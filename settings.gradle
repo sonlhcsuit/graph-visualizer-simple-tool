@@ -7,5 +7,14 @@
  * in the user manual at https://docs.gradle.org/7.0.2/userguide/multi_project_builds.html
  */
 
+pluginManagement {
+    repositories {
+        maven {
+            url "https://nexus.gluonhq.com/nexus/content/repositories/releases"
+        }
+
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'graph-visualizer-simple-tools'
 include('app', 'list', 'utilities')
