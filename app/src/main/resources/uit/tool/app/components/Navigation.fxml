@@ -16,21 +16,23 @@
          BorderPane.alignment="TOP_RIGHT" fx:controller="uit.tool.app.components.Navigation">
     <children>
         <Pane prefHeight="97.0" prefWidth="256.0"/>
-        <HBox alignment="CENTER">
+        <HBox alignment="CENTER" fx:id="navBrand">
             <children>
-                <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" fx:id="logo">
+                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" fx:id="navBrandIcon">
                     <image>
                         <Image url="@/uit/tool/app/assets/logo.png"/>
                     </image>
-                    <HBox.margin>
-                        <Insets right="10.0"/>
-                    </HBox.margin>
+
                 </ImageView>
-                <Label contentDisplay="CENTER" graphicTextGap="1.0" prefHeight="21.0"
+                <Label fx:id="navBrandName" contentDisplay="CENTER" graphicTextGap="1.0" prefHeight="21.0"
                        prefWidth="60.0" text="GVST" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold Italic" size="18.0"/>
                     </font>
+
+                    <HBox.margin>
+                        <Insets left="10.0"/>
+                    </HBox.margin>
                     <opaqueInsets>
                         <Insets/>
                     </opaqueInsets>
@@ -41,10 +43,10 @@
             <children>
                 <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" fx:id="avatar">
                     <image>
-                        <Image url="@/uit/tool/app/assets/search.png"/>
+                        <Image url="@/uit/tool/app/assets/user.png"/>
                     </image>
                     <clip>
-                        <Circle centerX="32" centerY="32" radius="32.0" fx:id="avatarClip"/>
+                        <Circle centerX="32" centerY="32" radius="32.0" fx:id="avatarClip" />
                     </clip>
                     <StackPane.margin>
                         <Insets/>
