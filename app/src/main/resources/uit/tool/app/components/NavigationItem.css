@@ -1,5 +1,11 @@
 .button {
-    -fx-text-fill: #1ca7ec;
+    -fx-text-fill: #000000;
     -fx-background-color: transparent;
     -fx-focus-traversable: false;
+}
+/*.button:pressed{*/
+/*    -fx-background-color: red;*/
+/*}*/
+.cont:pressed{
+    -fx-background-color: #b5ffff;
 }

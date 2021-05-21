@@ -12,7 +12,7 @@
 
 <?import uit.tool.app.components.NavigationItem?>
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-         alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" style="-fx-background-color: #c3d8eb;"
+         alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" style="-fx-background-color: #80d8ff;"
          BorderPane.alignment="TOP_RIGHT" fx:controller="uit.tool.app.components.Navigation">
     <children>
         <Pane prefHeight="97.0" prefWidth="256.0"/>
@@ -24,18 +24,14 @@
                     </image>
 
                 </ImageView>
-                <Label fx:id="navBrandName" contentDisplay="CENTER" graphicTextGap="1.0" prefHeight="21.0"
-                       prefWidth="60.0" text="GVST" textAlignment="CENTER" textFill="WHITE">
+                <Label fx:id="navBrandName" contentDisplay="CENTER" graphicTextGap="1.0"
+                       prefHeight="20.0" prefWidth="64.0" text="GVST" textAlignment="CENTER" textFill="BLACK">
                     <font>
                         <Font name="Arial Bold Italic" size="18.0"/>
                     </font>
-
                     <HBox.margin>
                         <Insets left="10.0"/>
                     </HBox.margin>
-                    <opaqueInsets>
-                        <Insets/>
-                    </opaqueInsets>
                 </Label>
             </children>
         </HBox>
@@ -46,7 +42,7 @@
                         <Image url="@/uit/tool/app/assets/user.png"/>
                     </image>
                     <clip>
-                        <Circle centerX="32" centerY="32" radius="32.0" fx:id="avatarClip" />
+                        <Circle centerX="32" centerY="32" radius="32.0" fx:id="avatarClip"/>
                     </clip>
                     <StackPane.margin>
                         <Insets/>
@@ -59,11 +55,21 @@
         </StackPane>
         <VBox fx:id="navGroup">
             <children>
-                <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png"/>
-                <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png"/>
-                <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png"/>
-
-
+                <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </NavigationItem>
+                <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </NavigationItem>
+                <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </NavigationItem>
             </children>
         </VBox>
     </children>
