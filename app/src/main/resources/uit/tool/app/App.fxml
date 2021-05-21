@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="uit.tool.app.App"
-      prefHeight="400.0" prefWidth="600.0">
-    <Label>Hello</Label>
-</VBox>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import uit.tool.app.components.Navigation ?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="720.0" prefWidth="1080.0"
+            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1;"
+            fx:controller="uit.tool.app.App">
+    <left>
+        <Navigation/>
+    </left>
+    <center>
+        <SplitPane dividerPositions="0.9064245810055865" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+                   BorderPane.alignment="CENTER">
+            <items>
+                <VBox prefHeight="200.0" prefWidth="100.0">
+                    <children>
+                        <SplitPane dividerPositions="0.8398533007334963" prefHeight="720.0" prefWidth="820.0">
+                            <items>
+                                <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab text="Graph View"/>
+                                        <Tab text="Matrix View"/>
+                                    </tabs>
+                                </TabPane>
+                                <VBox minWidth="-Infinity" prefHeight="0.0" prefWidth="128.0"/>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </VBox>
+                <VBox minHeight="64.0" minWidth="-Infinity" prefHeight="213.0" prefWidth="820.0"/>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
