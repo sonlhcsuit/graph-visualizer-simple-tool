@@ -1,0 +1,5 @@
+.button {
+    -fx-text-fill: #1ca7ec;
+    -fx-background-color: transparent;
+    -fx-focus-traversable: false;
+}

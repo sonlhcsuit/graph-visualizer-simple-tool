@@ -1,6 +1,7 @@
 package uit.tool.app.components;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import uit.tool.app.interfaces.Loader;
 
+import uit.tool.app.components.NavigationItem;
 
 public class Navigation extends VBox implements Loader {
 	private boolean isMenuOpen;
@@ -18,11 +20,9 @@ public class Navigation extends VBox implements Loader {
 	private ImageView logo;
 	@FXML
 	private ImageView avatar;
-	@FXML
-	public Button btnNew;
 
 	@FXML
-	public HBox btnGroupNew;
+	private VBox navGroup;
 
 	public Navigation() {
 		Loader.loadFXML(this);
@@ -37,25 +37,14 @@ public class Navigation extends VBox implements Loader {
 	}
 
 	public void toggleMenu() {
-		if (isMenuOpen) {
-			closeMenu();
-		} else {
-			openMenu();
+		for (int i = 0; i < this.navGroup.getChildren().size(); i++) {
+			NavigationItem navItem = (NavigationItem) this.navGroup.getChildren().get(i);
+			navItem.toggle(isMenuOpen);
+//			System.out.println(navItem.getCollapsed());
 		}
 		isMenuOpen = !isMenuOpen;
+
 	}
 
-	public void openMenu() {
-		btnGroupNew.getChildren().add(1, btnNew);
-	}
 
-	public void closeMenu() {
-		try {
-			btnGroupNew.getChildren().remove(1);
-
-		} catch (Exception e) {
-
-		}
-		System.out.println(btnNew);
-	}
 }

@@ -10,19 +10,21 @@
 <?import javafx.scene.image.Image?>
 
 
-<fx:root type="javafx.scene.layout.HBox" alignment="CENTER" layoutX="10.0" layoutY="10.0" fx:id="btnGroupNew" fx:controller="uit.tool.app.components.NavigationItem">
+<fx:root xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="@/uit/tool/app/components/NavigationItem.css"
+         type="javafx.scene.layout.HBox" alignment="CENTER"
+         layoutX="10.0" layoutY="10.0" fx:controller="uit.tool.app.components.NavigationItem" fx:id="container">
     <children>
-        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@/uit/tool/app/assets/contract.png"/>
-            </image>
+        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" fx:id="icon">
+            <!--            <image>-->
+            <!--                <Image url="@/uit/tool/app/assets/black-square.png"/>-->
+            <!--            </image>-->
             <viewport>
                 <Rectangle2D/>
             </viewport>
         </ImageView>
-        <Button fx:id="btnNew" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity"
-                mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0"
-                style="-fx-background-color: none;" text="New" textFill="#1ca7ec">
+        <Button fx:id="btn" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity"
+                mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0" text="_">
             <font>
                 <Font name="Arial Italic" size="18.0"/>
             </font>
