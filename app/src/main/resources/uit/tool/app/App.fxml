@@ -17,6 +17,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import uit.tool.app.components.Navigation ?>
+<?import uit.tool.app.components.GraphView?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="720.0" prefWidth="1080.0"
@@ -36,7 +37,9 @@
                             <items>
                                 <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
-                                        <Tab text="Graph View"/>
+                                        <Tab text="Graph View">
+                                            <GraphView/>
+                                        </Tab>
                                         <Tab text="Matrix View"/>
                                     </tabs>
                                 </TabPane>

@@ -32,7 +32,6 @@ public class Navigation extends VBox implements Loader {
 
 	public Navigation() {
 		Loader.loadFXML(this);
-		System.out.println("hehe");
 	}
 
 	public void initialize() {
@@ -40,6 +39,7 @@ public class Navigation extends VBox implements Loader {
 		navBrandIcon.setOnMouseClicked((MouseEvent e) -> {
 			toggleMenu();
 		});
+		toggleMenu();
 	}
 	public void toggleAvatar(boolean isSmall){
 		if (isSmall){

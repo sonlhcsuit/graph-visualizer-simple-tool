@@ -1,0 +1,5 @@
+.stackpane{
+    -fx-border-color: red;
+    -fx-border-style: solid;
+    -fx-border-width: 1;
+}

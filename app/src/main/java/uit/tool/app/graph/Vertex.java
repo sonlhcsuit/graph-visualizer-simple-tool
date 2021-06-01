@@ -1,5 +1,8 @@
 package uit.tool.app.graph;
 
+import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
+
 public class Vertex {
 	private Double x;
 	private Double y;
@@ -42,4 +45,7 @@ public class Vertex {
 		return y;
 	}
 
+//	static StackPane toVertexNode(){
+//		StackPane s = new StackPane();
+//	}
 }
