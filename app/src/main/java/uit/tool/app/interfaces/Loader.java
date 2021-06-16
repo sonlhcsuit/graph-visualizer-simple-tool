@@ -12,6 +12,7 @@ public interface Loader {
 		loader.setRoot(component);
 		loader.setControllerFactory((t) -> component);
 		String filename = String.format("%s.fxml", component.getClass().getSimpleName());
+		System.out.println(filename);
 		try {
 			loader.load(Objects.requireNonNull(component.getClass().getResourceAsStream(filename)));
 		} catch (IOException e) {

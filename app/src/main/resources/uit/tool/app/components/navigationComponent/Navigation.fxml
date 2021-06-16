@@ -1,4 +1,4 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<?xml version="1.0" encoding="UTF-8"?>
 
 
 <?import javafx.scene.control.*?>
@@ -8,12 +8,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.geometry.Rectangle2D?>
 
-<?import uit.tool.app.components.NavigationItem?>
+<?import uit.tool.app.components.navigationComponent.NavigationItem?>
+
+
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
          alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" style="-fx-background-color: #80d8ff;"
-         BorderPane.alignment="TOP_RIGHT" fx:controller="uit.tool.app.components.Navigation">
+         BorderPane.alignment="TOP_RIGHT"
+         fx:controller="uit.tool.app.components.navigationComponent.Navigation">
     <children>
         <Pane prefHeight="97.0" prefWidth="256.0"/>
         <HBox alignment="CENTER" fx:id="navBrand">

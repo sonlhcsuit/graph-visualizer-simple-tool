@@ -13,7 +13,7 @@
 <fx:root xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
          stylesheets="@/uit/tool/app/stylesheets/NavigationItem.css" styleClass="cont"
          type="javafx.scene.layout.HBox" alignment="CENTER" layoutX="10.0" layoutY="10.0"
-         fx:controller="uit.tool.app.components.NavigationItem" fx:id="container">
+         fx:controller="uit.tool.app.components.navigationComponent.NavigationItem" fx:id="container">
     <children>
 
         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" fx:id="icon">

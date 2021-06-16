@@ -1,0 +1,11 @@
+.stackpane{
+    /*-fx-border-color: red;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-width: 1;*/
+}
+#name{
+    -fx-text-fill: white;
+    -fx-font-style: italic;
+    -fx-font-size: 20px;
+    -fx-font-family: Tahoma;
+}

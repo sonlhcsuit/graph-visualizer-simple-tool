@@ -34,10 +34,8 @@ public class Main
     }
 
 	public static void main(String[] args) {
-
         launch(args);
-//        Graph gr = new Graph();
-//        System.out.println(gr.toString());
+
 	}
 
 }
