@@ -11,25 +11,32 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
 
 public class VertexView extends StackPane implements Loader {
 	@FXML
-	Circle cir;
-	@FXML
 	Label vName;
 
-	public VertexView(@NamedArg(value = "x",defaultValue = "0") double x ,
-					  @NamedArg(value = "y",defaultValue = "0") double y,
+	private Vertex vertex;
+	public VertexView(@NamedArg(value = "x", defaultValue = "0") double x,
+					  @NamedArg(value = "y", defaultValue = "0") double y,
 					  @NamedArg(value = "name", defaultValue = "A") String name) {
 		Loader.loadFXML(this);
-		AnchorPane.setLeftAnchor(this,x);
-		AnchorPane.setTopAnchor(this,y);
+		AnchorPane.setLeftAnchor(this, x);
+		AnchorPane.setTopAnchor(this, y);
 		vName.setText(name);
 	}
 
+	public VertexView(Vertex vertex) {
+		this(vertex.getX(), vertex.getY(), vertex.getName());
+		this.vertex = vertex;
+	}
+
+	public Vertex getVertex() {
+		return vertex;
+	}
 
 	private Image setUpImage() {
 		WritableImage wImage = new WritableImage(40, 40);

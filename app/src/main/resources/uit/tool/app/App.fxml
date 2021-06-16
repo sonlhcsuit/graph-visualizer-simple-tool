@@ -8,6 +8,9 @@
 <?import uit.tool.app.components.navigationComponent.Navigation?>
 <?import uit.tool.app.components.graphComponent.GraphView?>
 
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="720.0" prefWidth="1080.0"
@@ -28,7 +31,12 @@
                                 <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
                                         <Tab text="Graph View">
-                                            <GraphView/>
+<!--                                            <ScrollPane prefViewportHeight="200" prefViewportWidth="200"-->
+<!--                                                        prefHeight="10000" prefWidth="1000">-->
+                                                <GraphView/>
+
+
+<!--                                            </ScrollPane>-->
                                         </Tab>
                                         <Tab text="Matrix View"/>
                                     </tabs>
@@ -41,5 +49,6 @@
                 <VBox minHeight="64.0" minWidth="-Infinity" prefHeight="213.0" prefWidth="820.0"/>
             </items>
         </SplitPane>
+
     </center>
 </BorderPane>

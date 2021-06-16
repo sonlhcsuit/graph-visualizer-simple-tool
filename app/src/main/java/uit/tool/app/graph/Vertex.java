@@ -45,7 +45,13 @@ public class Vertex {
 		return y;
 	}
 
-//	static StackPane toVertexNode(){
+	@Override
+	public String toString() {
+		return String.format("Vertex@%s{x:%f,y:%f,name:'%s'}",Integer.toHexString(hashCode()),x,y,name);
+//		
+	}
+
+	//	static StackPane toVertexNode(){
 //		StackPane s = new StackPane();
 //	}
 }

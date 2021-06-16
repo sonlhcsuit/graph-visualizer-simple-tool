@@ -3,17 +3,21 @@ package uit.tool.app.graph;
 public class Edge {
 	private Vertex from = null;
 	private Vertex to = null;
-	Double weight = 0.0;
+	Double weight;
 
 	public Edge(Vertex from, Vertex to, Double weight) {
-		this.from = from;
-		this.to = to;
+		this(from,to);
 		this.weight = weight;
 	}
 
 	public Edge(Vertex from, Vertex to) {
 		this.from = from;
 		this.to = to;
-		this.weight = 0.0;
+	}
+	public Vertex getSource(){
+		return from;
+	}
+	public Vertex gerDestination(){
+		return to;
 	}
 }

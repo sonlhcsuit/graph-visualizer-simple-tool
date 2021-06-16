@@ -23,6 +23,13 @@ public class Graph{
 		return vertexes;
 	}
 
+	public ArrayList<Edge> getEdges() {
+		return edges;
+	}
+	public void updateVertexPosition(Vertex vertex,double newX, double newY){
+		vertex.setX(newX);
+		vertex.setY(newY);
+	}
 	static public Graph sampleGraph(){
 		Vertex a = new Vertex("a", 100.0, 100.0);
 		Vertex b = new Vertex("b", 200.0, 100.0);
@@ -49,8 +56,7 @@ public class Graph{
 		E.add(de);
 		E.add(ea);
 		E.add(be);
-		Graph graph = new Graph(V, E);
-		return graph;
+		return new Graph(V, E);
 	}
 
 }

@@ -1,13 +1,10 @@
 package uit.tool.app.components.graphComponent;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Circle;
 import uit.tool.app.components.Event.VertexEvent;
+import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
@@ -17,9 +14,11 @@ import java.util.ArrayList;
 
 public class GraphView extends AnchorPane implements Loader {
 
+	private Graph graph;
 
 	public GraphView() {
 		Loader.loadFXML(this);
+		this.graph = Graph.sampleGraph();
 		renderGraph();
 	}
 
@@ -31,35 +30,47 @@ public class GraphView extends AnchorPane implements Loader {
 		});
 		this.setOnDragDropped((DragEvent event) -> {
 			VertexView vertex = (VertexView) event.getGestureSource();
-
-
 			AnchorPane.setTopAnchor(vertex, event.getY());
 			AnchorPane.setLeftAnchor(vertex, event.getX());
-
 			event.setDropCompleted(true);
 			event.consume();
-			this.fireEvent(new VertexEvent(VertexEvent.MOVE, vertex));
+			this.fireEvent(new VertexEvent(VertexEvent.MOVE, vertex, event.getX(), event.getY()));
 
 		});
 
-		this.addEventFilter(VertexEvent.MOVE,this::handleVertexEvent);
+		this.addEventFilter(VertexEvent.MOVE, this::handleVertexEvent);
 	}
-	public void handleVertexEvent(VertexEvent e){
-		System.out.println(e.getVertexView());
-		System.out.println("moved");
+
+	public void handleVertexEvent(VertexEvent e) {
+		updatePosition(e.getVertexView(), e.getNewX(), e.getNewY());
+		renderGraph();
+		System.out.printf("Width and Height: %f %f",this.getWidth(),this.getHeight());
 	}
 
 	public void renderGraph() {
-		Graph graph = Graph.sampleGraph();
-		ArrayList<Vertex> V = graph.getVertexes();
+		this.getChildren().clear();
+		ArrayList<Vertex> V = this.graph.getVertexes();
+		ArrayList<Edge> E = this.graph.getEdges();
 
-		for (Vertex v : V) {
-			this.getChildren().add(new VertexView(v.getX(), v.getY(), v.getName()));
+		for (Edge e : E) {
+			EdgeView ev = new EdgeView(e.getSource(),e.gerDestination());
+			ev.toBack();
+			this.getChildren().add(ev);
 		}
+		for (Vertex v : V) {
+			this.getChildren().add(new VertexView(v));
+		}
+
+
 	}
 
-	public void drawLine(VertexView from ,VertexView to){
+	public void updatePosition(VertexView vertexView, double newX, double newY) {
+		Vertex vertex = vertexView.getVertex();
+		this.graph.updateVertexPosition(vertex, newX, newY);
+	}
 
+	public EdgeView drawLine(Vertex from, Vertex to) {
+		return new EdgeView(from,to);
 	}
 
 }
