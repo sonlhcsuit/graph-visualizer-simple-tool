@@ -1,19 +1,18 @@
-package uit.tool.app.components;
+package uit.tool.app.components.navigationComponent;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.scene.transform.Scale;
-import javafx.scene.transform.Transform;
+import uit.tool.app.components.navigationComponent.NavigationItem;
 import uit.tool.app.interfaces.Loader;
 
-import uit.tool.app.components.NavigationItem;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Navigation extends VBox implements Loader {
 	private boolean isMenuOpen;
@@ -32,7 +31,6 @@ public class Navigation extends VBox implements Loader {
 
 	public Navigation() {
 		Loader.loadFXML(this);
-		System.out.println("hehe");
 	}
 
 	public void initialize() {
@@ -40,6 +38,7 @@ public class Navigation extends VBox implements Loader {
 		navBrandIcon.setOnMouseClicked((MouseEvent e) -> {
 			toggleMenu();
 		});
+		toggleMenu();
 	}
 	public void toggleAvatar(boolean isSmall){
 		if (isSmall){

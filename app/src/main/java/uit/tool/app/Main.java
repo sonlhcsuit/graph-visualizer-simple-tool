@@ -5,10 +5,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.*;
+import uit.tool.app.graph.Edge;
+import uit.tool.app.graph.Graph;
+import uit.tool.app.graph.Vertex;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Main extends Application {
+public class Main
+        extends Application
+{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -27,8 +33,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
-    }
+	public static void main(String[] args) {
+        launch(args);
+
+	}
 
 }

@@ -1,12 +1,10 @@
-package uit.tool.app.components;
+package uit.tool.app.components.navigationComponent;
 
-import javafx.beans.DefaultProperty;
 import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import uit.tool.app.interfaces.Loader;
 
