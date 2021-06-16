@@ -54,7 +54,6 @@ public class GraphView extends AnchorPane implements Loader {
 //			System.out.println(this.getHeight());
 //		});
 //		renderGraph();
-
 	}
 
 	public void renderGraph() {
