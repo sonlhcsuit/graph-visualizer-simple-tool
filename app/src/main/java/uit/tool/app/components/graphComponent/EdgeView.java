@@ -11,8 +11,9 @@ public class EdgeView extends Path {
 	private static final double radius = 20;
 	public static final String ARC_UP = "Arc_Up";
 	public static final String ARC_DOWN = "Arc_Down";
+	public static final String LINE = "Line";
 
-	EdgeView(Vertex source, Vertex destination) {
+	EdgeView(Vertex source, Vertex destination, String type) {
 		/**
 		 * for arrow drawing:
 		 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
@@ -36,11 +37,11 @@ public class EdgeView extends Path {
 		double vX = endX - startX;
 		double vY = endY - startY;
 		double vLength = Math.sqrt(vX * vX + vY * vY);
-		endX = endX - radius * vX / vLength;
-		endY = endY - radius * vY / vLength;
+		endX = endX - (radius - 5) * vX / vLength;
+		endY = endY - (radius - 5) * vY / vLength;
 
-		startX = startX + radius * vX / vLength;
-		startY = startY + radius * vY / vLength;
+//		startX = startX + radius * vX / vLength;
+//		startY = startY + radius * vY / vLength;
 
 
 		double angle = defaultArrowAngle;
@@ -53,16 +54,25 @@ public class EdgeView extends Path {
 		double bX = cos * vX / vLength + sin * vY / vLength;
 		double bY = cos * vY / vLength - sin * vX / vLength;
 
-
 		getElements().add(new MoveTo(startX, startY));
-//		getElements().add(new LineTo(endX, endY));
+
+		if (LINE.equals(type)) {
+//			Using line, good but not with more than one connection between 2 vertex
+			getElements().add(new LineTo(endX, endY));
+		} else {
+//			Using arc (suck)
+
+			boolean isArcUp = !ARC_DOWN.equals(type);
+			ArcTo arcTo = new ArcTo(vX == 0 ? 20 : vX, vY == 0 ? 20 : vY, 0, endX, endY, false, isArcUp);
+			getElements().add(arcTo);
+		}
 
 
-		ArcTo arcTo = new ArcTo( vX/5,Vy/5,0,endX,endY,false,true);
-
-		getElements().add(arcTo);
-
-		getElements().add(new MoveTo(endX, endY));
+//		Using quad curve (suck,too)
+//		double controlX = (startX + endX) / 2 - vX/2;
+//		double controlY = (startY + endY) / 2 + vY/2;
+//		QuadCurveTo quad = new QuadCurveTo(controlX,controlY,endX,endY);
+//		getElements().add(quad);
 
 		getElements().add(new LineTo(endX - defaultArrowHeadSize * aX, endY - defaultArrowHeadSize * aY));
 		getElements().add(new LineTo(endX - defaultArrowHeadSize * bX, endY - defaultArrowHeadSize * bY));
@@ -70,9 +80,9 @@ public class EdgeView extends Path {
 
 	}
 
-	EdgeView(Vertex source, Vertex destination, double weighted) {
-		this(source, destination);
-		System.out.println(weighted);
+	EdgeView(Vertex source, Vertex destination) {
+		this(source, destination,LINE);
 	}
+
 
 }
