@@ -37,8 +37,8 @@ public class EdgeView extends Path {
 		double vX = endX - startX;
 		double vY = endY - startY;
 		double vLength = Math.sqrt(vX * vX + vY * vY);
-		endX = endX - (radius - 5) * vX / vLength;
-		endY = endY - (radius - 5) * vY / vLength;
+		endX = endX - (radius - 0) * vX / vLength;
+		endY = endY - (radius - 0) * vY / vLength;
 
 //		startX = startX + radius * vX / vLength;
 //		startY = startY + radius * vY / vLength;
@@ -81,7 +81,7 @@ public class EdgeView extends Path {
 	}
 
 	EdgeView(Vertex source, Vertex destination) {
-		this(source, destination,LINE);
+		this(source, destination, LINE);
 	}
 
 

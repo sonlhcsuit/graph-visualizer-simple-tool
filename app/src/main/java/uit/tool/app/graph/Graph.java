@@ -51,12 +51,12 @@ public class Graph{
 		Edge be = new Edge(b, e);
 		Edge ac = new Edge(a, c);
 		ArrayList<Edge> E = new ArrayList<>();
-//		E.add(ab);
-//		E.add(bc);
-//		E.add(de);
-//		E.add(ea);
+		E.add(ab);
+		E.add(bc);
+		E.add(de);
+		E.add(ea);
 		E.add(be);
-//		E.add(ac);
+		E.add(ac);
 		return new Graph(V, E);
 	}
 
