@@ -9,8 +9,7 @@
          fx:controller="uit.tool.app.components.graphComponent.GraphView"
          stylesheets="@/uit/tool/app/stylesheets/GraphView.css" >
     <AnchorPane fx:id="graphArea" styleClass="graph">
-        <VertexView name="A"/>
-        <Line startX="100" endX="350" startY="150" endY="200"/>
+
     </AnchorPane>
 
 </fx:root>
