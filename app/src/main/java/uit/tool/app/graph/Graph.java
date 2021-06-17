@@ -33,7 +33,7 @@ public class Graph{
 	static public Graph sampleGraph(){
 		Vertex a = new Vertex("a", 100.0, 100.0);
 		Vertex b = new Vertex("b", 200.0, 100.0);
-		Vertex c = new Vertex("c", 200.0, 200.0);
+		Vertex c = new Vertex("c", 300.0, 250.0);
 		Vertex d = new Vertex("d", 150.0, 150.0);
 		Vertex e = new Vertex("e", 100.0, 200.0);
 
@@ -49,13 +49,14 @@ public class Graph{
 		Edge de = new Edge(d, e);
 		Edge ea = new Edge(e, a);
 		Edge be = new Edge(b, e);
-
+		Edge ac = new Edge(a, c);
 		ArrayList<Edge> E = new ArrayList<>();
-		E.add(ab);
-		E.add(bc);
-		E.add(de);
-		E.add(ea);
+//		E.add(ab);
+//		E.add(bc);
+//		E.add(de);
+//		E.add(ea);
 		E.add(be);
+//		E.add(ac);
 		return new Graph(V, E);
 	}
 

@@ -82,23 +82,23 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public void renderGraph() {
-		this.maxOffsetX = 0;
-		this.maxOffsetX = 0;
+		this.maxOffsetX = 500;
+		this.maxOffsetY = 500;
 
 		this.graphArea.getChildren().clear();
 		ArrayList<Vertex> V = this.graph.getVertexes();
 		ArrayList<Edge> E = this.graph.getEdges();
+
+		for (Vertex v : V) {
+			this.graphArea.getChildren().add(new VertexView(v));
+//			this.maxOffsetX = Math.max(this.maxOffsetX, v.getX());
+//			this.maxOffsetY = Math.max(this.maxOffsetY, v.getY());
+		}
 		for (Edge e : E) {
 			EdgeView ev = new EdgeView(e.getSource(), e.gerDestination());
 			ev.toBack();
 			this.graphArea.getChildren().add(ev);
 		}
-//		for (Vertex v : V) {
-//			this.graphArea.getChildren().add(new VertexView(v));
-//			this.maxOffsetX = Math.max(this.maxOffsetX, v.getX());
-//			this.maxOffsetY = Math.max(this.maxOffsetY, v.getY());
-//		}
-
 		this.graphArea.setPrefWidth(maxOffsetX + 100);
 		this.graphArea.setPrefHeight(maxOffsetY + 100);
 	}

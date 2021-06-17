@@ -6,51 +6,68 @@ import javafx.scene.shape.*;
 import uit.tool.app.graph.Vertex;
 
 public class EdgeView extends Path {
-	private static final double defaultArrowHeadSize = 10.0;
-	private static final double defaultArrowAngle = Math.PI/6;  // 30 deg
-
+	private static final double defaultArrowHeadSize = 5;
+	private static final double defaultArrowAngle = Math.PI / 6;  // 30 deg
+	private static final double radius = 20;
+	public static final String ARC_UP = "Arc_Up";
+	public static final String ARC_DOWN = "Arc_Down";
 
 	EdgeView(Vertex source, Vertex destination) {
+		/**
+		 * for arrow drawing:
+		 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
+		 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
+		 */
+
 		super();
-		strokeProperty().bind(fillProperty());
-		setFill(Color.BLACK);
+		setStroke(Color.BLACK);
+
+
+		setStrokeWidth(2);
+
 		double startX, startY, endX, endY;
-		startX = source.getX() + 20;
-		startY = source.getY() + 20;
-		endX = destination.getX() + 20;
-		endY = destination.getY() + 20;
+//		adjust 20 make start/end point at center of the circle (not the top-left)
+		startX = source.getX() + radius;
+		startY = source.getY() + radius;
+		endX = destination.getX() + radius;
+		endY = destination.getY() + radius;
+
+//		end point not terminate at center but at border
+		double vX = endX - startX;
+		double vY = endY - startY;
+		double vLength = Math.sqrt(vX * vX + vY * vY);
+		endX = endX - radius * vX / vLength;
+		endY = endY - radius * vY / vLength;
+
+		startX = startX + radius * vX / vLength;
+		startY = startY + radius * vY / vLength;
+
+
+		double angle = defaultArrowAngle;
+		double cos = Math.cos(angle);
+		double sin = Math.sin(angle);
+
+//		draw arrow wings
+		double aX = cos * vX / vLength - sin * vY / vLength;
+		double aY = sin * vX / vLength + cos * vY / vLength;
+		double bX = cos * vX / vLength + sin * vY / vLength;
+		double bY = cos * vY / vLength - sin * vX / vLength;
+
+
 		getElements().add(new MoveTo(startX, startY));
+//		getElements().add(new LineTo(endX, endY));
+
+
+		ArcTo arcTo = new ArcTo( vX/5,Vy/5,0,endX,endY,false,true);
+
+		getElements().add(arcTo);
+
+		getElements().add(new MoveTo(endX, endY));
+
+		getElements().add(new LineTo(endX - defaultArrowHeadSize * aX, endY - defaultArrowHeadSize * aY));
+		getElements().add(new LineTo(endX - defaultArrowHeadSize * bX, endY - defaultArrowHeadSize * bY));
 		getElements().add(new LineTo(endX, endY));
 
-//		Calculate angle of the line
-//		double angelRad = Math.atan2(endX,endY);
-		double
-
-		double angle = Math.atan2((endY - startY), (endX - startX)) - Math.PI / 2.0;
-		double sin = Math.sin(angle);
-		double cos = Math.cos(angle);
-		QuadCurveTo quadCurveTo = new QuadCurveTo();
-		quadCurveTo.setX(120.0f);
-		quadCurveTo.setY(60.0f);
-		quadCurveTo.setControlX(100.0f);
-		quadCurveTo.setControlY(0.0f);
-		getElements().add(quadCurveTo);
-
-
-
-
-		//point1
-		double x1 = (- 1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
-		double y1 = (- 1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
-//		//point2
-//		double x2 = (1.0 / 2.0 * cos + Math.sqrt(3) / 2 * sin) * defaultArrowHeadSize + endX;
-//		double y2 = (1.0 / 2.0 * sin - Math.sqrt(3) / 2 * cos) * defaultArrowHeadSize + endY;
-//
-//		getElements().add(new LineTo(x1, y1));
-//		getElements().add(new LineTo(x2, y2));
-//		getElements().add(new LineTo(endX, endY));
-//
-getElements().add(arrowHead);
 	}
 
 	EdgeView(Vertex source, Vertex destination, double weighted) {
