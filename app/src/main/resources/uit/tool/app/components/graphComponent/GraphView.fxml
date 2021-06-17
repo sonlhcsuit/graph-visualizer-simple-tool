@@ -4,11 +4,14 @@
 <?import uit.tool.app.components.graphComponent.VertexView?>
 <?import javafx.scene.shape.Line?>
 
-<fx:root type="javafx.scene.layout.AnchorPane"
-         xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-         fx:controller="uit.tool.app.components.graphComponent.GraphView">
-    <VertexView name="A"/>
-    <Line startX="100" endX="350" startY="150" endY="200"/>
-
+<fx:root type="javafx.scene.control.ScrollPane"
+         xmlns="https://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+         fx:controller="uit.tool.app.components.graphComponent.GraphView"
+         stylesheets="@/uit/tool/app/stylesheets/GraphView.css" >
+    <AnchorPane fx:id="graphArea" styleClass="graph">
+        <VertexView name="A"/>
+        <Line startX="100" endX="350" startY="150" endY="200"/>
+    </AnchorPane>
 
 </fx:root>
+
