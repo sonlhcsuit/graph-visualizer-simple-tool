@@ -5,7 +5,8 @@ import uit.tool.app.graph.Vertex;
 
 public class EdgeView extends Line{
 
-	EdgeView(Vertex source, Vertex destination){
+
+	EdgeView(Vertex source, Vertex destination ){
 		super();
 		double startX,startY,endX,endY;
 		startX = source.getX()+ 20;
@@ -18,6 +19,10 @@ public class EdgeView extends Line{
 		this.setEndY(endY);
 		this.getStyleClass().add("line");
 		this.setStrokeWidth(2);
+	}
+	EdgeView(Vertex source,Vertex destination,double weighted){
+		this(source,destination);
+		System.out.println(weighted);
 	}
 
 }
