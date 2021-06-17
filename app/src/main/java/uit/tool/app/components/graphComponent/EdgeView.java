@@ -17,5 +17,7 @@ public class EdgeView extends Line{
 		this.setEndX(endX);
 		this.setEndY(endY);
 		this.getStyleClass().add("line");
+		this.setStrokeWidth(2);
 	}
+
 }
