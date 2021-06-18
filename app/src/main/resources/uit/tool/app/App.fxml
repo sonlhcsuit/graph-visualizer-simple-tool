@@ -31,12 +31,7 @@
                                 <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
                                         <Tab text="Graph View">
-<!--                                            <ScrollPane prefViewportHeight="200" prefViewportWidth="200"-->
-<!--                                                        prefHeight="10000" prefWidth="1000">-->
-                                                <GraphView/>
-
-
-<!--                                            </ScrollPane>-->
+                                            <GraphView/>
                                         </Tab>
                                         <Tab text="Matrix View"/>
                                     </tabs>
