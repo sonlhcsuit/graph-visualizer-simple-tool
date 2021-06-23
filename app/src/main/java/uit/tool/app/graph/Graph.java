@@ -1,44 +1,47 @@
 package uit.tool.app.graph;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Graph {
-	ArrayList<Vertex> vertexes = null;
-	ArrayList<Edge> edges = null;
+	private ArrayList<Vertex> vertexes = null;
+	private int size;
 	double[][] matrix;
 
-	public Graph(ArrayList<Vertex> vertexes, ArrayList<Edge> edges) throws NullPointerException {
-		if (vertexes == null || edges == null) {
-			throw new NullPointerException("Must provided at least 1 vertex or edge");
+	public Graph(ArrayList<Vertex> vertexes) throws NullPointerException {
+		if (vertexes == null) {
+			throw new NullPointerException("Must provided at least 1 vertex");
 		}
 		this.vertexes = vertexes;
-		this.edges = edges;
-		int size = this.vertexes.size();
+		this.size = this.vertexes.size();
 		this.matrix = new double[size][size];
 
-		for (Edge e : this.edges) {
+	}
+
+	public Graph(ArrayList<Vertex> vertexes, ArrayList<Edge> edges) throws NullPointerException {
+		this(vertexes);
+		if (edges == null) {
+			throw new NullPointerException("Must provided at least 1 edge");
+		}
+
+		for (Edge e : edges) {
 			Vertex from = e.getSource();
 			Vertex to = e.getDestination();
 			int fi = this.vertexes.indexOf(from);
 			int ti = this.vertexes.indexOf(to);
 			this.matrix[fi][ti] = e.getWeight();
 		}
+
 	}
 
 
-	public ArrayList<String> getVertexNames() {
-		return this.vertexes.stream().map(Vertex::getName).collect(Collectors.toCollection(ArrayList::new));
+	public TreeSet<String> getVertexNames() {
+		return this.vertexes.stream().map(Vertex::getName).collect(Collectors.toCollection(TreeSet::new));
 	}
 
 	public ArrayList<Vertex> getVertexes() {
 		return vertexes;
-	}
-
-	public ArrayList<Edge> getEdges() {
-		return edges;
 	}
 
 	public void updateVertexPosition(Vertex vertex, double newX, double newY) {
@@ -83,22 +86,32 @@ public class Graph {
 		return this.matrix;
 	}
 
-	public void updateWeight(int row, int col, double weight) {
-		matrix[row][col] = weight;
-		Vertex from = vertexes.get(row);
-		Vertex to = vertexes.get(col);
-
-		for (Edge e : edges) {
-			if (from == e.getSource() && to == e.getDestination()) {
-				e.setWeight(weight);
-			}
+	public void updateWeight(int row, int col, double weight) throws IllegalStateException {
+		if (row >= size || col >= size || row < 0 || col < 0) {
+			throw new IllegalStateException("Vertex not existed");
 		}
-		adjacencyMatrix();
+		matrix[row][col] = weight;
+
 	}
 
 	public void updateWeight(Vertex from, Vertex to, double weight) {
-		int fi = vertexes.indexOf(from);
-		int ti = vertexes.indexOf(to);
-		matrix[fi][ti] = weight;
+		int row = vertexes.indexOf(from);
+		int col = vertexes.indexOf(to);
+		updateWeight(row, col, weight);
 	}
+
+	boolean isVertexUnique(Vertex vertex){
+		TreeSet<String> vertexNames = getVertexNames();
+		return vertexNames.contains(vertex.getName());
+	}
+	public void addVertex(Vertex v) throws IllegalStateException{
+		if (isVertexUnique(v)){
+			throw new IllegalStateException("Vertex name existed!");
+		}
+		this.vertexes.add(v);
+		this.vertexes.sort(Comparator.comparing(Vertex::getName));
+		System.out.println(getVertexes());
+	}
+
+
 }

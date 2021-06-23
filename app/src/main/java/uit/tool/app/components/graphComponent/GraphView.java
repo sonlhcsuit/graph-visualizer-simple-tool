@@ -99,14 +99,26 @@ public class GraphView extends ScrollPane implements Loader {
 		double maxOffsetY = 0;
 		this.graphArea.getChildren().clear();
 		ArrayList<Vertex> V = this.graph.getVertexes();
-		ArrayList<Edge> E = this.graph.getEdges();
 
-		for (Edge e : E) {
-			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
-			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), e.getWeight());
-			this.graphArea.getChildren().add(ev);
-			this.graphArea.getChildren().add(wv);
+//		Render edge & weight on screen
+		double[][] matrix = this.graph.adjacencyMatrix();
+		int size = matrix.length;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (i != j && matrix[i][j] != 0) {
+					EdgeView ev = new EdgeView(V.get(i), V.get(j));
+					WeightedView wv = new WeightedView(V.get(i), V.get(j), matrix[i][j]);
+					this.graphArea.getChildren().add(ev);
+					this.graphArea.getChildren().add(wv);
+				}
+			}
 		}
+//		for (Edge e : E) {
+//			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
+//			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), e.getWeight());
+//			this.graphArea.getChildren().add(ev);
+//			this.graphArea.getChildren().add(wv);
+//		}
 
 		for (Vertex v : V) {
 			this.graphArea.getChildren().add(new VertexView(v));
@@ -152,6 +164,7 @@ public class GraphView extends ScrollPane implements Loader {
 				this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
 				event.getRelativeY(), this.getVvalue()
 		) - 20;
+
 		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
 		try {
 			this.writeLog.call(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));

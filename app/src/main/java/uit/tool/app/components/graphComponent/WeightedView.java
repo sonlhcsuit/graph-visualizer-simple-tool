@@ -2,7 +2,6 @@ package uit.tool.app.components.graphComponent;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import uit.tool.app.graph.Vertex;
 
 public class WeightedView extends Label {

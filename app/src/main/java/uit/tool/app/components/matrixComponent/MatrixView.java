@@ -10,6 +10,7 @@ import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class MatrixView extends GridPane implements Loader {
 
@@ -63,7 +64,7 @@ public class MatrixView extends GridPane implements Loader {
 			return;
 		}
 		double[][] matrix = this.graph.adjacencyMatrix();
-		ArrayList<String> names = this.graph.getVertexNames();
+		ArrayList<String> names = new ArrayList<>(this.graph.getVertexNames());
 		int size = matrix.length;
 		for (int i = 0; i < size; i++) {
 			this.add(makeCell(names.get(i), true), 0, i + 1);
