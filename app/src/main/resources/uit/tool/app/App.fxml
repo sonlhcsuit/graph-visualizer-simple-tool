@@ -34,10 +34,10 @@
                                 <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
                                         <Tab text="Graph View">
-                                            <GraphView fx:id="graph"/>
+                                            <GraphView fx:id="graphView"/>
                                         </Tab>
                                         <Tab text="Matrix View">
-                                            <MatrixView/>
+                                            <MatrixView fx:id="matrixView"/>
                                         </Tab>
                                     </tabs>
                                 </TabPane>

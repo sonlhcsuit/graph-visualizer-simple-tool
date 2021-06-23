@@ -6,8 +6,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import uit.tool.app.App;
-import uit.tool.app.components.Event.VertexEvent;
+import uit.tool.app.components.Event.VertexMove;
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
@@ -20,33 +19,35 @@ public class GraphView extends ScrollPane implements Loader {
 
 	@FXML
 	private AnchorPane graphArea;
-	private double maxOffsetX;
-	private double maxOffsetY;
 	private Graph graph;
 	private Callback<String, Void> writeLog;
 
 	public GraphView() {
 		Loader.loadFXML(this);
-		this.graph = Graph.sampleGraph();
-		renderGraph();
+	}
+
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+	}
+
+	public Graph getGraph() {
+		return graph;
 	}
 
 	public void setWriteLog(Callback<String, Void> writeLog) {
 		this.writeLog = writeLog;
 	}
 
-	public Callback<String, Void> getWriteLog() {
-		return writeLog;
-	}
 
 	public void initialize() {
+		System.out.println("Graph View init");
 		this.setOnDragOver((DragEvent event) -> {
 			event.acceptTransferModes(TransferMode.MOVE);
 			event.consume();
 		});
 		this.setOnDragDropped(this::handleDroppedEvent);
 
-		this.addEventFilter(VertexEvent.MOVE, this::handleVertexEvent);
+		this.addEventFilter(VertexMove.MOVE, this::handleVertexEvent);
 
 ////	debug purpose
 //		this.setOnMouseClicked(event -> {
@@ -89,54 +90,44 @@ public class GraphView extends ScrollPane implements Loader {
 		return differenceAxe + relative;
 	}
 
-	public void renderGraph() {
-		this.maxOffsetX = 0;
-		this.maxOffsetY = 0;
+	public void render() {
+		if (this.graph == null) {
+			return;
+		}
 
+		double maxOffsetX = 0;
+		double maxOffsetY = 0;
 		this.graphArea.getChildren().clear();
 		ArrayList<Vertex> V = this.graph.getVertexes();
-		ArrayList<Edge> E = this.graph.getEdges();
 
-
-		for (Edge e : E) {
-			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
-			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), 10);
-			this.graphArea.getChildren().add(ev);
-			this.graphArea.getChildren().add(wv);
+//		Render edge & weight on screen
+		double[][] matrix = this.graph.adjacencyMatrix();
+		int size = matrix.length;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (i != j && matrix[i][j] != 0) {
+					EdgeView ev = new EdgeView(V.get(i), V.get(j));
+					WeightedView wv = new WeightedView(V.get(i), V.get(j), matrix[i][j]);
+					this.graphArea.getChildren().add(ev);
+					this.graphArea.getChildren().add(wv);
+				}
+			}
 		}
+//		for (Edge e : E) {
+//			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
+//			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), e.getWeight());
+//			this.graphArea.getChildren().add(ev);
+//			this.graphArea.getChildren().add(wv);
+//		}
 
 		for (Vertex v : V) {
 			this.graphArea.getChildren().add(new VertexView(v));
-			this.maxOffsetX = Math.max(this.maxOffsetX, v.getX());
-			this.maxOffsetY = Math.max(this.maxOffsetY, v.getY());
+			maxOffsetX = Math.max(maxOffsetX, v.getX());
+			maxOffsetY = Math.max(maxOffsetY, v.getY());
 		}
+
 		this.graphArea.setPrefWidth(maxOffsetX + 100);
 		this.graphArea.setPrefHeight(maxOffsetY + 100);
-	}
-
-	public void handleVertexEvent(VertexEvent event) {
-		/**
-		 * This method is handle when a VertexView moved
-		 * Update position of moved vertex by updating data in graph object then render new graph
-		 * first by calculating absolute size of moved vertex
-		 */
-		Vertex vertex = event.getVertexView().getVertex();
-		double absoluteX = syncAxeValue(
-				this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
-				event.getRelativeX(), this.getHvalue()
-		) - 20;
-		double absoluteY = syncAxeValue(
-				this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
-				event.getRelativeY(), this.getVvalue()
-		) - 20;
-		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
-		try {
-			this.writeLog.call(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		renderGraph();
 	}
 
 	private void handleDroppedEvent(DragEvent event) {
@@ -152,9 +143,36 @@ public class GraphView extends ScrollPane implements Loader {
 		double relativeX = event.getX();
 		double relativeY = event.getY();
 
-		this.fireEvent(new VertexEvent(VertexEvent.MOVE, vertex, relativeX, relativeY));
+		this.fireEvent(new VertexMove(VertexMove.MOVE, vertex, relativeX, relativeY));
 		event.setDropCompleted(true);
 		event.consume();
 
 	}
+
+	public void handleVertexEvent(VertexMove event) {
+		/**
+		 * This method is handle when a VertexView moved
+		 * Update position of moved vertex by updating data in graph object then render new graph
+		 * first by calculating absolute size of moved vertex
+		 */
+		Vertex vertex = event.getVertexView().getVertex();
+		double absoluteX = syncAxeValue(
+				this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
+				event.getRelativeX(), this.getHvalue()
+		) - 20;
+		double absoluteY = syncAxeValue(
+				this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
+				event.getRelativeY(), this.getVvalue()
+		) - 20;
+
+		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
+		try {
+			this.writeLog.call(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		render();
+	}
+
 }

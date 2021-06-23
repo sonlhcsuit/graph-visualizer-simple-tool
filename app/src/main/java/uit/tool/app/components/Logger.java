@@ -14,8 +14,6 @@ public class Logger extends ScrollPane implements Loader {
 	}
 
 	public void writeLog(String message){
-		System.out.println("Logger ");
-		System.out.println(message);
 		Label l = new Label();
 		l.setText(message);
 		this.log.getChildren().add(l);
