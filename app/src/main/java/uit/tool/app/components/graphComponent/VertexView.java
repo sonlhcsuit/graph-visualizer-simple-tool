@@ -1,9 +1,11 @@
 package uit.tool.app.components.graphComponent;
 
-import javafx.beans.DefaultProperty;
 import javafx.beans.NamedArg;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -11,6 +13,7 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
@@ -18,8 +21,9 @@ import uit.tool.app.interfaces.Loader;
 public class VertexView extends StackPane implements Loader {
 	@FXML
 	Label vName;
-
+	ContextMenu ctm;
 	private Vertex vertex;
+
 	public VertexView(@NamedArg(value = "x", defaultValue = "0") double x,
 					  @NamedArg(value = "y", defaultValue = "0") double y,
 					  @NamedArg(value = "name", defaultValue = "A") String name) {
@@ -50,7 +54,7 @@ public class VertexView extends StackPane implements Loader {
 	}
 
 	public void initialize() {
-
+		this.ctm = createContextMenu();
 		this.setOnDragDetected((MouseEvent event) -> {
 //			For drag & drop vertex
 			Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
@@ -70,6 +74,23 @@ public class VertexView extends StackPane implements Loader {
 			event.setDragDetect(true);
 		});
 
+		this.setOnContextMenuRequested(event -> ctm.show(this, event.getScreenX(), event.getScreenY()));
+	}
 
+	public ContextMenu createContextMenu() {
+		ContextMenu ctm = new ContextMenu();
+
+		MenuItem rename = new MenuItem("Rename");
+		MenuItem remove = new MenuItem("Remove");
+
+		rename.setOnAction((ActionEvent)->{
+			this.fireEvent(new VertexEvent(VertexEvent.RENAME,this));
+		});
+		remove.setOnAction((ActionEvent)->{
+			System.out.println("click remove");
+		});
+		// Add MenuItem to ContextMenu
+		ctm.getItems().addAll(rename, remove);
+		return ctm;
 	}
 }

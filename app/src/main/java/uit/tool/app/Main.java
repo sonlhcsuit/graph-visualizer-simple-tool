@@ -3,6 +3,8 @@ package uit.tool.app;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 import uit.tool.app.graph.Edge;
@@ -21,9 +23,8 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sb-app.fxml")));
 		String javaVersion = System.getProperty("java.version");
 		String javafxVersion = System.getProperty("javafx.version");
-		String version_check = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
-		System.out.println(version_check);
-
+		String versionString = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
+		System.out.println(versionString);
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
 		primaryStage.setTitle("GVST");
 		primaryStage.setScene(new Scene(root, 1080, 720));

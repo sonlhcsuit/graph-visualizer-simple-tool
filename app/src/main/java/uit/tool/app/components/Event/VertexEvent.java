@@ -4,23 +4,29 @@ import javafx.event.Event;
 import javafx.event.EventType;
 import uit.tool.app.components.graphComponent.VertexView;
 
-public class VertexMove extends Event {
+public class VertexEvent extends Event {
 	/**
 	 *
 	 */
-	public static final EventType<VertexMove> MOVE = new EventType<>(ANY, "MOVE");
-	public static final EventType<VertexMove> WEIGHT = new EventType<>(ANY,"WEIGHT");
+	public static final EventType<VertexEvent> MOVE = new EventType<>(ANY, "MOVE");
+	public static final EventType<VertexEvent> ADD = new EventType<>(ANY, "ADD");
+	public static final EventType<VertexEvent> RENAME = new EventType<>(ANY, "RENAME");
+	public static final EventType<VertexEvent> REMOVE = new EventType<>(ANY, "REMOVE");
+
 	private VertexView vertexView;
 	private double relativeX;
 	private double relativeY;
 
 
-	public VertexMove(EventType<? extends Event> type, VertexView v) {
+	public VertexEvent(EventType<? extends Event> type, VertexView ve) {
+		/**
+		 * An event was trigger when a user want to rename, remove or add an existed vertex
+		 */
 		super(type);
-		this.vertexView = v;
+		this.vertexView = ve;
 	}
 
-	public VertexMove(EventType<? extends Event> type, VertexView v, double relativeX, double relativeY) {
+	public VertexEvent(EventType<? extends Event> type, VertexView ve, double relativeX, double relativeY) {
 		/**
 		 * An event was trigger when a vertex moved. Remember that because of graph view need to resize so the
 		 * actual size bigger than viewport size, so when drag & drop, position of the cursor just relative
@@ -32,7 +38,7 @@ public class VertexMove extends Event {
 		 * @see javafx.scene.control.ScrollPane
 		 */
 
-		this(type, v);
+		this(type, ve);
 		this.relativeX = relativeX;
 		this.relativeY = relativeY;
 	}

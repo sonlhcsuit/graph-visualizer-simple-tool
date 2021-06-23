@@ -5,12 +5,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import uit.tool.app.components.Event.EdgeWeight;
+import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 public class MatrixView extends GridPane implements Loader {
 
@@ -46,7 +45,7 @@ public class MatrixView extends GridPane implements Loader {
 				if (newW != oldW) {
 					int colIndex = getColumnIndex(t);
 					int rowIndex = getRowIndex(t);
-					this.fireEvent(new EdgeWeight(EdgeWeight.UPDATE, rowIndex - 1, colIndex - 1, newW));
+					this.fireEvent(new EdgeEvent(EdgeEvent.UPDATE_WEIGHT, rowIndex - 1, colIndex - 1, newW));
 				}
 				t.setText(String.format("%.2f", newW));
 

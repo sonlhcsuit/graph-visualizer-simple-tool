@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Graph {
-	private ArrayList<Vertex> vertexes = null;
+	private final ArrayList<Vertex> vertexes;
 	private int size;
 	double[][] matrix;
 
@@ -24,15 +24,7 @@ public class Graph {
 		if (edges == null) {
 			throw new NullPointerException("Must provided at least 1 edge");
 		}
-
-		for (Edge e : edges) {
-			Vertex from = e.getSource();
-			Vertex to = e.getDestination();
-			int fi = this.vertexes.indexOf(from);
-			int ti = this.vertexes.indexOf(to);
-			this.matrix[fi][ti] = e.getWeight();
-		}
-
+		edgeListToMatrix(edges);
 	}
 
 
@@ -47,6 +39,88 @@ public class Graph {
 	public void updateVertexPosition(Vertex vertex, double newX, double newY) {
 		vertex.setX(newX);
 		vertex.setY(newY);
+	}
+
+
+	public double[][] adjacencyMatrix() {
+//		for (double[] doubles : this.matrix) {
+//			System.out.println(Arrays.toString(doubles));
+//		}
+		return this.matrix;
+	}
+
+	public void updateEdge(int row, int col, double weight) throws IllegalStateException {
+		if (row >= size || col >= size || row < 0 || col < 0) {
+			throw new IllegalStateException("Vertex not existed");
+		}
+		matrix[row][col] = weight;
+
+	}
+
+	public void updateEdge(Vertex from, Vertex to, double weight) {
+		int row = vertexes.indexOf(from);
+		int col = vertexes.indexOf(to);
+		updateEdge(row, col, weight);
+	}
+
+	boolean isVertexUnique(Vertex vertex) {
+		TreeSet<String> vertexNames = getVertexNames();
+		return vertexNames.contains(vertex.getName());
+	}
+
+	public void addVertex(Vertex v) throws IllegalStateException {
+		if (isVertexUnique(v)) {
+			throw new IllegalStateException("Vertex name existed!");
+		}
+		this.vertexes.add(v);
+		this.vertexes.sort(Comparator.comparing(Vertex::getName));
+		ArrayList<Edge> edges = getEdgeList();
+		this.size = this.vertexes.size();
+		this.matrix = new double[this.size][this.size];
+		edgeListToMatrix(edges);
+	}
+	public void removeVertex(Vertex v) throws IllegalStateException{
+		int index = this.vertexes.indexOf(v);
+		if (index ==-1){
+			throw new IllegalStateException("Vertex does not existed");
+		}
+		double sum =0;
+		for (int i =0;i<size;i++){
+			sum = sum + matrix[index][i];
+			sum = sum + matrix[i][index];
+		}
+		if (sum != 0){
+			throw new IllegalStateException("Vertex is connect to another vertexes, Remove edge first!");
+		}
+		ArrayList<Edge> edges = getEdgeList();
+		this.vertexes.remove(v);
+		this.size = this.vertexes.size();
+		this.matrix = new double[this.size][this.size];
+		edgeListToMatrix(edges);
+	}
+	public ArrayList<Edge> getEdgeList() {
+		ArrayList<Edge> E = new ArrayList<>();
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (matrix[i][j] != 0) {
+					E.add(new Edge(vertexes.get(i), vertexes.get(j), matrix[i][j]));
+				}
+			}
+		}
+		return E;
+	}
+
+	private void edgeListToMatrix(ArrayList<Edge> E) {
+		for (Edge e : E) {
+			Vertex from = e.getSource();
+			Vertex to = e.getDestination();
+			int fi = this.vertexes.indexOf(from);
+			int ti = this.vertexes.indexOf(to);
+			if (fi > size || ti > size || fi < 0 || ti < 0) {
+				throw new IllegalStateException("No vertex existed!");
+			}
+			this.matrix[fi][ti] = e.getWeight();
+		}
 	}
 
 	static public Graph sampleGraph() {
@@ -78,40 +152,5 @@ public class Graph {
 		E.add(ac);
 		return new Graph(V, E);
 	}
-
-	public double[][] adjacencyMatrix() {
-		for (double[] doubles : this.matrix) {
-			System.out.println(Arrays.toString(doubles));
-		}
-		return this.matrix;
-	}
-
-	public void updateWeight(int row, int col, double weight) throws IllegalStateException {
-		if (row >= size || col >= size || row < 0 || col < 0) {
-			throw new IllegalStateException("Vertex not existed");
-		}
-		matrix[row][col] = weight;
-
-	}
-
-	public void updateWeight(Vertex from, Vertex to, double weight) {
-		int row = vertexes.indexOf(from);
-		int col = vertexes.indexOf(to);
-		updateWeight(row, col, weight);
-	}
-
-	boolean isVertexUnique(Vertex vertex){
-		TreeSet<String> vertexNames = getVertexNames();
-		return vertexNames.contains(vertex.getName());
-	}
-	public void addVertex(Vertex v) throws IllegalStateException{
-		if (isVertexUnique(v)){
-			throw new IllegalStateException("Vertex name existed!");
-		}
-		this.vertexes.add(v);
-		this.vertexes.sort(Comparator.comparing(Vertex::getName));
-		System.out.println(getVertexes());
-	}
-
 
 }

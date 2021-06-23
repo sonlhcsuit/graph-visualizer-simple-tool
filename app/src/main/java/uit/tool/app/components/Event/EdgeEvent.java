@@ -4,13 +4,13 @@ package uit.tool.app.components.Event;
 import javafx.event.Event;
 import javafx.event.EventType;
 
-public class EdgeWeight extends Event {
-	public final static EventType<EdgeWeight> UPDATE = new EventType<>(ANY, "UPDATE");
+public class EdgeEvent extends Event {
+	public final static EventType<EdgeEvent> UPDATE_WEIGHT = new EventType<>(ANY, "UPDATE");
 
 	private int row, col;
 	private double weight;
 
-	public EdgeWeight(EventType<EdgeWeight> type, int row, int col, double weight) {
+	public EdgeEvent(EventType<EdgeEvent> type, int row, int col, double weight) {
 		super(type);
 		this.row = row;
 		this.col = col;

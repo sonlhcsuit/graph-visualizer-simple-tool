@@ -6,8 +6,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import uit.tool.app.components.Event.VertexMove;
-import uit.tool.app.graph.Edge;
+import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
@@ -47,7 +46,11 @@ public class GraphView extends ScrollPane implements Loader {
 		});
 		this.setOnDragDropped(this::handleDroppedEvent);
 
-		this.addEventFilter(VertexMove.MOVE, this::handleVertexEvent);
+		this.addEventFilter(VertexEvent.MOVE, this::handleVertexMove);
+		this.addEventFilter(VertexEvent.RENAME, this::handleVertexRename);
+		this.addEventFilter(VertexEvent.ADD, this::handleVertexAdd);
+		this.addEventFilter(VertexEvent.REMOVE, this::handleVertexRemove);
+
 
 ////	debug purpose
 //		this.setOnMouseClicked(event -> {
@@ -143,13 +146,14 @@ public class GraphView extends ScrollPane implements Loader {
 		double relativeX = event.getX();
 		double relativeY = event.getY();
 
-		this.fireEvent(new VertexMove(VertexMove.MOVE, vertex, relativeX, relativeY));
+		this.fireEvent(new VertexEvent(VertexEvent.MOVE, vertex, relativeX, relativeY));
 		event.setDropCompleted(true);
 		event.consume();
 
 	}
 
-	public void handleVertexEvent(VertexMove event) {
+
+	public void handleVertexMove(VertexEvent event) {
 		/**
 		 * This method is handle when a VertexView moved
 		 * Update position of moved vertex by updating data in graph object then render new graph
@@ -173,6 +177,18 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 
 		render();
+	}
+
+	public void handleVertexRename(VertexEvent event) {
+		System.out.println("rename");
+	}
+
+	public void handleVertexAdd(VertexEvent event) {
+		System.out.println("add vertex");
+	}
+
+	public void handleVertexRemove(VertexEvent event) {
+		System.out.println("remove");
 	}
 
 }
