@@ -11,6 +11,9 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import uit.tool.app.components.matrixComponent.MatrixView?>
+<?import javafx.scene.control.Label?>
+<?import uit.tool.app.components.Logger?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="720.0" prefWidth="1080.0"
@@ -31,9 +34,11 @@
                                 <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
                                         <Tab text="Graph View">
-                                            <GraphView/>
+                                            <GraphView fx:id="graph"/>
                                         </Tab>
-                                        <Tab text="Matrix View"/>
+                                        <Tab text="Matrix View">
+                                            <MatrixView/>
+                                        </Tab>
                                     </tabs>
                                 </TabPane>
                                 <VBox minWidth="-Infinity" prefHeight="0.0" prefWidth="128.0"/>
@@ -41,7 +46,7 @@
                         </SplitPane>
                     </children>
                 </VBox>
-                <VBox minHeight="64.0" minWidth="-Infinity" prefHeight="213.0" prefWidth="820.0"/>
+                <Logger fx:id="logger"/>
             </items>
         </SplitPane>
 

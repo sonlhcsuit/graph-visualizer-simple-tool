@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.control.ScrollPane"
+         xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="uit.tool.app.components.Logger" stylesheets="@/uit/tool/app/stylesheets/Logger.css">
+    <VBox fx:id="log">
+
+
+    </VBox>
+</fx:root>

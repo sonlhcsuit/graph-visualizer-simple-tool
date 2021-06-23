@@ -40,8 +40,8 @@ public class EdgeView extends Path {
 		endX = endX - (radius - 0) * vX / vLength;
 		endY = endY - (radius - 0) * vY / vLength;
 
-//		startX = startX + radius * vX / vLength;
-//		startY = startY + radius * vY / vLength;
+		startX = startX + radius * vX / vLength;
+		startY = startY + radius * vY / vLength;
 
 
 		double angle = defaultArrowAngle;
@@ -61,7 +61,6 @@ public class EdgeView extends Path {
 			getElements().add(new LineTo(endX, endY));
 		} else {
 //			Using arc (suck)
-
 			boolean isArcUp = !ARC_DOWN.equals(type);
 			ArcTo arcTo = new ArcTo(vX == 0 ? 20 : vX, vY == 0 ? 20 : vY, 0, endX, endY, false, isArcUp);
 			getElements().add(arcTo);

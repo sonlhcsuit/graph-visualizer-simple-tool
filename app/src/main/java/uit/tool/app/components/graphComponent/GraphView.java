@@ -5,6 +5,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
+import uit.tool.app.App;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Graph;
@@ -18,16 +20,23 @@ public class GraphView extends ScrollPane implements Loader {
 
 	@FXML
 	private AnchorPane graphArea;
-
-
 	private double maxOffsetX;
 	private double maxOffsetY;
 	private Graph graph;
+	private Callback<String, Void> writeLog;
 
 	public GraphView() {
 		Loader.loadFXML(this);
 		this.graph = Graph.sampleGraph();
 		renderGraph();
+	}
+
+	public void setWriteLog(Callback<String, Void> writeLog) {
+		this.writeLog = writeLog;
+	}
+
+	public Callback<String, Void> getWriteLog() {
+		return writeLog;
 	}
 
 	public void initialize() {
@@ -74,6 +83,7 @@ public class GraphView extends ScrollPane implements Loader {
 //		The different between actual edge vs relative edge (how many pixel was panned)
 //		percentage is 1 as long as the current viewport can reach the lowest edge (end point of axe)
 //		so we need to minus the viewport size to better accuracy
+
 		double differenceAxe = (size - viewport) * scrollPercent;
 
 		return differenceAxe + relative;
@@ -110,7 +120,6 @@ public class GraphView extends ScrollPane implements Loader {
 		 * Update position of moved vertex by updating data in graph object then render new graph
 		 * first by calculating absolute size of moved vertex
 		 */
-
 		Vertex vertex = event.getVertexView().getVertex();
 		double absoluteX = syncAxeValue(
 				this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
@@ -120,8 +129,13 @@ public class GraphView extends ScrollPane implements Loader {
 				this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
 				event.getRelativeY(), this.getVvalue()
 		) - 20;
-
 		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
+		try {
+			this.writeLog.call(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		renderGraph();
 	}
 
@@ -137,7 +151,6 @@ public class GraphView extends ScrollPane implements Loader {
 		VertexView vertex = (VertexView) event.getGestureSource();
 		double relativeX = event.getX();
 		double relativeY = event.getY();
-
 
 		this.fireEvent(new VertexEvent(VertexEvent.MOVE, vertex, relativeX, relativeY));
 		event.setDropCompleted(true);
