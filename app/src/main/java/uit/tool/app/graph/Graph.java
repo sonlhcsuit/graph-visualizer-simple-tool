@@ -19,7 +19,7 @@ public class Graph {
 		int size = this.vertexes.size();
 		this.matrix = new double[size][size];
 
-		for(Edge e : this.edges){
+		for (Edge e : this.edges) {
 			Vertex from = e.getSource();
 			Vertex to = e.getDestination();
 			int fi = this.vertexes.indexOf(from);
@@ -60,12 +60,12 @@ public class Graph {
 		V.add(d);
 		V.add(e);
 
-		Edge ab = new Edge(a, b,4);
-		Edge bc = new Edge(b, c,5);
-		Edge de = new Edge(d, e,3);
-		Edge ea = new Edge(e, a,6);
-		Edge be = new Edge(b, e,1);
-		Edge ac = new Edge(a, c,2);
+		Edge ab = new Edge(a, b, 4);
+		Edge bc = new Edge(b, c, 5);
+		Edge de = new Edge(d, e, 3);
+		Edge ea = new Edge(e, a, 6);
+		Edge be = new Edge(b, e, 1);
+		Edge ac = new Edge(a, c, 2);
 		ArrayList<Edge> E = new ArrayList<>();
 		E.add(ab);
 		E.add(bc);
@@ -83,15 +83,22 @@ public class Graph {
 		return this.matrix;
 	}
 
-	public void updateWeight(int row,int col, double weight){
+	public void updateWeight(int row, int col, double weight) {
 		matrix[row][col] = weight;
 		Vertex from = vertexes.get(row);
 		Vertex to = vertexes.get(col);
 
-		for (Edge e:edges){
-			if (from == e.getSource() && to ==e.getDestination()){
+		for (Edge e : edges) {
+			if (from == e.getSource() && to == e.getDestination()) {
 				e.setWeight(weight);
 			}
 		}
+		adjacencyMatrix();
+	}
+
+	public void updateWeight(Vertex from, Vertex to, double weight) {
+		int fi = vertexes.indexOf(from);
+		int ti = vertexes.indexOf(to);
+		matrix[fi][ti] = weight;
 	}
 }

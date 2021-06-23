@@ -4,21 +4,23 @@ import javafx.event.Event;
 import javafx.event.EventType;
 import uit.tool.app.components.graphComponent.VertexView;
 
-public class VertexEvent extends Event {
+public class VertexMove extends Event {
 	/**
 	 *
 	 */
-	public static final EventType<VertexEvent> MOVE = new EventType<>(ANY, "MOVE");
+	public static final EventType<VertexMove> MOVE = new EventType<>(ANY, "MOVE");
+	public static final EventType<VertexMove> WEIGHT = new EventType<>(ANY,"WEIGHT");
 	private VertexView vertexView;
 	private double relativeX;
 	private double relativeY;
 
-	public VertexEvent(EventType<? extends Event> type, VertexView v) {
+
+	public VertexMove(EventType<? extends Event> type, VertexView v) {
 		super(type);
 		this.vertexView = v;
 	}
 
-	public VertexEvent(EventType<? extends Event> type, VertexView v, double relativeX, double relativeY) {
+	public VertexMove(EventType<? extends Event> type, VertexView v, double relativeX, double relativeY) {
 		/**
 		 * An event was trigger when a vertex moved. Remember that because of graph view need to resize so the
 		 * actual size bigger than viewport size, so when drag & drop, position of the cursor just relative
@@ -34,6 +36,7 @@ public class VertexEvent extends Event {
 		this.relativeX = relativeX;
 		this.relativeY = relativeY;
 	}
+
 
 	public double getRelativeX() {
 		return relativeX;

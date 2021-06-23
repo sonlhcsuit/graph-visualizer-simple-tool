@@ -7,8 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.util.Callback;
+import uit.tool.app.components.Event.EdgeWeight;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.graphComponent.GraphView;
+import uit.tool.app.components.matrixComponent.MatrixView;
+import uit.tool.app.graph.Graph;
 
 
 public class App extends BorderPane {
@@ -23,22 +26,31 @@ public class App extends BorderPane {
 	@FXML
 	private Logger logger;
 	@FXML
-	private GraphView graph;
+	private GraphView graphView;
+	@FXML
+	private MatrixView matrixView;
 
+	private Graph graph;
 	private Callback<String, Void> writeLog;
 
 	public void initialize() {
 		isMenuOpen = true;
-
+		this.graph = Graph.sampleGraph();
 		this.writeLog = (String message) -> {
 			this.logger.writeLog(message);
 			return null;
 		};
-		this.graph.setWriteLog(this.writeLog);
+		this.graphView.setGraph(this.graph);
+		this.matrixView.setGraph(this.graph);
+		this.matrixView.render();
+		this.graphView.render();
+		this.graphView.setWriteLog(this.writeLog);
+		this.matrixView.addEventFilter(EdgeWeight.UPDATE,this::weightHandler);
 
-//		pane.setOnMouseClicked((MouseEvent e) -> {
-//			System.out.printf("Width: %.3f Height: %.3f\n", pane.getWidth(), pane.getHeight());
-//		});
+	}
+	public void weightHandler(EdgeWeight event){
+		this.graph.updateWeight(event.getRow(),event.getCol(),event.getWeight());
+		this.graphView.render();
 	}
 
 	public void click() {

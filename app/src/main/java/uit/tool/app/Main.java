@@ -12,29 +12,27 @@ import uit.tool.app.graph.Vertex;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Main
-        extends Application
-{
+public class Main extends Application {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        System.out.println();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("App.fxml")));
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		System.out.println();
+		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("App.fxml")));
 //        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sb-app.fxml")));
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        String version_check = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
-        System.out.println(version_check);
+		String javaVersion = System.getProperty("java.version");
+		String javafxVersion = System.getProperty("javafx.version");
+		String version_check = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
+		System.out.println(version_check);
 
-        setUserAgentStylesheet(STYLESHEET_CASPIAN);
-        primaryStage.setTitle("GVST");
-        primaryStage.setScene(new Scene(root, 1080, 720));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
+		setUserAgentStylesheet(STYLESHEET_CASPIAN);
+		primaryStage.setTitle("GVST");
+		primaryStage.setScene(new Scene(root, 1080, 720));
+		primaryStage.setResizable(false);
+		primaryStage.show();
+	}
 
 	public static void main(String[] args) {
-        launch(args);
+		launch(args);
 
 	}
 
