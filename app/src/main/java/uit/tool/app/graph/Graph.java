@@ -31,10 +31,10 @@ public class Graph{
 		vertex.setY(newY);
 	}
 	static public Graph sampleGraph(){
-		Vertex a = new Vertex("a", 100.0, 100.0);
-		Vertex b = new Vertex("b", 200.0, 100.0);
-		Vertex c = new Vertex("c", 300.0, 250.0);
-		Vertex d = new Vertex("d", 150.0, 150.0);
+		Vertex a = new Vertex("a", 200.0, 50.0);
+		Vertex b = new Vertex("b", 300.0, 350.0);
+		Vertex c = new Vertex("c", 450.0, 250.0);
+		Vertex d = new Vertex("d", 80.0, 450.0);
 		Vertex e = new Vertex("e", 100.0, 200.0);
 
 		ArrayList<Vertex> V = new ArrayList<>();
