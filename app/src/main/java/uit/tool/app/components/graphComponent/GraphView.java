@@ -100,7 +100,7 @@ public class GraphView extends ScrollPane implements Loader {
 
 		for (Edge e : E) {
 			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
-			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), 10);
+			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), e.getWeight());
 			this.graphArea.getChildren().add(ev);
 			this.graphArea.getChildren().add(wv);
 		}
