@@ -7,12 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import uit.tool.app.components.navigationComponent.Navigation?>
 <?import uit.tool.app.components.graphComponent.GraphView?>
-
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import uit.tool.app.components.matrixComponent.MatrixView?>
-<?import javafx.scene.control.Label?>
 <?import uit.tool.app.components.Logger?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"

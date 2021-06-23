@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.fxml.*;
+import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
@@ -25,6 +26,7 @@ public class Main extends Application {
 		String javafxVersion = System.getProperty("javafx.version");
 		String versionString = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
 		System.out.println(versionString);
+
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
 		primaryStage.setTitle("GVST");
 		primaryStage.setScene(new Scene(root, 1080, 720));
@@ -34,7 +36,6 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
-
 	}
 
 }

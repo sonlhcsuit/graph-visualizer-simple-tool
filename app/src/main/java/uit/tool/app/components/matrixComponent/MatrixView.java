@@ -62,6 +62,7 @@ public class MatrixView extends GridPane implements Loader {
 		if (graph == null) {
 			return;
 		}
+		getChildren().clear();
 		double[][] matrix = this.graph.adjacencyMatrix();
 		ArrayList<String> names = new ArrayList<>(this.graph.getVertexNames());
 		int size = matrix.length;
@@ -69,12 +70,14 @@ public class MatrixView extends GridPane implements Loader {
 			this.add(makeCell(names.get(i), true), 0, i + 1);
 			this.add(makeCell(names.get(i), true), i + 1, 0);
 		}
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size;
+			 i++) {
 			for (int j = 0; j < size; j++) {
 				this.add(makeCell(String.format("%.2f", matrix[i][j]), i == j), j + 1, i + 1);
 			}
 
 		}
 	}
+
 
 }

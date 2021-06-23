@@ -74,7 +74,11 @@ public class VertexView extends StackPane implements Loader {
 			event.setDragDetect(true);
 		});
 
-		this.setOnContextMenuRequested(event -> ctm.show(this, event.getScreenX(), event.getScreenY()));
+		this.setOnContextMenuRequested(event -> {
+			ctm.show(this, event.getScreenX(), event.getScreenY());
+			event.consume();
+
+		});
 	}
 
 	public ContextMenu createContextMenu() {
@@ -83,11 +87,12 @@ public class VertexView extends StackPane implements Loader {
 		MenuItem rename = new MenuItem("Rename");
 		MenuItem remove = new MenuItem("Remove");
 
-		rename.setOnAction((ActionEvent)->{
-			this.fireEvent(new VertexEvent(VertexEvent.RENAME,this));
+		rename.setOnAction((ActionEvent) -> {
+			this.fireEvent(new VertexEvent(VertexEvent.RENAME, this));
 		});
-		remove.setOnAction((ActionEvent)->{
-			System.out.println("click remove");
+		remove.setOnAction((ActionEvent) -> {
+			this.fireEvent(new VertexEvent(VertexEvent.REMOVE, this));
+
 		});
 		// Add MenuItem to ContextMenu
 		ctm.getItems().addAll(rename, remove);

@@ -2,6 +2,7 @@ package uit.tool.app.components.graphComponent;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
@@ -47,11 +48,9 @@ public class GraphView extends ScrollPane implements Loader {
 		this.setOnDragDropped(this::handleDroppedEvent);
 
 		this.addEventFilter(VertexEvent.MOVE, this::handleVertexMove);
-		this.addEventFilter(VertexEvent.RENAME, this::handleVertexRename);
-		this.addEventFilter(VertexEvent.ADD, this::handleVertexAdd);
-		this.addEventFilter(VertexEvent.REMOVE, this::handleVertexRemove);
-
-
+		this.setOnContextMenuRequested((ContextMenuEvent event)->{
+			this.getContextMenu().show(this,event.getScreenX(),event.getScreenY());
+		});
 ////	debug purpose
 //		this.setOnMouseClicked(event -> {
 //			System.out.printf("Click X: %.2f Y: %.2f\n", event.getX(), event.getY());
@@ -179,16 +178,7 @@ public class GraphView extends ScrollPane implements Loader {
 		render();
 	}
 
-	public void handleVertexRename(VertexEvent event) {
-		System.out.println("rename");
+	public void addHandler() {
+		System.out.println("add");
 	}
-
-	public void handleVertexAdd(VertexEvent event) {
-		System.out.println("add vertex");
-	}
-
-	public void handleVertexRemove(VertexEvent event) {
-		System.out.println("remove");
-	}
-
 }
