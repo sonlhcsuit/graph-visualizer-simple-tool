@@ -3,16 +3,9 @@ package uit.tool.app;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.fxml.*;
-import uit.tool.app.components.Event.VertexEvent;
-import uit.tool.app.graph.Edge;
-import uit.tool.app.graph.Graph;
-import uit.tool.app.graph.Vertex;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Main extends Application {

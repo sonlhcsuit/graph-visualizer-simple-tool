@@ -1,8 +1,10 @@
 package uit.tool.app;
 
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -45,39 +47,40 @@ public class App extends BorderPane {
 		};
 		this.graphView.setGraph(this.graph);
 		this.matrixView.setGraph(this.graph);
-		this.graph.addVertex(new Vertex("z",50.0,50.0));
-		this.graph.addVertex(new Vertex("g",400.0,50.0));
-		this.matrixView.render();
-		this.graphView.render();
+		render();
 		this.graphView.setWriteLog(this.writeLog);
 
 
-		this.matrixView.addEventFilter(EdgeEvent.UPDATE_WEIGHT,this::weightHandler);
-		this.graphView.addEventFilter(VertexEvent.REMOVE,this::vertexRemoveHandler);
-		this.graphView.addEventFilter(VertexEvent.RENAME,this::vertexRemoveHandler);
-		this.graphView.addEventFilter(VertexEvent.ADD,this::vertexRemoveHandler);
-
-//		this.graphView.addEventFilter(VertexEvent.REMOVE,e->{
-//			System.out.println("Remove at App");
-//		});
+		this.matrixView.addEventFilter(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
+		this.graphView.addEventFilter(VertexEvent.REMOVE, this::removeEventHandler);
+		this.graphView.addEventFilter(VertexEvent.RENAME, this::renameEventHandler);
+		this.graphView.addEventFilter(VertexEvent.ADD, this::addEventFilter);
 
 	}
-	public void weightHandler(EdgeEvent event){
-		this.graph.updateEdge(event.getRow(),event.getCol(),event.getWeight());
+	public void weightHandler(EdgeEvent event) {
+		this.graph.updateEdge(event.getRow(), event.getCol(), event.getWeight());
 		this.graphView.render();
 	}
-	public void vertexRemoveHandler(VertexEvent event){
-		try {
-			this.graph.removeVertex(event.getVertexView().getVertex());
-			this.graphView.render();
-			this.matrixView.render();
-		}catch (IllegalStateException e){
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Error");
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-		}
+
+	private void addEventFilter(VertexEvent event) {
+		render();
 	}
+
+	private void renameEventHandler(VertexEvent event) {
+		render();
+	}
+
+
+	private void removeEventHandler(VertexEvent event) {
+		render();
+	}
+
+	public void render() {
+		this.graphView.render();
+		this.matrixView.render();
+	}
+
+
 
 	public void click() {
 		if (isMenuOpen) {

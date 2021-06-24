@@ -24,9 +24,8 @@ public class Graph {
 		if (edges == null) {
 			throw new NullPointerException("Must provided at least 1 edge");
 		}
-		edgeListToMatrix(edges);
+		this.matrix = edgeListToMatrix(edges);
 	}
-
 
 	public TreeSet<String> getVertexNames() {
 		return this.vertexes.stream().map(Vertex::getName).collect(Collectors.toCollection(TreeSet::new));
@@ -40,7 +39,6 @@ public class Graph {
 		vertex.setX(newX);
 		vertex.setY(newY);
 	}
-
 
 	public double[][] adjacencyMatrix() {
 //		for (double[] doubles : this.matrix) {
@@ -65,19 +63,29 @@ public class Graph {
 
 	boolean isVertexUnique(Vertex vertex) {
 		TreeSet<String> vertexNames = getVertexNames();
-		return vertexNames.contains(vertex.getName());
+		return !vertexNames.contains(vertex.getName());
 	}
 
 	public void addVertex(Vertex v) throws IllegalStateException {
-		if (isVertexUnique(v)) {
+		if (!isVertexUnique(v)) {
 			throw new IllegalStateException("Vertex name existed!");
 		}
 		this.vertexes.add(v);
 		this.vertexes.sort(Comparator.comparing(Vertex::getName));
 		ArrayList<Edge> edges = getEdgeList();
 		this.size = this.vertexes.size();
-		this.matrix = new double[this.size][this.size];
-		edgeListToMatrix(edges);
+		this.matrix = edgeListToMatrix(edges);
+	}
+
+	public void renameVertex(Vertex v,String vertexName) throws IllegalStateException{
+		if (!isVertexUnique(new Vertex(vertexName,0.0,0.0))) {
+			throw new IllegalStateException("Vertex name existed!");
+		}
+		v.setName(vertexName);
+		ArrayList<Edge> edges = getEdgeList();
+		this.vertexes.sort(Comparator.comparing(Vertex::getName));
+		this.matrix = edgeListToMatrix(edges);
+
 	}
 	public void removeVertex(Vertex v) throws IllegalStateException{
 		int index = this.vertexes.indexOf(v);
@@ -98,6 +106,7 @@ public class Graph {
 		this.matrix = new double[this.size][this.size];
 		edgeListToMatrix(edges);
 	}
+
 	public ArrayList<Edge> getEdgeList() {
 		ArrayList<Edge> E = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
@@ -110,7 +119,8 @@ public class Graph {
 		return E;
 	}
 
-	private void edgeListToMatrix(ArrayList<Edge> E) {
+	private double[][] edgeListToMatrix(ArrayList<Edge> E) {
+		double matrix[][]= new double[this.size][this.size];
 		for (Edge e : E) {
 			Vertex from = e.getSource();
 			Vertex to = e.getDestination();
@@ -119,8 +129,9 @@ public class Graph {
 			if (fi > size || ti > size || fi < 0 || ti < 0) {
 				throw new IllegalStateException("No vertex existed!");
 			}
-			this.matrix[fi][ti] = e.getWeight();
+			matrix[fi][ti] = e.getWeight();
 		}
+		return matrix;
 	}
 
 	static public Graph sampleGraph() {

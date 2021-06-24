@@ -1,7 +1,8 @@
 package uit.tool.app.components.graphComponent;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -47,10 +48,17 @@ public class GraphView extends ScrollPane implements Loader {
 		});
 		this.setOnDragDropped(this::handleDroppedEvent);
 
-		this.addEventFilter(VertexEvent.MOVE, this::handleVertexMove);
-		this.setOnContextMenuRequested((ContextMenuEvent event)->{
-			this.getContextMenu().show(this,event.getScreenX(),event.getScreenY());
+		this.setOnContextMenuRequested((ContextMenuEvent event) -> {
+			this.getContextMenu().show(this, event.getScreenX(), event.getScreenY());
+//			pass local position data into context menu, make handler can use it
+			this.getContextMenu().setUserData(String.format("%f %f", event.getX(), event.getY()));
 		});
+
+		this.addEventFilter(VertexEvent.MOVE, this::handleVertexMove);
+		this.addEventFilter(VertexEvent.REMOVE, this::vertexRemoveHandler);
+		this.addEventFilter(VertexEvent.RENAME, this::vertexRenameHandler);
+		this.addEventFilter(VertexEvent.ADD, this::vertexAddHandler);
+
 ////	debug purpose
 //		this.setOnMouseClicked(event -> {
 //			System.out.printf("Click X: %.2f Y: %.2f\n", event.getX(), event.getY());
@@ -151,7 +159,6 @@ public class GraphView extends ScrollPane implements Loader {
 
 	}
 
-
 	public void handleVertexMove(VertexEvent event) {
 		/**
 		 * This method is handle when a VertexView moved
@@ -178,7 +185,75 @@ public class GraphView extends ScrollPane implements Loader {
 		render();
 	}
 
-	public void addHandler() {
-		System.out.println("add");
+	public void vertexRemoveHandler(VertexEvent event) {
+		try {
+			System.out.println("Remove at graph View");
+			this.graph.removeVertex(event.getVertexView().getVertex());
+		} catch (IllegalStateException e) {
+			event.consume();
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+		}
 	}
+
+	public void vertexRenameHandler(VertexEvent event) {
+		try {
+			String vertexName = getVertexNameFromUser("Vertex name", "Enter new name for the vertex");
+			System.out.println(vertexName);
+			this.graph.renameVertex(event.getVertexView().getVertex(), vertexName);
+		} catch (IllegalStateException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+		}
+	}
+
+	public void vertexAddHandler(VertexEvent event) {
+		try {
+			String vertexName = getVertexNameFromUser("Vertex name", "Enter vertex name");
+			System.out.println(vertexName);
+			double absoluteX = syncAxeValue(
+					this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
+					event.getRelativeX(), this.getHvalue()
+			) - 20;
+			double absoluteY = syncAxeValue(
+					this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
+					event.getRelativeY(), this.getVvalue()
+			) - 20;
+			Vertex vertex = new Vertex(vertexName, absoluteX, absoluteY);
+			this.graph.addVertex(vertex);
+
+		} catch (IllegalStateException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setContentText(e.getMessage());
+			alert.showAndWait();
+		}
+	}
+
+	private String getVertexNameFromUser(String headerText, String contentText) throws IllegalStateException {
+		TextInputDialog td = new TextInputDialog();
+		td.setHeaderText(headerText);
+		td.setContentText(contentText);
+		td.showAndWait();
+		String vertexName = td.getEditor().getText();
+		if (vertexName.length() > 2) {
+			throw new IllegalStateException("Vertex name must have maximum 2 letter");
+		}
+		if (vertexName.length() == 0) {
+			throw new IllegalStateException("Vertex name must not be empty");
+		}
+		return vertexName;
+	}
+
+	public void addHandler(ActionEvent event) {
+		String data = (String) this.getContextMenu().getUserData();
+		double relativeX = Double.parseDouble(data.split(" ")[0]);
+		double relativeY = Double.parseDouble(data.split(" ")[1]);
+		this.fireEvent(new VertexEvent(VertexEvent.ADD, null, relativeX, relativeY));
+	}
+
 }
