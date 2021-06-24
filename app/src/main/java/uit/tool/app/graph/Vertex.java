@@ -3,6 +3,8 @@ package uit.tool.app.graph;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
+import java.text.ParseException;
+
 public class Vertex {
 	private Double x;
 	private Double y;
@@ -45,9 +47,28 @@ public class Vertex {
 		return y;
 	}
 
+	public String toFileString() {
+		return String.format("%s %.6f %.6f", name, x, y);
+	}
+
+	public static Vertex fromString(String s) throws IllegalStateException {
+		String[] elements = s.strip().split(" ");
+		if (elements.length != 3) {
+			throw new IllegalStateException("Vertex string are not in correct format!");
+		}
+		String name = elements[0];
+		String x = elements[1];
+		String y = elements[2];
+		try {
+			return new Vertex(name, Double.parseDouble(x), Double.parseDouble(y));
+		} catch (NumberFormatException e) {
+			throw new IllegalStateException("Vertex string are not in correct format!");
+		}
+	}
+
 	@Override
 	public String toString() {
-		return String.format("Vertex@%s{x:%f,y:%f,name:'%s'}",Integer.toHexString(hashCode()),x,y,name);
+		return String.format("Vertex@%s{x:%f,y:%f,name:'%s'}", Integer.toHexString(hashCode()), x, y, name);
 //		
 	}
 

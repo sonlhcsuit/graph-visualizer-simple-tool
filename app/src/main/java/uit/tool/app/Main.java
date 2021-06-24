@@ -22,7 +22,7 @@ public class Main extends Application {
 		System.out.println(versionString);
 
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
-		primaryStage.setTitle("GVST");
+		primaryStage.setTitle("GVST - Untitled");
 		primaryStage.setScene(new Scene(root, 1080, 720));
 		primaryStage.setResizable(false);
 		primaryStage.show();

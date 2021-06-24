@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import uit.tool.app.components.Event.EdgeEvent;
+import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class MatrixView extends GridPane implements Loader {
 
+	private Logger logger;
 	private Graph graph;
 
 	public MatrixView() {
@@ -31,6 +33,14 @@ public class MatrixView extends GridPane implements Loader {
 		return graph;
 	}
 
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
+	public Logger getLogger() {
+		return logger;
+	}
+
 	public TextField makeCell(String name, boolean isDisabled) {
 		TextField t = new TextField();
 		t.setAlignment(Pos.CENTER);
@@ -46,6 +56,7 @@ public class MatrixView extends GridPane implements Loader {
 					int colIndex = getColumnIndex(t);
 					int rowIndex = getRowIndex(t);
 					this.fireEvent(new EdgeEvent(EdgeEvent.UPDATE_WEIGHT, rowIndex - 1, colIndex - 1, newW));
+					this.logger.writeLog(String.format("Changes weight of edge from %.2f to %.2f",oldW,newW));
 				}
 				t.setText(String.format("%.2f", newW));
 

@@ -9,6 +9,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import uit.tool.app.components.Event.VertexEvent;
+import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
@@ -21,7 +22,9 @@ public class GraphView extends ScrollPane implements Loader {
 	@FXML
 	private AnchorPane graphArea;
 	private Graph graph;
-	private Callback<String, Void> writeLog;
+
+	private Logger logger;
+
 
 	public GraphView() {
 		Loader.loadFXML(this);
@@ -35,10 +38,13 @@ public class GraphView extends ScrollPane implements Loader {
 		return graph;
 	}
 
-	public void setWriteLog(Callback<String, Void> writeLog) {
-		this.writeLog = writeLog;
+	public void setLogger(Logger logger) {
+		this.logger = logger;
 	}
 
+	public Logger getLogger() {
+		return logger;
+	}
 
 	public void initialize() {
 		System.out.println("Graph View init");
@@ -177,7 +183,7 @@ public class GraphView extends ScrollPane implements Loader {
 
 		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
 		try {
-			this.writeLog.call(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
+			this.logger.writeLog(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -203,6 +209,8 @@ public class GraphView extends ScrollPane implements Loader {
 			String vertexName = getVertexNameFromUser("Vertex name", "Enter new name for the vertex");
 			System.out.println(vertexName);
 			this.graph.renameVertex(event.getVertexView().getVertex(), vertexName);
+			this.logger.writeLog(String.format("Change name to: %s",vertexName));
+
 		} catch (IllegalStateException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");
@@ -225,6 +233,7 @@ public class GraphView extends ScrollPane implements Loader {
 			) - 20;
 			Vertex vertex = new Vertex(vertexName, absoluteX, absoluteY);
 			this.graph.addVertex(vertex);
+			this.logger.writeLog(String.format("Add vertex: %s",vertexName));
 
 		} catch (IllegalStateException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
