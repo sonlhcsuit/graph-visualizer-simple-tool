@@ -77,8 +77,8 @@ public class Graph {
 		this.matrix = edgeListToMatrix(edges);
 	}
 
-	public void renameVertex(Vertex v,String vertexName) throws IllegalStateException{
-		if (!isVertexUnique(new Vertex(vertexName,0.0,0.0))) {
+	public void renameVertex(Vertex v, String vertexName) throws IllegalStateException {
+		if (!isVertexUnique(new Vertex(vertexName, 0.0, 0.0))) {
 			throw new IllegalStateException("Vertex name existed!");
 		}
 		ArrayList<Edge> edges = getEdgeList();
@@ -87,24 +87,24 @@ public class Graph {
 		this.matrix = edgeListToMatrix(edges);
 
 	}
-	public void removeVertex(Vertex v) throws IllegalStateException{
+
+	public void removeVertex(Vertex v) throws IllegalStateException {
 		int index = this.vertexes.indexOf(v);
-		if (index ==-1){
+		if (index == -1) {
 			throw new IllegalStateException("Vertex does not existed");
 		}
-		double sum =0;
-		for (int i =0;i<size;i++){
+		double sum = 0;
+		for (int i = 0; i < size; i++) {
 			sum = sum + matrix[index][i];
 			sum = sum + matrix[i][index];
 		}
-		if (sum != 0){
+		if (sum != 0) {
 			throw new IllegalStateException("Vertex is connect to another vertexes, Remove edge first!");
 		}
 		ArrayList<Edge> edges = getEdgeList();
 		this.vertexes.remove(v);
 		this.size = this.vertexes.size();
-		this.matrix = new double[this.size][this.size];
-		edgeListToMatrix(edges);
+		this.matrix = edgeListToMatrix(edges);
 	}
 
 	public ArrayList<Edge> getEdgeList() {
