@@ -1,12 +1,12 @@
 .container{
-    -fx-border-color: black;
-    -fx-border-style: solid;
-    -fx-border-width: 2;
+    /*-fx-border-color: black;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-width: 2;*/
 }
 .graph{
     /*-fx-border-color: red;*/
-    -fx-border-style: solid;
-    -fx-border-width: 2;
+    /*-fx-border-style: solid;*/
+    /*-fx-border-width: 2;*/
 }
 
 .edge{

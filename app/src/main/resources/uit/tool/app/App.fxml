@@ -10,12 +10,9 @@
 <?import uit.tool.app.components.matrixComponent.MatrixView?>
 <?import uit.tool.app.components.Logger?>
 
-<fx:root type="javafx.scene.layout.BorderPane" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="720.0" prefWidth="1080.0"
-            xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            style="-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1;"
-            fx:controller="uit.tool.app.App">
+<fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         prefHeight="720.0" prefWidth="1080.0" stylesheets="@/uit/tool/app/stylesheets/App.css" fx:controller="uit.tool.app.App"
+         id="app">
     <left>
         <Navigation/>
     </left>

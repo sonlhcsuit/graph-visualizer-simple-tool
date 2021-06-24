@@ -13,9 +13,12 @@
 
 
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-         alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" style="-fx-background-color: #80d8ff;"
-         BorderPane.alignment="TOP_RIGHT"
-         fx:controller="uit.tool.app.components.navigationComponent.Navigation">
+         alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" BorderPane.alignment="TOP_RIGHT"
+         fx:controller="uit.tool.app.components.navigationComponent.Navigation"
+         stylesheets="@/uit/tool/app/stylesheets/Navigation.css"
+         id="navigation"
+
+>
     <children>
         <Pane prefHeight="97.0" prefWidth="256.0"/>
         <HBox alignment="CENTER" fx:id="navBrand">
@@ -67,11 +70,17 @@
                         <Insets bottom="10.0" top="10.0"/>
                     </VBox.margin>
                 </NavigationItem>
+                <NavigationItem text="Save" icon="@/uit/tool/app/assets/save.png">
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </NavigationItem>
                 <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0"/>
                     </VBox.margin>
                 </NavigationItem>
+
             </children>
         </VBox>
     </children>
