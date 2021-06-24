@@ -3,6 +3,7 @@ package uit.tool.app.components.matrixComponent;
 
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import uit.tool.app.components.Event.EdgeEvent;
@@ -48,21 +49,24 @@ public class MatrixView extends GridPane implements Loader {
 		t.setText(name);
 		t.setPrefSize(40, 40);
 
-		t.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-			try {
-				double oldW = Double.parseDouble(oldValue);
-				double newW = Double.parseDouble(newValue);
-				if (newW != oldW) {
+		t.focusedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				try {
+					double newW = Double.parseDouble(t.getText());
 					int colIndex = getColumnIndex(t);
 					int rowIndex = getRowIndex(t);
 					this.fireEvent(new EdgeEvent(EdgeEvent.UPDATE_WEIGHT, rowIndex - 1, colIndex - 1, newW));
-					this.logger.writeLog(String.format("Changes weight of edge from %.2f to %.2f",oldW,newW));
-				}
-				t.setText(String.format("%.2f", newW));
+					this.logger.writeLog(String.format("Changes weight to %.2f", newW));
+					t.setText(String.format("%.2f", newW));
 
-			} catch (NumberFormatException e) {
-				t.setText(oldValue);
+				} catch (NumberFormatException e) {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setContentText("Weight is invalid(must be a number!");
+					alert.showAndWait();
+				}
 			}
+
 		});
 
 		return t;
@@ -86,7 +90,6 @@ public class MatrixView extends GridPane implements Loader {
 			for (int j = 0; j < size; j++) {
 				this.add(makeCell(String.format("%.2f", matrix[i][j]), i == j), j + 1, i + 1);
 			}
-
 		}
 	}
 
