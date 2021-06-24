@@ -17,9 +17,11 @@ import uit.tool.app.components.graphComponent.GraphView;
 import uit.tool.app.components.matrixComponent.MatrixView;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Vertex;
+import uit.tool.app.interfaces.Loader;
 
 
-public class App extends BorderPane {
+public class App extends BorderPane implements Loader {
+
 
 	private boolean isMenuOpen;
 	@FXML
@@ -38,6 +40,9 @@ public class App extends BorderPane {
 	private Graph graph;
 	private Callback<String, Void> writeLog;
 
+	public App(){
+		Loader.loadFXML(this);
+	}
 	public void initialize() {
 		isMenuOpen = true;
 		this.graph = Graph.sampleGraph();

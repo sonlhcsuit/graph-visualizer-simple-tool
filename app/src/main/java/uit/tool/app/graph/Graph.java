@@ -81,8 +81,8 @@ public class Graph {
 		if (!isVertexUnique(new Vertex(vertexName,0.0,0.0))) {
 			throw new IllegalStateException("Vertex name existed!");
 		}
-		v.setName(vertexName);
 		ArrayList<Edge> edges = getEdgeList();
+		v.setName(vertexName);
 		this.vertexes.sort(Comparator.comparing(Vertex::getName));
 		this.matrix = edgeListToMatrix(edges);
 
@@ -120,7 +120,7 @@ public class Graph {
 	}
 
 	private double[][] edgeListToMatrix(ArrayList<Edge> E) {
-		double matrix[][]= new double[this.size][this.size];
+		double[][] matrix = new double[this.size][this.size];
 		for (Edge e : E) {
 			Vertex from = e.getSource();
 			Vertex to = e.getDestination();
