@@ -14,7 +14,7 @@
          prefHeight="720.0" prefWidth="1080.0" stylesheets="@/uit/tool/app/stylesheets/App.css" fx:controller="uit.tool.app.App"
          id="app">
     <left>
-        <Navigation/>
+        <Navigation fx:id="navigation"/>
     </left>
     <center>
         <SplitPane dividerPositions="0.9064245810055865" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"

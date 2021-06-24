@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import uit.tool.app.interfaces.Loader;
 
 public class NavigationItem extends HBox implements Loader {
@@ -16,8 +18,10 @@ public class NavigationItem extends HBox implements Loader {
 	private ImageView icon;
 	@FXML
 	HBox container;
-
 	private boolean isCollapsed;
+
+	private Callback<Void, Void> menuFunction;
+
 
 	public NavigationItem(
 			@NamedArg("text") String text, @NamedArg("icon") String icon
@@ -29,6 +33,14 @@ public class NavigationItem extends HBox implements Loader {
 		isCollapsed = false;
 	}
 
+	public void setMenuFunction(Callback<Void, Void> menuFunction) {
+		this.menuFunction = menuFunction;
+	}
+
+	public Callback<Void, Void> getMenuFunction() {
+		return menuFunction;
+	}
+
 	public void setCollapsed(boolean collapsed) {
 		isCollapsed = collapsed;
 	}
@@ -38,7 +50,11 @@ public class NavigationItem extends HBox implements Loader {
 	}
 
 	public void initialize() {
-
+		setOnMouseClicked((MouseEvent e) -> {
+			if (this.menuFunction != null) {
+				this.menuFunction.call(null);
+			}
+		});
 	}
 
 	public void toggle(boolean isCollapsed) {
@@ -47,7 +63,7 @@ public class NavigationItem extends HBox implements Loader {
 			collapse();
 		} else {
 //			trigger to open
-			decollapse();
+			unCollapse();
 		}
 		this.isCollapsed = isCollapsed;
 	}
@@ -58,7 +74,7 @@ public class NavigationItem extends HBox implements Loader {
 		}
 	}
 
-	public void decollapse() {
+	public void unCollapse() {
 		if (isCollapsed) {
 			container.getChildren().add(btn);
 		}

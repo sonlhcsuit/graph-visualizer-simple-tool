@@ -6,6 +6,7 @@
 /*.button:pressed{*/
 /*    -fx-background-color: red;*/
 /*}*/
+
 .cont:pressed{
     -fx-background-color: #b5ffff;
 }

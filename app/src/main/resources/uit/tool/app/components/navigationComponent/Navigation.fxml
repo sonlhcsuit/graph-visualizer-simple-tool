@@ -16,73 +16,61 @@
          alignment="TOP_CENTER" prefHeight="720.0" prefWidth="256.0" BorderPane.alignment="TOP_RIGHT"
          fx:controller="uit.tool.app.components.navigationComponent.Navigation"
          stylesheets="@/uit/tool/app/stylesheets/Navigation.css"
-         id="navigation"
+         id="navigation">
+    <Pane prefHeight="97.0" prefWidth="256.0"/>
+    <HBox alignment="CENTER" fx:id="navBrand">
+        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" fx:id="navBrandIcon">
 
->
-    <children>
-        <Pane prefHeight="97.0" prefWidth="256.0"/>
-        <HBox alignment="CENTER" fx:id="navBrand">
-            <children>
-                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" fx:id="navBrandIcon">
-                    <image>
-                        <Image url="@/uit/tool/app/assets/logo.png"/>
-                    </image>
+            <Image url="@/uit/tool/app/assets/logo.png"/>
+        </ImageView>
+        <Label fx:id="navBrandName" contentDisplay="CENTER" graphicTextGap="1.0"
+               prefHeight="20.0" prefWidth="64.0" text="GVST" textAlignment="CENTER" textFill="BLACK">
+            <font>
+                <Font name="Arial Bold Italic" size="18.0"/>
+            </font>
+            <HBox.margin>
+                <Insets left="10.0"/>
+            </HBox.margin>
+        </Label>
+    </HBox>
 
-                </ImageView>
-                <Label fx:id="navBrandName" contentDisplay="CENTER" graphicTextGap="1.0"
-                       prefHeight="20.0" prefWidth="64.0" text="GVST" textAlignment="CENTER" textFill="BLACK">
-                    <font>
-                        <Font name="Arial Bold Italic" size="18.0"/>
-                    </font>
-                    <HBox.margin>
-                        <Insets left="10.0"/>
-                    </HBox.margin>
-                </Label>
-            </children>
-        </HBox>
-        <StackPane prefHeight="103.0" prefWidth="256.0">
-            <children>
-                <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" fx:id="avatar">
-                    <image>
-                        <Image url="@/uit/tool/app/assets/user.png"/>
-                    </image>
-                    <clip>
-                        <Circle centerX="32" centerY="32" radius="32.0" fx:id="avatarClip"/>
-                    </clip>
-                    <StackPane.margin>
-                        <Insets/>
-                    </StackPane.margin>
-                </ImageView>
-            </children>
+    <StackPane prefHeight="103.0" prefWidth="256.0">
+        <VBox.margin>
+            <Insets bottom="20.0"/>
+        </VBox.margin>
+        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" fx:id="avatar">
+            <clip>
+                <Circle centerX="32" centerY="32" radius="32.0" />
+            </clip>
+            <Image url="@/uit/tool/app/assets/user.png"/>
+        </ImageView>
+    </StackPane>
+
+    <VBox fx:id="navGroup">
+        <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png" fx:id="newFunc" >
             <VBox.margin>
-                <Insets bottom="20.0"/>
+                <Insets bottom="10.0" top="10.0"/>
             </VBox.margin>
-        </StackPane>
-        <VBox fx:id="navGroup">
-            <children>
-                <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
-                    </VBox.margin>
-                </NavigationItem>
-                <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
-                    </VBox.margin>
-                </NavigationItem>
-                <NavigationItem text="Save" icon="@/uit/tool/app/assets/save.png">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
-                    </VBox.margin>
-                </NavigationItem>
-                <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png">
-                    <VBox.margin>
-                        <Insets bottom="10.0" top="10.0"/>
-                    </VBox.margin>
-                </NavigationItem>
+        </NavigationItem>
 
-            </children>
-        </VBox>
-    </children>
+        <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png" fx:id="openFunc">
+            <VBox.margin>
+                <Insets bottom="10.0" top="10.0"/>
+            </VBox.margin>
+        </NavigationItem>
+
+        <NavigationItem text="Save" icon="@/uit/tool/app/assets/save.png" fx:id="saveFunc">
+            <VBox.margin>
+                <Insets bottom="10.0" top="10.0"/>
+            </VBox.margin>
+        </NavigationItem>
+
+        <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png" fx:id="settingFunc">
+            <VBox.margin>
+                <Insets bottom="10.0" top="10.0"/>
+            </VBox.margin>
+        </NavigationItem>
+
+    </VBox>
 </fx:root>
 
