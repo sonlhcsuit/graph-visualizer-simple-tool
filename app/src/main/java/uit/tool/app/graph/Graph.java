@@ -76,9 +76,9 @@ public class Graph {
 		if (!isVertexUnique(v)) {
 			throw new IllegalStateException("Vertex name existed!");
 		}
+		ArrayList<Edge> edges = getEdgeList();
 		this.vertexes.add(v);
 		this.vertexes.sort(Comparator.comparing(Vertex::getName));
-		ArrayList<Edge> edges = getEdgeList();
 		this.size = this.vertexes.size();
 		this.matrix = edgeListToMatrix(edges);
 	}
@@ -87,11 +87,10 @@ public class Graph {
 		if (!isVertexUnique(new Vertex(vertexName, 0.0, 0.0))) {
 			throw new IllegalStateException("Vertex name existed!");
 		}
-		ArrayList<Edge> edges = getEdgeList();
 		v.setName(vertexName);
+		ArrayList<Edge> edges = getEdgeList();
 		this.vertexes.sort(Comparator.comparing(Vertex::getName));
 		this.matrix = edgeListToMatrix(edges);
-
 	}
 
 	public void removeVertex(Vertex v) throws IllegalStateException {
