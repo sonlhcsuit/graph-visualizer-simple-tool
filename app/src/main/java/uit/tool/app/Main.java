@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.fxml.*;
+import com.google.gson.Gson;
 
 import java.util.Objects;
 
@@ -12,8 +12,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		System.out.println();
-//		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("App.fxml")));
 		Parent root = new App();
 //        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sb-app.fxml")));
 		String javaVersion = System.getProperty("java.version");
@@ -29,6 +27,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		Gson gson = new Gson();
 		launch(args);
 	}
 
