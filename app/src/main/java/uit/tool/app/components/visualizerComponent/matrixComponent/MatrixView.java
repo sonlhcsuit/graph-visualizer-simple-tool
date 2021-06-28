@@ -1,7 +1,6 @@
-package uit.tool.app.components.matrixComponent;
+package uit.tool.app.components.visualizerComponent.matrixComponent;
 
 
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;

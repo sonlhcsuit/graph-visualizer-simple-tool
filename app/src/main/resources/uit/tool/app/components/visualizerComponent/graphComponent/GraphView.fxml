@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <fx:root type="javafx.scene.control.ScrollPane"
          xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="uit.tool.app.components.graphComponent.GraphView"
+         fx:controller="uit.tool.app.components.visualizerComponent.graphComponent.GraphView"
          stylesheets="@/uit/tool/app/stylesheets/GraphView.css" >
     <AnchorPane fx:id="graphArea" styleClass="graph">
 

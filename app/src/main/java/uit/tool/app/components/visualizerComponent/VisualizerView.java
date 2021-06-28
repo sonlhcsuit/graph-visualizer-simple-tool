@@ -1,9 +1,9 @@
-package uit.tool.app.components;
+package uit.tool.app.components.visualizerComponent;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
-import uit.tool.app.components.graphComponent.GraphView;
-import uit.tool.app.components.matrixComponent.MatrixView;
+import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
+import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 

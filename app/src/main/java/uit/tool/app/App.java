@@ -1,27 +1,22 @@
 package uit.tool.app;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
-import uit.tool.app.components.VisualizerView;
-import uit.tool.app.components.graphComponent.GraphView;
-import uit.tool.app.components.matrixComponent.MatrixView;
+import uit.tool.app.components.visualizerComponent.VisualizerView;
+import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
+import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.components.navigationComponent.Navigation;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 
@@ -55,51 +50,51 @@ public class App extends BorderPane implements Loader {
 
 	public void initialize() {
 		isMenuOpen = true;
-
-		this.graphView.setLogger(this.logger);
-		this.matrixView.setLogger(this.logger);
-
-//		Set up function for navigation
-		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
-		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
-
-//		Set event filter, whenever graph change, automatically render new view
-		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
-		this.addEventHandler(VertexEvent.REMOVE, this::removeEventHandler);
-		this.addEventHandler(VertexEvent.RENAME, this::renameEventHandler);
-		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
+//
+//		this.graphView.setLogger(this.logger);
+//		this.matrixView.setLogger(this.logger);
+//
+////		Set up function for navigation
+//		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
+//		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
+//
+////		Set event filter, whenever graph change, automatically render new view
+//		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
+//		this.addEventHandler(VertexEvent.REMOVE, this::removeEventHandler);
+//		this.addEventHandler(VertexEvent.RENAME, this::renameEventHandler);
+//		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
 	}
+//
+//	private void updateGraph(Graph g) {
+//		this.graph = g;
+//		this.graphView.setGraph(g);
+//		this.matrixView.setGraph(g);
+//		this.graphView.render();
+//		this.matrixView.render();
+//	}
+//
+//	public void weightHandler(EdgeEvent event) {
+//		this.graph.updateEdge(event.getRow(), event.getCol(), event.getWeight());
+//		this.graphView.render();
+//	}
+//
+//	private void addEventFilter(VertexEvent event) {
+//		System.out.println("hihi");
+//		render();
+//	}
 
-	private void updateGraph(Graph g) {
-		this.graph = g;
-		this.graphView.setGraph(g);
-		this.matrixView.setGraph(g);
-		this.graphView.render();
-		this.matrixView.render();
-	}
-
-	public void weightHandler(EdgeEvent event) {
-		this.graph.updateEdge(event.getRow(), event.getCol(), event.getWeight());
-		this.graphView.render();
-	}
-
-	private void addEventFilter(VertexEvent event) {
-		System.out.println("hihi");
-		render();
-	}
-
-	private void renameEventHandler(VertexEvent event) {
-		render();
-	}
-
-	private void removeEventHandler(VertexEvent event) {
-		render();
-	}
-
-	public void render() {
-		this.graphView.render();
-		this.matrixView.render();
-	}
+//	private void renameEventHandler(VertexEvent event) {
+//		render();
+//	}
+//
+//	private void removeEventHandler(VertexEvent event) {
+//		render();
+//	}
+//
+//	public void render() {
+//		this.graphView.render();
+//		this.matrixView.render();
+//	}
 
 
 	private final Callback<Void, Void> openGraph = (unused) -> {
@@ -120,7 +115,7 @@ public class App extends BorderPane implements Loader {
 					stringBuilder.append(scanner.nextLine()).append("\n");
 				}
 				Graph g = Graph.parseFromFileString(stringBuilder.toString());
-				this.updateGraph(g);
+//				this.updateGraph(g);
 				Stage primStage = (Stage) getScene().getWindow();
 				primStage.setTitle(String.format("GVST - %s", g.getName()));
 			} catch (Exception e) {

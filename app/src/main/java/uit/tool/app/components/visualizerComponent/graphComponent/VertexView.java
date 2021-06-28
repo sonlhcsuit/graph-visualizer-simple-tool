@@ -1,9 +1,6 @@
-package uit.tool.app.components.graphComponent;
+package uit.tool.app.components.visualizerComponent.graphComponent;
 
 import javafx.beans.NamedArg;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;

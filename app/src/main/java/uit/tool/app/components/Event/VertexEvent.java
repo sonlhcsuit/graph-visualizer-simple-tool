@@ -2,7 +2,7 @@ package uit.tool.app.components.Event;
 
 import javafx.event.Event;
 import javafx.event.EventType;
-import uit.tool.app.components.graphComponent.VertexView;
+import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
 
 public class VertexEvent extends Event {
 	/**

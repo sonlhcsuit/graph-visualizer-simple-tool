@@ -8,7 +8,7 @@
 
 <?import uit.tool.app.components.menuComponent.Menu?>
 
-<?import uit.tool.app.components.VisualizerView?>
+<?import uit.tool.app.components.visualizerComponent.VisualizerView?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="720.0" prefWidth="1080.0" stylesheets="@/uit/tool/app/stylesheets/App.css"
          fx:controller="uit.tool.app.App"

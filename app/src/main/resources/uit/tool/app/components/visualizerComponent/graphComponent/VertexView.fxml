@@ -14,7 +14,7 @@
 <fx:root type="javafx.scene.layout.StackPane"
          stylesheets="@/uit/tool/app/stylesheets/VertexView.css" styleClass="stackpane"
          xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-         fx:controller="uit.tool.app.components.graphComponent.VertexView"
+         fx:controller="uit.tool.app.components.visualizerComponent.graphComponent.VertexView"
          prefHeight="40" prefWidth="40">
 
     <Circle radius="20" centerX="20" centerY="20" fill="black" />

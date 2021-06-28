@@ -1,4 +1,4 @@
-package uit.tool.app.components.graphComponent;
+package uit.tool.app.components.visualizerComponent.graphComponent;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,7 +7,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;

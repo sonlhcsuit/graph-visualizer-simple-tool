@@ -1,4 +1,4 @@
-package uit.tool.app.components.graphComponent;
+package uit.tool.app.components.visualizerComponent.graphComponent;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
