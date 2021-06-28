@@ -38,6 +38,9 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public void setLogger(Logger logger) {
+		System.out.println("logger");
+		System.out.println(logger);
+
 		this.logger = logger;
 	}
 

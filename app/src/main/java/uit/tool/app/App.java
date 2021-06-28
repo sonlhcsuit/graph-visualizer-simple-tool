@@ -36,10 +36,6 @@ public class App extends BorderPane implements Loader {
 	private Navigation navigation;
 	@FXML
 	private Logger logger;
-	@FXML
-	private GraphView graphView;
-	@FXML
-	private MatrixView matrixView;
 
 	private Graph graph;
 
@@ -49,14 +45,16 @@ public class App extends BorderPane implements Loader {
 	}
 
 	public void initialize() {
+		System.out.println("app");
 		isMenuOpen = true;
+		this.visualizerView.setLogger(this.logger);
 //
 //		this.graphView.setLogger(this.logger);
 //		this.matrixView.setLogger(this.logger);
 //
 ////		Set up function for navigation
-//		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
-//		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
+		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
+		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
 //
 ////		Set event filter, whenever graph change, automatically render new view
 //		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
@@ -107,6 +105,7 @@ public class App extends BorderPane implements Loader {
 		String homePath = System.getProperty("user.home");
 		fc.setInitialDirectory(new File(homePath));
 		File f = fc.showOpenDialog(null);
+		System.out.println(f.getAbsolutePath());
 		if (f != null) {
 			try {
 				Scanner scanner = new Scanner(f);
@@ -115,7 +114,7 @@ public class App extends BorderPane implements Loader {
 					stringBuilder.append(scanner.nextLine()).append("\n");
 				}
 				Graph g = Graph.parseFromFileString(stringBuilder.toString());
-//				this.updateGraph(g);
+				this.visualizerView.setGraph(g);
 				Stage primStage = (Stage) getScene().getWindow();
 				primStage.setTitle(String.format("GVST - %s", g.getName()));
 			} catch (Exception e) {
