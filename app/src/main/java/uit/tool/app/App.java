@@ -62,23 +62,25 @@ public class App extends BorderPane implements Loader {
 
 
 		Graph g = Graph.sampleGraph();
+		this.graph = g;
 		this.visualizerView.setGraph(g);
 		this.menu.setSetting(g.getSetting());
 
 
-		Gson gson = new Gson();
-		System.out.println(gson.toJson(g.getSetting()));
+		this.addEventFilter(SettingEvent.SAVE_GRAPH, (SettingEvent event) -> {
+			try {
+				Graph.save(this.graph);
 
-		this.addEventFilter(SettingEvent.SAVE_GRAPH,(SettingEvent event)->{
-			System.out.println("save name");
-
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 
-		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED,(SettingEvent event)->{
+		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED, (SettingEvent event) -> {
 			this.visualizerView.render();
 		});
 
-		this.addEventFilter(SettingEvent.TOGGLE_WEIGHTED,(SettingEvent event)->{
+		this.addEventFilter(SettingEvent.TOGGLE_WEIGHTED, (SettingEvent event) -> {
 			this.visualizerView.render();
 		});
 //
@@ -130,22 +132,14 @@ public class App extends BorderPane implements Loader {
 		);
 		String homePath = System.getProperty("user.home");
 		fc.setInitialDirectory(new File(homePath));
-		File f = fc.showOpenDialog(null);
-		System.out.println(f.getAbsolutePath());
-		if (f != null) {
-			try {
-				Scanner scanner = new Scanner(f);
-				StringBuilder stringBuilder = new StringBuilder();
-				while (scanner.hasNextLine()) {
-					stringBuilder.append(scanner.nextLine()).append("\n");
-				}
-				Graph g = Graph.parseFromFileString(stringBuilder.toString());
-				this.visualizerView.setGraph(g);
-				Stage primStage = (Stage) getScene().getWindow();
-				primStage.setTitle(String.format("GVST - %s", g.getName()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		File file = fc.showOpenDialog(null);
+		try {
+			Graph g = Graph.load(file.getAbsolutePath());
+			this.visualizerView.setGraph(g);
+			Stage primStage = (Stage) getScene().getWindow();
+			primStage.setTitle(String.format("GVST - %s", g.getSetting().getName()));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	};

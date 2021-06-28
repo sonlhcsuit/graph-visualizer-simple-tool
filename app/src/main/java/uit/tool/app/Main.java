@@ -10,15 +10,15 @@ import javafx.stage.WindowEvent;
 public class Main extends Application {
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		Parent root = new App();
+	public void start(Stage primaryStage) {
 		String javaVersion = System.getProperty("java.version");
 		String javafxVersion = System.getProperty("javafx.version");
 		String versionString = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
 		System.out.println(versionString);
 
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
-		primaryStage.setTitle("GVST - Untitled");
+		Parent root = new App();
+		primaryStage.setTitle("GVST");
 		primaryStage.setScene(new Scene(root, 1080, 720));
 		primaryStage.setResizable(false);
 		primaryStage.setOnCloseRequest((WindowEvent event)->{

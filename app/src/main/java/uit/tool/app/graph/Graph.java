@@ -1,7 +1,10 @@
 package uit.tool.app.graph;
 
 
-import java.io.File;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -172,42 +175,38 @@ public class Graph {
 		return String.format("%s\n%s\n%s%s", metadata, numberVertex, vertexes.toString(), edges.toString());
 	}
 
-	static public Graph parseFromFileString(String fileString) throws IllegalStateException {
-		String[] lines = fileString.split("\n");
-		String name = lines[0];
-		String sizeString = lines[1];
-		int size = 0;
-		System.out.println(name);
-		System.out.println(size);
-		if (!name.matches("^Name:\s[a-zA-Z0-9\s]+$")) {
-			throw new IllegalStateException("Cannot parse the file because file is damaged!");
+	static public Graph load(String filepath) throws IllegalStateException, IOException, JsonSyntaxException {
+		File file = new File(filepath);
+		if (!file.exists()) {
+			throw new IOException("File didnt' not exist!");
 		}
-		name = name.replace("Name:", "").strip();
+		if (file.isDirectory()) {
+			throw new IOException("Regular file expected but got directory");
+		}
 
-		if (!sizeString.matches("^Number of Vertex:\s[0-9]+$")) {
-			throw new IllegalStateException("Cannot parse the file because file is damaged!");
-		}
-		size = Integer.parseInt(sizeString.replace("Number of Vertex:", "").strip());
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		StringBuilder builder = new StringBuilder();
+		String line;
+		do {
+			line = reader.readLine();
+			builder.append(line);
+		} while (line != null);
+		reader.close();
 
-		System.out.println(name);
-		System.out.println(size);
-		ArrayList<Vertex> V = new ArrayList<>();
-		for (int i = 2; i < size + 2; i++) {
-			V.add(Vertex.fromString(lines[i]));
+		Gson gson = new Gson();
+		return gson.fromJson(builder.toString(), Graph.class);
+	}
+
+	public static void save(Graph graph) throws IllegalStateException, IOException {
+		String filePath = graph.setting.getFilepath();
+		if ("".equals(filePath) || filePath == null) {
+			throw new IllegalStateException("File path was not specified!");
 		}
-		ArrayList<Edge> E = new ArrayList<>();
-		for (int i = 2 + size; i < size + size + 2; i++) {
-			List<Double> t = Arrays.stream(lines[i].replace("[", "").replace("]", "").split(",")).map(Double::parseDouble).collect(Collectors.toList());
-			if (t.size() != size) {
-				throw new IllegalStateException("Cannot parse the file because file is damaged!");
-			}
-			for (int j = 0; j < size; j++) {
-				if (t.get(j) != 0) {
-					E.add(new Edge(V.get(i - size - 2), V.get(j), t.get(j)));
-				}
-			}
-		}
-		return new Graph(V, E, name);
+		Gson gson = new Gson();
+		String json = gson.toJson(graph);
+		FileWriter fileWriter = new FileWriter(filePath);
+		fileWriter.write(json);
+		fileWriter.close();
 	}
 
 	static public Graph sampleGraph() {

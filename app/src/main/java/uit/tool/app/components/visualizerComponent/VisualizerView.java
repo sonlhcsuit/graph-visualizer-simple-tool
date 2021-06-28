@@ -28,7 +28,6 @@ public class VisualizerView extends TabPane implements Loader {
 		this.matrixView.setGraph(graph);
 		this.graphView.render();
 		this.matrixView.render();
-		System.out.println(graph.getName());
 	}
 
 	public Graph getGraph() {
