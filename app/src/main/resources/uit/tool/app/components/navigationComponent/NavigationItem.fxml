@@ -17,15 +17,12 @@
     </padding>
 
     <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" fx:id="icon">
-        <!--            <image>-->
-        <!--                <Image url="@/uit/tool/app/assets/black-square.png"/>-->
-        <!--            </image>-->
         <viewport>
             <Rectangle2D/>
         </viewport>
     </ImageView>
     <Button fx:id="btn" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity"
-            mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0">
+            mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0" >
         <font>
             <Font name="Arial Bold Italic" size="18.0"/>
         </font>

@@ -70,7 +70,6 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(SettingEvent.SAVE_GRAPH, (SettingEvent event) -> {
 			try {
 				Graph.save(this.graph);
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

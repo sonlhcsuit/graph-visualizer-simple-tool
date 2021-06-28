@@ -3,10 +3,13 @@
     -fx-background-color: transparent;
     -fx-focus-traversable: false;
 }
-/*.button:pressed{*/
-/*    -fx-background-color: red;*/
-/*}*/
 
 .cont:pressed{
     -fx-background-color: #b5ffff;
 }
+
+/*.cont{*/
+/*    -fx-border-color: black;*/
+/*    -fx-border-width: 2;*/
+/*    -fx-border-style: solid;*/
+/*}*/

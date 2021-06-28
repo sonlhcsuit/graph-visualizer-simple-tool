@@ -7,15 +7,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.util.Callback;
+import uit.tool.app.components.Event.UserEvent;
 import uit.tool.app.interfaces.Loader;
 
-import java.io.File;
-
-
 public class Navigation extends VBox implements Loader {
+
 	private boolean isMenuOpen;
 
 	@FXML
@@ -28,43 +24,48 @@ public class Navigation extends VBox implements Loader {
 	private ImageView avatar;
 	@FXML
 	private VBox navGroup;
+	@FXML
+	public NavigationItem newItem;
+	@FXML
+	public NavigationItem openItem;
+	@FXML
+	public NavigationItem saveAsItem;
+	@FXML
+	public NavigationItem settingItem;
 
-	@FXML
-	private NavigationItem newFunc;
-	@FXML
-	private NavigationItem openFunc;
-	@FXML
-	private NavigationItem saveFunc;
-	@FXML
-	private NavigationItem settingFunc;
 
 	public Navigation() {
 		Loader.loadFXML(this);
 	}
 
 	public void initialize() {
-
 		isMenuOpen = true;
 		navBrandIcon.setOnMouseClicked((MouseEvent e) -> {
 			toggleMenu();
 		});
 		toggleMenu();
+		this.newItem.setOnMouseClicked(this::newItemHandler);
+		this.openItem.setOnMouseClicked(this::openFunction);
+		this.saveAsItem.setOnMouseClicked(this::saveAsHandler);
+		this.settingItem.setOnMouseClicked(this::settingItemHandler);
 	}
 
-	public NavigationItem getNewFunc() {
-		return newFunc;
+
+	public void newItemHandler(MouseEvent event) {
+		this.fireEvent(new UserEvent(UserEvent.NEW_GRAPH));
 	}
 
-	public NavigationItem getOpenFunc() {
-		return openFunc;
+	public void openFunction(MouseEvent event) {
+		this.fireEvent(new UserEvent(UserEvent.OPEN_GRAPH));
 	}
 
-	public NavigationItem getSaveFunc() {
-		return saveFunc;
+
+	public void saveAsHandler(MouseEvent event) {
+		this.fireEvent(new UserEvent(UserEvent.SAVE_AS_GRAPH));
 	}
 
-	public NavigationItem getSettingFunc() {
-		return settingFunc;
+	public void settingItemHandler(MouseEvent event) {
+		this.fireEvent(new UserEvent(UserEvent.SETTING));
 	}
 
 	public void toggleAvatar(boolean isSmall) {
@@ -101,7 +102,6 @@ public class Navigation extends VBox implements Loader {
 		for (int i = 0; i < this.navGroup.getChildren().size(); i++) {
 			NavigationItem navItem = (NavigationItem) this.navGroup.getChildren().get(i);
 			navItem.toggle(isMenuOpen);
-//			System.out.println(navItem.getCollapsed());
 		}
 		toggleAvatar(isMenuOpen);
 		toggleBrand(isMenuOpen);

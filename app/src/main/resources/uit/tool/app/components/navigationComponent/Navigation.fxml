@@ -47,25 +47,25 @@
     </StackPane>
 
     <VBox fx:id="navGroup">
-        <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png" fx:id="newFunc" >
+        <NavigationItem text="New" icon="@/uit/tool/app/assets/contract.png" fx:id="newItem" >
             <VBox.margin>
                 <Insets bottom="10.0" top="10.0"/>
             </VBox.margin>
         </NavigationItem>
 
-        <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png" fx:id="openFunc">
+        <NavigationItem text="Open" icon="@/uit/tool/app/assets/search.png" fx:id="openItem">
             <VBox.margin>
                 <Insets bottom="10.0" top="10.0"/>
             </VBox.margin>
         </NavigationItem>
 
-        <NavigationItem text="Save" icon="@/uit/tool/app/assets/save.png" fx:id="saveFunc">
+        <NavigationItem text="Save As" icon="@/uit/tool/app/assets/save.png" fx:id="saveAsItem">
             <VBox.margin>
                 <Insets bottom="10.0" top="10.0"/>
             </VBox.margin>
         </NavigationItem>
 
-        <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png" fx:id="settingFunc">
+        <NavigationItem text="Setting" icon="@/uit/tool/app/assets/settings.png" fx:id="settingItem">
             <VBox.margin>
                 <Insets bottom="10.0" top="10.0"/>
             </VBox.margin>
