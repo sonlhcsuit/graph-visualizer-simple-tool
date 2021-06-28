@@ -1,13 +1,17 @@
 package uit.tool.app;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.components.Event.SettingEvent;
+import uit.tool.app.components.Event.UserEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.menuComponent.Menu;
@@ -20,6 +24,7 @@ import uit.tool.app.interfaces.Loader;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -75,6 +80,13 @@ public class App extends BorderPane implements Loader {
 			}
 		});
 
+
+		this.addEventFilter(UserEvent.NEW_GRAPH, this::newGraphUserEventHandler);
+		this.addEventFilter(UserEvent.OPEN_GRAPH, this::openGraphUserEventHandler);
+		this.addEventFilter(UserEvent.SAVE_AS_GRAPH, this::saveAsUserEventHandler);
+		this.addEventFilter(UserEvent.SETTING, this::settingUserEventHandler);
+
+
 		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED, (SettingEvent event) -> {
 			this.visualizerView.render();
 		});
@@ -121,8 +133,7 @@ public class App extends BorderPane implements Loader {
 //		this.matrixView.render();
 //	}
 
-
-	private final Callback<Void, Void> openGraph = (unused) -> {
+	private void openGraphUserEventHandler(UserEvent event) {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Open a new graph");
 		fc.getExtensionFilters().addAll(
@@ -137,11 +148,38 @@ public class App extends BorderPane implements Loader {
 			this.visualizerView.setGraph(g);
 			Stage primStage = (Stage) getScene().getWindow();
 			primStage.setTitle(String.format("GVST - %s", g.getSetting().getName()));
+
+		} catch (IllegalStateException | IOException | JsonSyntaxException e) {
+			showError("Error", e.getMessage());
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-	};
+	}
+
+	private void showError(String title, String content) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
+	private void newGraphUserEventHandler(UserEvent event) {
+
+	}
+
+	private void saveAsUserEventHandler(UserEvent event) {
+
+	}
+
+	private void saveGraphUserEventHandler(UserEvent event) {
+
+	}
+
+	private void settingUserEventHandler(UserEvent event) {
+
+	}
+
 
 	private final Callback<Void, Void> saveGraph = (unused) -> {
 		FileChooser fc = new FileChooser();

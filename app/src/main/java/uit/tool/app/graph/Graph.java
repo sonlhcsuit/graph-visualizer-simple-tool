@@ -194,6 +194,7 @@ public class Graph {
 		reader.close();
 
 		Gson gson = new Gson();
+		System.out.println();
 		return gson.fromJson(builder.toString(), Graph.class);
 	}
 
