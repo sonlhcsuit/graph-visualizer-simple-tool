@@ -232,7 +232,7 @@ public class Graph {
 		Edge ea = new Edge(e, a, 6);
 		Edge be = new Edge(b, e, 1);
 		Edge ac = new Edge(a, c, 2);
-		Edge ca = new Edge(c, a, 2);
+		Edge ca = new Edge(c, a, 10);
 
 		ArrayList<Edge> E = new ArrayList<>();
 //		E.add(ab);

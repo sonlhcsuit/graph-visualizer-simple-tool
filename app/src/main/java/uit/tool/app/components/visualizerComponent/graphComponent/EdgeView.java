@@ -20,7 +20,6 @@ public class EdgeView extends Path {
 		 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
 		 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
 		 */
-
 		super();
 		setStroke(Color.BLACK);
 		setStrokeWidth(2);

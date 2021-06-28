@@ -37,9 +37,9 @@ public class WeightedView extends Label {
 		double pointY = pivotY;
 
 		if (isLine){
-			pointY = pointY + 25;
+			pointY = pointY - 25;
 		}else {
-			pointY = pointY + vLength/8;
+			pointY = pointY - vLength/8;
 		}
 		pointX = pointX - pivotX;
 		pointY = pointY - pivotY;

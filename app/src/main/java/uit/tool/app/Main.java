@@ -12,7 +12,6 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = new App();
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sb-app.fxml")));
 		String javaVersion = System.getProperty("java.version");
 		String javafxVersion = System.getProperty("javafx.version");
 		String versionString = String.format("Hello, JavaFX %s, running on Java %s.", javafxVersion, javaVersion);
