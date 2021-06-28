@@ -5,18 +5,55 @@ import javafx.scene.layout.AnchorPane;
 import uit.tool.app.graph.Vertex;
 
 public class WeightedView extends Label {
-	WeightedView(Vertex source, Vertex destination, double weight) {
+	WeightedView(Vertex source, Vertex destination, double weight, boolean isLine) {
 		super();
 		this.setText(String.format("%.2f", weight));
+//		start point
 		double startX = source.getX();
 		double startY = source.getY();
+//		end point
 		double endX = destination.getX();
 		double endY = destination.getY();
+//		Vector of start point & end point
 		double vX = endX - startX;
 		double vY = endY - startY;
+		double vLength = Math.sqrt(vX * vX + vY * vY);
 
-		AnchorPane.setLeftAnchor(this, (startX + endX) / 2 + vX * 0.05);
-		AnchorPane.setTopAnchor(this, (startY + endY) / 2 - vY * 0.05);
-//		this.setFont(new Font(20));
+//		Middle point of start point & end point
+		double pivotX = (startX + endX) / 2;
+		double pivotY = (startY + endY) / 2;
+
+//		angle of vector
+		double angle = Math.atan2(vY, vX);
+		double cos = Math.cos(angle);
+		double sin = Math.sin(angle);
+
+//		Middle point of start & end
+		pivotX = (startX + endX) / 2;
+		pivotY = (startY + endY) / 2;
+
+//		point on Perpendicular Bisector:
+		double pointX = pivotX;
+		double pointY = pivotY;
+
+		if (isLine){
+			pointY = pointY + 25;
+		}else {
+			pointY = pointY + vLength/8;
+		}
+		pointX = pointX - pivotX;
+		pointY = pointY - pivotY;
+		double rX = pointX * cos - pointY * sin;
+		double rY = pointX * sin + pointY * cos;
+		rX = rX + pivotX;
+		rY = rY + pivotY;
+
+		AnchorPane.setLeftAnchor(this, rX);
+		AnchorPane.setTopAnchor(this, rY);
+
+	}
+
+	WeightedView(Vertex source, Vertex destination, double weight) {
+		this(source, destination, weight, true);
 	}
 }

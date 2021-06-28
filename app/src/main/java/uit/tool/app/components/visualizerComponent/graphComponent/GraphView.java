@@ -120,30 +120,43 @@ public class GraphView extends ScrollPane implements Loader {
 
 //		Render edge & weight on screen
 		double[][] matrix = this.graph.adjacencyMatrix();
+
+
+
 		int size = matrix.length;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (i != j && matrix[i][j] != 0) {
-					if (setting.isDirected()) {
-						EdgeView ev = new EdgeView(V.get(i), V.get(j),EdgeView.ARC_DOWN);
-						this.area.getChildren().add(ev);
+//					2 edges between 2 vertex, which mean, use arc to create, not line
+					EdgeView ev;
+					WeightedView wv = null;
+					if (matrix[i][j] != 0 && matrix[j][i] != 0) {
+						System.out.println("realyy");
+						if (i > j) {
+							ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC_UP, setting.isDirected());
+						} else {
+							ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC_DOWN, setting.isDirected());
+						}
+						if (setting.isWeighted()) {
+							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], false);
+						}
+					} else {
+//						1 edge between 2 vertex, use line
+						ev = new EdgeView(V.get(i), V.get(j), EdgeView.LINE, true);
+						if (setting.isWeighted()) {
+							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], true);
+						}
 					}
 
-//					weighted
-					if (setting.isWeighted()) {
-						WeightedView wv = new WeightedView(V.get(i), V.get(j), matrix[i][j]);
+					this.area.getChildren().add(ev);
+					if (wv != null) {
 						this.area.getChildren().add(wv);
 					}
+
 
 				}
 			}
 		}
-//		for (Edge e : E) {
-//			EdgeView ev = new EdgeView(e.getSource(), e.getDestination());
-//			WeightedView wv = new WeightedView(e.getSource(), e.getDestination(), e.getWeight());
-//			this.graphArea.getChildren().add(ev);
-//			this.graphArea.getChildren().add(wv);
-//		}
 
 		for (Vertex v : V) {
 			this.area.getChildren().add(new VertexView(v));

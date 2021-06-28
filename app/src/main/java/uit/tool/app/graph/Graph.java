@@ -225,6 +225,8 @@ public class Graph {
 		V.add(e);
 
 		Edge ab = new Edge(a, b, 4);
+		Edge ba = new Edge(b, a, 2);
+
 		Edge bc = new Edge(b, c, 5);
 		Edge de = new Edge(d, e, 3);
 		Edge ea = new Edge(e, a, 6);

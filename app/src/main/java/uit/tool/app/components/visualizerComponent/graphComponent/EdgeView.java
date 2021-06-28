@@ -12,8 +12,6 @@ public class EdgeView extends Path {
 
 	public static final String ARC_UP = "ARC_UP";
 	public static final String ARC_DOWN = "ARC_DOWN";
-	public static final String ARC_UP_ARROW = "ARC_UP_ARROW";
-	public static final String ARC_DOWN_ARROW = "ARC_DOWN_ARROW";
 	public static final String LINE = "Line";
 	public static final String ARROW = "ARROW";
 
@@ -35,72 +33,46 @@ public class EdgeView extends Path {
 		endX = destination.getX() + radius;
 		endY = destination.getY() + radius;
 
-		getElements().add(new MoveTo(startX, startY));
-		if (LINE.equals(type)) {
-			getElements().add(new LineTo(endX, endY));
-			return;
-		}
-//		end point not terminate at center but at border
-//		Vector v from start point to endpoint
 
+//		Vector v from start point to endpoint
 		double vX = endX - startX;
 		double vY = endY - startY;
 		double vLength = Math.sqrt(vX * vX + vY * vY);
 
-		if (ARC_UP.equals(type) || ARC_DOWN.equals(type)) {
-			double radiusX = Math.abs(vX);
-			double radiusY = Math.abs(vY);
-//			vX == 0 || vY == 0 mean that start point or end point are horizontal line or vertical line
-			boolean isArcUp = !ARC_DOWN.equals(type);
-			double angle = Math.atan2(vY, vX);
-			radiusX = vLength / 2;
-			radiusY = vLength / 8;
-			ArcTo arcTo = new ArcTo(radiusX, radiusY, Math.toDegrees(angle), endX, endY, false, isArcUp);
-			getElements().add(arcTo);
-		}
-
-
-		endX = endX - radius * vX / vLength;
-		endY = endY - radius * vY / vLength;
-
-		startX = startX + radius * vX / vLength;
-		startY = startY + radius * vY / vLength;
 
 		getElements().add(new MoveTo(startX, startY));
 
-
-		if (ARROW.equals(type)) {
+		if (LINE.equals(type)) {
+			getElements().add(new LineTo(endX, endY));
+		} else if (ARC_UP.equals(type) || ARC_DOWN.equals(type)) {
+//			vX == 0 || vY == 0 mean that start point or end point are horizontal line or vertical line
+			boolean isArcUp = !ARC_DOWN.equals(type);
+			double angle = Math.atan2(vY, vX);
+			double radiusX = vLength / 2;
+			double radiusY = vLength / 8;
+			ArcTo arcTo = new ArcTo(radiusX, radiusY, Math.toDegrees(angle), endX, endY, false, isArcUp);
+			getElements().add(arcTo);
+		}
+		if (withArrow) {
 			double angle = defaultArrowAngle;
 			double cos = Math.cos(angle);
 			double sin = Math.sin(angle);
+
+//			endpoint of the arrow is at the border, not the center
+			endX = endX - radius * vX / vLength;
+			endY = endY - radius * vY / vLength;
+
 //			draw arrow wings
 			double aX = cos * vX / vLength - sin * vY / vLength;
 			double aY = sin * vX / vLength + cos * vY / vLength;
 			double bX = cos * vX / vLength + sin * vY / vLength;
 			double bY = cos * vY / vLength - sin * vX / vLength;
 
-			getElements().add(new LineTo(endX, endY));
+			getElements().add(new MoveTo(endX, endY));
 			getElements().add(new LineTo(endX - defaultArrowHeadSize * aX, endY - defaultArrowHeadSize * aY));
 			getElements().add(new LineTo(endX - defaultArrowHeadSize * bX, endY - defaultArrowHeadSize * bY));
 			getElements().add(new LineTo(endX, endY));
 		}
-
-
-//
-//		{
-////			Using arc (suck)
-//			boolean isArcUp = !ARC_DOWN.equals(type);
-//			ArcTo arcTo = new ArcTo(vX == 0 ? 20 : vX, vY == 0 ? 20 : vY, 0, endX, endY, false, isArcUp);
-//			getElements().add(arcTo);
-//		}
-//
-//
-////		Using quad curve (suck,too)
-////		double controlX = (startX + endX) / 2 - vX/2;
-////		double controlY = (startY + endY) / 2 + vY/2;
-////		QuadCurveTo quad = new QuadCurveTo(controlX,controlY,endX,endY);
-////		getElements().add(quad);
-
 
 	}
 
