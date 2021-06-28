@@ -11,6 +11,7 @@ import javafx.util.Callback;
 import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
+import uit.tool.app.components.VisualizerView;
 import uit.tool.app.components.graphComponent.GraphView;
 import uit.tool.app.components.matrixComponent.MatrixView;
 import uit.tool.app.components.navigationComponent.Navigation;
@@ -35,6 +36,8 @@ public class App extends BorderPane implements Loader {
 //	@FXML
 //	private VBox side;
 	@FXML
+	private VisualizerView visualizerView;
+	@FXML
 	private Navigation navigation;
 	@FXML
 	private Logger logger;
@@ -44,7 +47,6 @@ public class App extends BorderPane implements Loader {
 	private MatrixView matrixView;
 
 	private Graph graph;
-	private Callback<String, Void> writeLog;
 
 
 	public App() {
@@ -62,11 +64,10 @@ public class App extends BorderPane implements Loader {
 		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
 
 //		Set event filter, whenever graph change, automatically render new view
-		this.matrixView.addEventFilter(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
-		this.graphView.addEventFilter(VertexEvent.REMOVE, this::removeEventHandler);
-		this.graphView.addEventFilter(VertexEvent.RENAME, this::renameEventHandler);
-		this.graphView.addEventFilter(VertexEvent.ADD, this::addEventFilter);
-
+		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
+		this.addEventHandler(VertexEvent.REMOVE, this::removeEventHandler);
+		this.addEventHandler(VertexEvent.RENAME, this::renameEventHandler);
+		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
 	}
 
 	private void updateGraph(Graph g) {
@@ -83,6 +84,7 @@ public class App extends BorderPane implements Loader {
 	}
 
 	private void addEventFilter(VertexEvent event) {
+		System.out.println("hihi");
 		render();
 	}
 

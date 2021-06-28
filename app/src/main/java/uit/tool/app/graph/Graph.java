@@ -1,12 +1,12 @@
 package uit.tool.app.graph;
 
 
-import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Graph {
 	private final ArrayList<Vertex> vertexes;
+	private Setting setting;
 	private int size;
 	double[][] matrix;
 	private String name;

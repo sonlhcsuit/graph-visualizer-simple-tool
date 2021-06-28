@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import uit.tool.app.components.navigationComponent.Navigation?>
-<?import uit.tool.app.components.graphComponent.GraphView?>
-<?import uit.tool.app.components.matrixComponent.MatrixView?>
 <?import uit.tool.app.components.Logger?>
 
+<?import uit.tool.app.components.menuComponent.Menu?>
+
+<?import uit.tool.app.components.VisualizerView?>
 <fx:root type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-         prefHeight="720.0" prefWidth="1080.0" stylesheets="@/uit/tool/app/stylesheets/App.css" fx:controller="uit.tool.app.App"
+         prefHeight="720.0" prefWidth="1080.0" stylesheets="@/uit/tool/app/stylesheets/App.css"
+         fx:controller="uit.tool.app.App"
          id="app">
     <left>
         <Navigation fx:id="navigation"/>
@@ -19,28 +19,13 @@
     <center>
         <SplitPane dividerPositions="0.9064245810055865" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
                    BorderPane.alignment="CENTER">
-            <items>
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <children>
-                        <SplitPane dividerPositions="0.8398533007334963" prefHeight="720.0" prefWidth="820.0">
-                            <items>
-                                <TabPane prefHeight="644.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE">
-                                    <tabs>
-                                        <Tab text="Graph View">
-                                            <GraphView fx:id="graphView"/>
-                                        </Tab>
-                                        <Tab text="Matrix View">
-                                            <MatrixView fx:id="matrixView"/>
-                                        </Tab>
-                                    </tabs>
-                                </TabPane>
-                                <VBox minWidth="-Infinity" prefHeight="0.0" prefWidth="128.0"/>
-                            </items>
-                        </SplitPane>
-                    </children>
-                </VBox>
-                <Logger fx:id="logger"/>
-            </items>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+                <SplitPane dividerPositions="0.8398533007334963" prefHeight="720.0" prefWidth="820.0">
+                    <VisualizerView fx:id="visualizerView"/>
+                    <Menu/>
+                </SplitPane>
+            </VBox>
+            <Logger fx:id="logger"/>
         </SplitPane>
 
     </center>

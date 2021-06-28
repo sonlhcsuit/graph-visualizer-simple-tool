@@ -17,4 +17,4 @@ pluginManagement {
     }
 }
 rootProject.name = 'graph-visualizer-simple-tools'
-include('app', 'list', 'utilities')
+include('app')
