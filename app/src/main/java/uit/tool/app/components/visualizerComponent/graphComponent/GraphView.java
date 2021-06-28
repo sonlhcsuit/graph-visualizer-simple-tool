@@ -54,11 +54,7 @@ public class GraphView extends ScrollPane implements Loader {
 		});
 		this.setOnDragDropped(this::handleDroppedEvent);
 
-		this.setOnContextMenuRequested((ContextMenuEvent event) -> {
-			this.getContextMenu().show(this, event.getScreenX(), event.getScreenY());
-//			pass local position data into context menu, make handler can use it
-			this.getContextMenu().setUserData(String.format("%f %f", event.getX(), event.getY()));
-		});
+		this.setOnContextMenuRequested(this::contextMenuRequest);
 
 		this.addEventFilter(VertexEvent.MOVE, this::handleVertexMove);
 		this.addEventFilter(VertexEvent.REMOVE, this::vertexRemoveHandler);
@@ -75,27 +71,26 @@ public class GraphView extends ScrollPane implements Loader {
 //		});
 	}
 
+	/**
+	 * This method is using to compute absolute position of overflow object in clipped viewport in scroll pane
+	 * The viewport will slide (pan) between the start point and end point of the line axe
+	 * The viewport has it size, too. Scroll value is the difference of actual start point of the line content and the actual start
+	 * point of viewport(measured in percent)
+	 * <p>
+	 * Explain with example
+	 * <p>
+	 * |                          axe                              |
+	 * |-----------------------------------------------------------|
+	 * |  percent ||         |        ||
+	 * ||         X        ||
+	 * ||     viewport    ||
+	 *
+	 * @param size          the size (how long) of the axe (the line axe)
+	 * @param viewport      the size(how long) of the viewport (the viewport line)
+	 * @param relative      the size(how long) from X to start point of the viewport
+	 * @param scrollPercent the difference between start point of viewport and axe (measured in percent)
+	 */
 	private double syncAxeValue(double size, double viewport, double relative, double scrollPercent) {
-		/**
-		 * This method is using to compute absolute position of overflow object in clipped viewport in scrollpane
-		 * The viewport will slide (pan) between the start point and end point of the line axe
-		 * The viewport has it size, too. Scroll value is the difference of actual start point of the line content and the actual start
-		 * point of viewport(measured in percent)
-		 *
-		 * Explain with example
-		 *
-		 *     |                          axe                              |
-		 *     |-----------------------------------------------------------|
-		 *     |  percent ||         |        ||
-		 *                ||         X        ||
-		 *                ||     viewport    ||
-		 *
-		 *
-		 * @param size the size (how long) of the axe (the line axe)
-		 * @param viewport the size(how long) of the viewport (the viewport line)
-		 * @param relative the size(how long) from X to start point of the viewport
-		 * @param scrollPercent the difference between start point of viewport and axe (measured in percent)
-		 */
 
 //		The different between actual edge vs relative edge (how many pixel was panned)
 //		percentage is 1 as long as the current viewport can reach the lowest edge (end point of axe)
@@ -106,27 +101,27 @@ public class GraphView extends ScrollPane implements Loader {
 		return differenceAxe + relative;
 	}
 
+	/**
+	 * Using this method to render visual part of graph
+	 */
 	public void render() {
+
 		if (this.graph == null) {
 			return;
 		}
 
-
+//		To determine max size of graph in scroll pane
 		double maxOffsetX = 0;
 		double maxOffsetY = 0;
-		this.area.getChildren().clear();
-		ArrayList<Vertex> V = this.graph.getVertexes();
 
+//		clear previous child & render
+		this.area.getChildren().clear();
+		double[][] matrix = this.graph.adjacencyMatrix();
+		int size = matrix.length;
+		ArrayList<Vertex> V = this.graph.getVertexes();
 		Setting setting = this.graph.getSetting();
 
 //		Render edge & weight on screen
-		double[][] matrix = this.graph.adjacencyMatrix();
-
-		for (double[] z : matrix) {
-			System.out.println(Arrays.toString(z));
-		}
-
-		int size = matrix.length;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (i != j && matrix[i][j] != 0) {
@@ -140,39 +135,38 @@ public class GraphView extends ScrollPane implements Loader {
 						}
 					} else {
 //						1 edge between 2 vertex, use line
-						ev = new EdgeView(V.get(i), V.get(j), EdgeView.LINE, true);
+						ev = new EdgeView(V.get(i), V.get(j), EdgeView.LINE, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], true);
 						}
 					}
-
 					this.area.getChildren().add(ev);
 					if (wv != null) {
 						this.area.getChildren().add(wv);
 					}
-
-
 				}
 			}
 		}
-
+//		render vertex
 		for (Vertex v : V) {
 			this.area.getChildren().add(new VertexView(v));
 			maxOffsetX = Math.max(maxOffsetX, v.getX());
 			maxOffsetY = Math.max(maxOffsetY, v.getY());
 		}
-
+//		adjust size of scroll pane
 		this.area.setPrefWidth(maxOffsetX + 100);
 		this.area.setPrefHeight(maxOffsetY + 100);
 	}
 
-	private void handleDroppedEvent(DragEvent event) {
-		/**
-		 * Using this method to handle some computation when drop a vertex to Graph View
-		 * @param e The drag event containing information
-		 * @see VertexView
-		 * @see Vertex
-		 */
+	/**
+	 * Using this method to handle some computation when drop a vertex to Graph View
+	 *
+	 * @param event event The drag event containing information
+	 * @see VertexView
+	 * @see Vertex
+	 */
+	public void handleDroppedEvent(DragEvent event) {
+
 
 //		only allow vertex can be dragged & dropped, defined which Vertex are involved.
 		VertexView vertex = (VertexView) event.getGestureSource();
@@ -185,12 +179,16 @@ public class GraphView extends ScrollPane implements Loader {
 
 	}
 
+	/**
+	 * This method is handle when a VertexView moved
+	 * Update position of moved vertex by updating data in graph object then render new graph
+	 * first by calculating absolute size of moved vertex
+	 *
+	 * @param event The event itself, able to get the VertexView
+	 * @see VertexView
+	 */
 	public void handleVertexMove(VertexEvent event) {
-		/**
-		 * This method is handle when a VertexView moved
-		 * Update position of moved vertex by updating data in graph object then render new graph
-		 * first by calculating absolute size of moved vertex
-		 */
+
 		Vertex vertex = event.getVertexView().getVertex();
 		double absoluteX = syncAxeValue(
 				this.area.getWidth(), this.getViewportBounds().getWidth(),
@@ -211,6 +209,11 @@ public class GraphView extends ScrollPane implements Loader {
 		render();
 	}
 
+	/**
+	 * Using this function to handler event when user remove a vertex
+	 *
+	 * @param event the event itself
+	 */
 	public void vertexRemoveHandler(VertexEvent event) {
 		try {
 			System.out.println("Remove at graph View");
@@ -224,13 +227,18 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 	}
 
+	/**
+	 * handler rename action
+	 *
+	 * @param event the event itself
+	 */
 	public void vertexRenameHandler(VertexEvent event) {
 		try {
 			String vertexName = getVertexNameFromUser("Vertex name", "Enter new name for the vertex");
-			System.out.println(vertexName);
 			this.graph.renameVertex(event.getVertexView().getVertex(), vertexName);
-			this.logger.writeLog(String.format("Change name to: %s", vertexName));
-
+			this.logger.writeLog(String.format("Change name of the vertex from %s to: %s",
+					event.getVertexView().getVertex().getName(),
+					vertexName));
 		} catch (IllegalStateException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Error");
@@ -239,10 +247,16 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 	}
 
+	/**
+	 * handler add action
+	 *
+	 * @param event the event itself,
+	 */
 	public void vertexAddHandler(VertexEvent event) {
 		try {
 			String vertexName = getVertexNameFromUser("Vertex name", "Enter vertex name");
-			System.out.println(vertexName);
+
+//			sync the position where user open the context menu with origin (top left point of anchor)
 			double absoluteX = syncAxeValue(
 					this.area.getWidth(), this.getViewportBounds().getWidth(),
 					event.getRelativeX(), this.getHvalue()
@@ -263,6 +277,14 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 	}
 
+	/**
+	 * The utility function allow to pop-up a form and collect information, specially in collect vertex name
+	 *
+	 * @param headerText  Header of the popup
+	 * @param contentText Content of the popup
+	 * @return vertex name entered
+	 * @throws IllegalStateException Vertex name must be 1 or 2 letters & must be unique with existed with before
+	 */
 	private String getVertexNameFromUser(String headerText, String contentText) throws IllegalStateException {
 		TextInputDialog td = new TextInputDialog();
 		td.setHeaderText(headerText);
@@ -278,7 +300,26 @@ public class GraphView extends ScrollPane implements Loader {
 		return vertexName;
 	}
 
-	public void addHandler(ActionEvent event) {
+
+	/**
+	 * When user right-clicked to any point, a context menu will be showed up
+	 * Also provide where context menu was trigger (where user click) in userData field of ContextMenu
+	 * @param event The ContextMenu Event itself
+	 * @see ContextMenu
+	 */
+	public void contextMenuRequest(ContextMenuEvent event) {
+		this.getContextMenu().show(this, event.getScreenX(), event.getScreenY());
+//		pass local position data into context menu, make handler can use it
+		this.getContextMenu().setUserData(String.format("%f %f", event.getX(), event.getY()));
+	}
+
+	/**
+	 * Trigger when user click to add button in context menu and
+	 * create new VertexAdd Event with useful information
+	 *
+	 * @param event the event itself
+	 */
+	public void addContextMenuHandler(ActionEvent event) {
 		String data = (String) this.getContextMenu().getUserData();
 		double relativeX = Double.parseDouble(data.split(" ")[0]);
 		double relativeY = Double.parseDouble(data.split(" ")[1]);

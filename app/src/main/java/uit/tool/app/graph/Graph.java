@@ -213,7 +213,7 @@ public class Graph {
 	static public Graph sampleGraph() {
 		Vertex a = new Vertex("a", 200.0, 50.0);
 		Vertex b = new Vertex("b", 300.0, 350.0);
-		Vertex c = new Vertex("c", 1200.0, 50.0);
+		Vertex c = new Vertex("c", 450.0, 50.0);
 		Vertex d = new Vertex("d", 80.0, 450.0);
 		Vertex e = new Vertex("e", 100.0, 200.0);
 
@@ -235,19 +235,19 @@ public class Graph {
 		Edge ca = new Edge(c, a, 10);
 
 		ArrayList<Edge> E = new ArrayList<>();
-//		E.add(ab);
-//		E.add(ba);
-//		E.add(bc);
-//		E.add(de);
-//		E.add(ea);
-//		E.add(be);
+		E.add(ab);
+		E.add(ba);
+		E.add(bc);
+		E.add(de);
+		E.add(ea);
+		E.add(be);
 		E.add(ac);
-E.add(ca);
+		E.add(ca);
 
 		String homePath = System.getProperty("user.home");
 		String filepath = homePath + File.separator + "sample.graph";
 
-		return new Graph(V, E, new Setting("Sample", filepath, true,true));
+		return new Graph(V, E, new Setting("Sample", filepath, true, true));
 	}
 
 }

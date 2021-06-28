@@ -14,7 +14,7 @@
     <contextMenu>
         <ContextMenu>
            <items>
-               <MenuItem text="Add" onAction="#addHandler"/>
+               <MenuItem text="Add" onAction="#addContextMenuHandler"/>
            </items>
         </ContextMenu>
     </contextMenu>
