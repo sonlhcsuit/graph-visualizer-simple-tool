@@ -6,6 +6,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import uit.tool.app.components.Event.EdgeEvent;
+import uit.tool.app.components.Event.SettingEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.visualizerComponent.VisualizerView;
@@ -53,8 +54,13 @@ public class App extends BorderPane implements Loader {
 //		this.matrixView.setLogger(this.logger);
 //
 ////		Set up function for navigation
-		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
-		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
+//		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
+//		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
+
+
+		this.visualizerView.setGraph(Graph.sampleGraph());
+		System.out.println("why not fire event");
+		this.fireEvent(new SettingEvent(SettingEvent.CHANGE_NAME));
 //
 ////		Set event filter, whenever graph change, automatically render new view
 //		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);

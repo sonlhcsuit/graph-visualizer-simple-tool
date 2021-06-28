@@ -1,6 +1,7 @@
 package uit.tool.app.graph;
 
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class Graph {
 		}
 		this.name = name;
 	}
+
 	public Graph(ArrayList<Vertex> vertexes, ArrayList<Edge> edges, Setting setting) throws NullPointerException {
 		this(vertexes);
 		if (edges != null) {
@@ -205,7 +207,7 @@ public class Graph {
 				}
 			}
 		}
-		return new Graph(V,E,name);
+		return new Graph(V, E, name);
 	}
 
 	static public Graph sampleGraph() {
@@ -235,7 +237,12 @@ public class Graph {
 		E.add(ea);
 		E.add(be);
 		E.add(ac);
-		return new Graph(V, E, new Setting("Sample Graph","asd",false));
+
+
+		String homePath = System.getProperty("user.home");
+		String filepath = homePath + File.separator + "sample.graph";
+
+		return new Graph(V, E, new Setting("Sample", filepath, false));
 	}
 
 }

@@ -8,7 +8,9 @@ public class Setting {
 
 	}
 	Setting(String name,String filepath, boolean isChanges){
-
+		this.name = name;
+		this.filepath = filepath;
+		this.isChanges = isChanges;
 	}
 
 	public void setName(String name) {
