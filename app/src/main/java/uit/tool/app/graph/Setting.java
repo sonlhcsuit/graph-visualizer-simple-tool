@@ -3,15 +3,19 @@ package uit.tool.app.graph;
 public class Setting {
 	private String name;
 	private String filepath;
-	private boolean isChanges;
+	private boolean isWeighted;
+	private boolean isDirected;
+
 	Setting(){
 
 	}
-	Setting(String name,String filepath, boolean isChanges){
+	Setting(String name,String filepath, boolean isWeighted,boolean isDirected){
 		this.name = name;
 		this.filepath = filepath;
-		this.isChanges = isChanges;
+		this.isWeighted = isWeighted;
+		this.isDirected = isDirected;
 	}
+
 
 	public void setName(String name) {
 		this.name = name;
@@ -29,11 +33,19 @@ public class Setting {
 		return filepath;
 	}
 
-	public void setChanges(boolean changes) {
-		isChanges = changes;
+	public void setDirected(boolean directed) {
+		isDirected = directed;
 	}
 
-	public boolean isChanges() {
-		return isChanges;
+	public boolean isDirected() {
+		return isDirected;
+	}
+
+	public void setWeighted(boolean weighted) {
+		isWeighted = weighted;
+	}
+
+	public boolean isWeighted() {
+		return isWeighted;
 	}
 }

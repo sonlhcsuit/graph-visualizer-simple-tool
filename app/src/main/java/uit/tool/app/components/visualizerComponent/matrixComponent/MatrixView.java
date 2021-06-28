@@ -22,7 +22,6 @@ public class MatrixView extends GridPane implements Loader {
 	}
 
 	public void initialize() {
-		System.out.println("Matrix View init");
 	}
 
 	public void setGraph(Graph graph) {

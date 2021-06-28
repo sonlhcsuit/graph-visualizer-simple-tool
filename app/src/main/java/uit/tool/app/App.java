@@ -1,5 +1,6 @@
 package uit.tool.app;
 
+import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -9,6 +10,7 @@ import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.components.Event.SettingEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
+import uit.tool.app.components.menuComponent.Menu;
 import uit.tool.app.components.visualizerComponent.VisualizerView;
 import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
 import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
@@ -37,6 +39,8 @@ public class App extends BorderPane implements Loader {
 	private Navigation navigation;
 	@FXML
 	private Logger logger;
+	@FXML
+	private Menu menu;
 
 	private Graph graph;
 
@@ -46,7 +50,6 @@ public class App extends BorderPane implements Loader {
 	}
 
 	public void initialize() {
-		System.out.println("app");
 		isMenuOpen = true;
 		this.visualizerView.setLogger(this.logger);
 //
@@ -58,9 +61,26 @@ public class App extends BorderPane implements Loader {
 //		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
 
 
-		this.visualizerView.setGraph(Graph.sampleGraph());
-		System.out.println("why not fire event");
-		this.fireEvent(new SettingEvent(SettingEvent.CHANGE_NAME));
+		Graph g = Graph.sampleGraph();
+		this.visualizerView.setGraph(g);
+		this.menu.setSetting(g.getSetting());
+
+
+		Gson gson = new Gson();
+		System.out.println(gson.toJson(g.getSetting()));
+
+		this.addEventFilter(SettingEvent.SAVE_GRAPH,(SettingEvent event)->{
+			System.out.println("save name");
+
+		});
+
+		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED,(SettingEvent event)->{
+			System.out.println("toggle directed");
+		});
+
+		this.addEventFilter(SettingEvent.TOGGLE_WEIGHTED,(SettingEvent event)->{
+			System.out.println("toggle weighted");
+		});
 //
 ////		Set event filter, whenever graph change, automatically render new view
 //		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);

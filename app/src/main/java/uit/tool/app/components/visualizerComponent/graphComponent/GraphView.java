@@ -38,9 +38,6 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public void setLogger(Logger logger) {
-		System.out.println("logger");
-		System.out.println(logger);
-
 		this.logger = logger;
 	}
 
@@ -49,7 +46,6 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public void initialize() {
-		System.out.println("Graph View init");
 		this.setOnDragOver((DragEvent event) -> {
 			event.acceptTransferModes(TransferMode.MOVE);
 			event.consume();

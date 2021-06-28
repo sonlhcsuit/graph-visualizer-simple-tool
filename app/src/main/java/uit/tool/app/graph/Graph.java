@@ -242,7 +242,7 @@ public class Graph {
 		String homePath = System.getProperty("user.home");
 		String filepath = homePath + File.separator + "sample.graph";
 
-		return new Graph(V, E, new Setting("Sample", filepath, false));
+		return new Graph(V, E, new Setting("Sample", filepath, true,true));
 	}
 
 }

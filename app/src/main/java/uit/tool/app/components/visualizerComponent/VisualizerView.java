@@ -46,7 +46,6 @@ public class VisualizerView extends TabPane implements Loader {
 	}
 
 	public void initialize(){
-		System.out.println("visual");
 
 	}
 }
