@@ -1,9 +1,11 @@
 package uit.tool.app;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
@@ -20,7 +22,12 @@ public class Main extends Application {
 		primaryStage.setTitle("GVST - Untitled");
 		primaryStage.setScene(new Scene(root, 1080, 720));
 		primaryStage.setResizable(false);
+		primaryStage.setOnCloseRequest((WindowEvent event)->{
+			Platform.exit();
+			System.exit(0);
+		});
 		primaryStage.show();
+
 	}
 
 	public static void main(String[] args) {

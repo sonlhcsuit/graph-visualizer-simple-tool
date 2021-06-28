@@ -15,6 +15,7 @@ import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class GraphView extends ScrollPane implements Loader {
@@ -121,7 +122,9 @@ public class GraphView extends ScrollPane implements Loader {
 //		Render edge & weight on screen
 		double[][] matrix = this.graph.adjacencyMatrix();
 
-
+		for (double[] z : matrix) {
+			System.out.println(Arrays.toString(z));
+		}
 
 		int size = matrix.length;
 		for (int i = 0; i < size; i++) {
@@ -131,12 +134,7 @@ public class GraphView extends ScrollPane implements Loader {
 					EdgeView ev;
 					WeightedView wv = null;
 					if (matrix[i][j] != 0 && matrix[j][i] != 0) {
-						System.out.println("realyy");
-						if (i > j) {
-							ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC_UP, setting.isDirected());
-						} else {
-							ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC_DOWN, setting.isDirected());
-						}
+						ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], false);
 						}
@@ -286,5 +284,6 @@ public class GraphView extends ScrollPane implements Loader {
 		double relativeY = Double.parseDouble(data.split(" ")[1]);
 		this.fireEvent(new VertexEvent(VertexEvent.ADD, null, relativeX, relativeY));
 	}
+
 
 }
