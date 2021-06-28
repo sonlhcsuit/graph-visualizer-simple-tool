@@ -75,11 +75,11 @@ public class App extends BorderPane implements Loader {
 		});
 
 		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED,(SettingEvent event)->{
-			System.out.println("toggle directed");
+			this.visualizerView.render();
 		});
 
 		this.addEventFilter(SettingEvent.TOGGLE_WEIGHTED,(SettingEvent event)->{
-			System.out.println("toggle weighted");
+			this.visualizerView.render();
 		});
 //
 ////		Set event filter, whenever graph change, automatically render new view

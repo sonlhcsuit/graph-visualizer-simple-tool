@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
+import uit.tool.app.graph.Setting;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class GraphView extends ScrollPane implements Loader {
 
 	@FXML
-	private AnchorPane graphArea;
+	private AnchorPane area;
 	private Graph graph;
 
 	private Logger logger;
@@ -109,10 +110,13 @@ public class GraphView extends ScrollPane implements Loader {
 			return;
 		}
 
+
 		double maxOffsetX = 0;
 		double maxOffsetY = 0;
-		this.graphArea.getChildren().clear();
+		this.area.getChildren().clear();
 		ArrayList<Vertex> V = this.graph.getVertexes();
+
+		Setting setting = this.graph.getSetting();
 
 //		Render edge & weight on screen
 		double[][] matrix = this.graph.adjacencyMatrix();
@@ -120,10 +124,17 @@ public class GraphView extends ScrollPane implements Loader {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (i != j && matrix[i][j] != 0) {
-					EdgeView ev = new EdgeView(V.get(i), V.get(j));
-					WeightedView wv = new WeightedView(V.get(i), V.get(j), matrix[i][j]);
-					this.graphArea.getChildren().add(ev);
-					this.graphArea.getChildren().add(wv);
+					if (setting.isDirected()) {
+						EdgeView ev = new EdgeView(V.get(i), V.get(j),EdgeView.ARC_DOWN);
+						this.area.getChildren().add(ev);
+					}
+
+//					weighted
+					if (setting.isWeighted()) {
+						WeightedView wv = new WeightedView(V.get(i), V.get(j), matrix[i][j]);
+						this.area.getChildren().add(wv);
+					}
+
 				}
 			}
 		}
@@ -135,13 +146,13 @@ public class GraphView extends ScrollPane implements Loader {
 //		}
 
 		for (Vertex v : V) {
-			this.graphArea.getChildren().add(new VertexView(v));
+			this.area.getChildren().add(new VertexView(v));
 			maxOffsetX = Math.max(maxOffsetX, v.getX());
 			maxOffsetY = Math.max(maxOffsetY, v.getY());
 		}
 
-		this.graphArea.setPrefWidth(maxOffsetX + 100);
-		this.graphArea.setPrefHeight(maxOffsetY + 100);
+		this.area.setPrefWidth(maxOffsetX + 100);
+		this.area.setPrefHeight(maxOffsetY + 100);
 	}
 
 	private void handleDroppedEvent(DragEvent event) {
@@ -171,11 +182,11 @@ public class GraphView extends ScrollPane implements Loader {
 		 */
 		Vertex vertex = event.getVertexView().getVertex();
 		double absoluteX = syncAxeValue(
-				this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
+				this.area.getWidth(), this.getViewportBounds().getWidth(),
 				event.getRelativeX(), this.getHvalue()
 		) - 20;
 		double absoluteY = syncAxeValue(
-				this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
+				this.area.getHeight(), this.getViewportBounds().getHeight(),
 				event.getRelativeY(), this.getVvalue()
 		) - 20;
 
@@ -207,7 +218,7 @@ public class GraphView extends ScrollPane implements Loader {
 			String vertexName = getVertexNameFromUser("Vertex name", "Enter new name for the vertex");
 			System.out.println(vertexName);
 			this.graph.renameVertex(event.getVertexView().getVertex(), vertexName);
-			this.logger.writeLog(String.format("Change name to: %s",vertexName));
+			this.logger.writeLog(String.format("Change name to: %s", vertexName));
 
 		} catch (IllegalStateException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -222,16 +233,16 @@ public class GraphView extends ScrollPane implements Loader {
 			String vertexName = getVertexNameFromUser("Vertex name", "Enter vertex name");
 			System.out.println(vertexName);
 			double absoluteX = syncAxeValue(
-					this.graphArea.getWidth(), this.getViewportBounds().getWidth(),
+					this.area.getWidth(), this.getViewportBounds().getWidth(),
 					event.getRelativeX(), this.getHvalue()
 			) - 20;
 			double absoluteY = syncAxeValue(
-					this.graphArea.getHeight(), this.getViewportBounds().getHeight(),
+					this.area.getHeight(), this.getViewportBounds().getHeight(),
 					event.getRelativeY(), this.getVvalue()
 			) - 20;
 			Vertex vertex = new Vertex(vertexName, absoluteX, absoluteY);
 			this.graph.addVertex(vertex);
-			this.logger.writeLog(String.format("Add vertex: %s",vertexName));
+			this.logger.writeLog(String.format("Add vertex: %s", vertexName));
 
 		} catch (IllegalStateException e) {
 			Alert alert = new Alert(Alert.AlertType.ERROR);

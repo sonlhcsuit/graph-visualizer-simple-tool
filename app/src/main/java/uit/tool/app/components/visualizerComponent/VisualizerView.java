@@ -48,4 +48,7 @@ public class VisualizerView extends TabPane implements Loader {
 	public void initialize(){
 
 	}
+	public void render(){
+		this.graphView.render();
+	}
 }
