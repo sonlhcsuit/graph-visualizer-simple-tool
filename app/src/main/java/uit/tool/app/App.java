@@ -1,14 +1,11 @@
 package uit.tool.app;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import uit.tool.app.components.Event.EdgeEvent;
 import uit.tool.app.components.Event.SettingEvent;
 import uit.tool.app.components.Event.UserEvent;
@@ -16,28 +13,16 @@ import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.menuComponent.Menu;
 import uit.tool.app.components.visualizerComponent.VisualizerView;
-import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
-import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.components.navigationComponent.Navigation;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 
 public class App extends BorderPane implements Loader {
 
-
-	private boolean isMenuOpen;
-	//	@FXML
-//	private Label hehe;
-//	@FXML
-//	private ImageView img;
-//	@FXML
-//	private VBox side;
 	@FXML
 	private VisualizerView visualizerView;
 	@FXML
@@ -61,14 +46,7 @@ public class App extends BorderPane implements Loader {
 	}
 
 	public void initialize() {
-		isMenuOpen = true;
 		this.visualizerView.setLogger(this.logger);
-
-//		Graph g = Graph.sampleGraph();
-//		this.graph = g;
-//		this.visualizerView.setGraph(g);
-//		this.menu.setSetting(g.getSetting());
-
 
 		this.addEventFilter(UserEvent.SAVE_GRAPH, this::saveGraphUserEventHandler);
 		this.addEventFilter(UserEvent.NEW_GRAPH, this::newGraphUserEventHandler);
@@ -112,6 +90,15 @@ public class App extends BorderPane implements Loader {
 
 
 	private void newGraphUserEventHandler(UserEvent event) {
+		if (this.graph != null) {
+			ButtonType choice = showConfirm("Are you want to save the graph?");
+			if (choice == ButtonType.YES) {
+				saveGraphUserEventHandler(null);
+			}
+			if (choice == ButtonType.CANCEL || choice == ButtonType.CLOSE) {
+				return;
+			}
+		}
 		Graph g = new Graph();
 		this.setGraph(g);
 	}
@@ -131,7 +118,7 @@ public class App extends BorderPane implements Loader {
 			this.setGraph(g);
 			System.out.println("Open a graph");
 		} catch (IllegalStateException | IOException | JsonSyntaxException e) {
-			showError("Error", e.getMessage());
+			showError(e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -178,11 +165,18 @@ public class App extends BorderPane implements Loader {
 
 	}
 
-	private void showError(String title, String content) {
+	private void showError(String content) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle(title);
+		alert.setTitle("Error");
 		alert.setContentText(content);
 		alert.showAndWait();
+	}
+
+	private ButtonType showConfirm(String content) {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+		alert.setTitle("Confirmation");
+		alert.showAndWait();
+		return alert.getResult();
 	}
 
 }

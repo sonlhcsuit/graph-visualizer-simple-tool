@@ -7,6 +7,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import uit.tool.app.components.Event.SettingEvent;
+import uit.tool.app.components.Event.UserEvent;
 import uit.tool.app.components.Event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
@@ -320,6 +322,11 @@ public class GraphView extends ScrollPane implements Loader {
 	 * @param event the event itself
 	 */
 	public void addContextMenuHandler(ActionEvent event) {
+		if (this.graph == null){
+			Alert alert = new Alert(Alert.AlertType.ERROR,"Create graph before add any vertex");
+			alert.showAndWait();
+			return;
+		}
 		String data = (String) this.getContextMenu().getUserData();
 		double relativeX = Double.parseDouble(data.split(" ")[0]);
 		double relativeY = Double.parseDouble(data.split(" ")[1]);
@@ -327,4 +334,12 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 
+	public void newContextMenuHandler(ActionEvent event) {
+		this.fireEvent(new UserEvent(UserEvent.NEW_GRAPH));
+	}
+
+	public void clearContextMenuHandler(ActionEvent event) {
+		System.out.println("clear");
+
+	}
 }
