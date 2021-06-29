@@ -6,14 +6,27 @@ public class Setting {
 	private boolean isWeighted;
 	private boolean isDirected;
 
-	Setting(){
-
-	}
-	Setting(String name,String filepath, boolean isWeighted,boolean isDirected){
+	Setting(String name, String filepath, boolean isWeighted, boolean isDirected) {
 		this.name = name;
 		this.filepath = filepath;
 		this.isWeighted = isWeighted;
 		this.isDirected = isDirected;
+	}
+
+	Setting() {
+		this("blank", null, true, true);
+	}
+
+	Setting(String name) {
+		this(name, null, true, true);
+	}
+
+	Setting(String name, String filepath) {
+		this(name, filepath, true, true);
+	}
+
+	Setting(String name, String filepath, boolean isWeighted) {
+		this(name, filepath, isWeighted, true);
 	}
 
 

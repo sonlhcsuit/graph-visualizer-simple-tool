@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import uit.tool.app.components.Event.SettingEvent;
+import uit.tool.app.components.Event.UserEvent;
 import uit.tool.app.graph.Setting;
 import uit.tool.app.interfaces.Loader;
 
@@ -32,12 +33,14 @@ public class Menu extends VBox implements Loader {
 
 	public void initialize() {
 
-		this.saveButton.setOnMouseClicked((MouseEvent event) -> {
-			this.setting.setName(this.nameTextField.getText().strip());
-			this.setting.setDirected(this.directCheckbox.isSelected());
-			this.setting.setWeighted(this.weightCheckbox.isSelected());
-			this.fireEvent(new SettingEvent(SettingEvent.SAVE_GRAPH, null));
+
+		this.nameTextField.textProperty().addListener((obs, oldV, newV) -> {
+			this.setting.setName(newV);
 		});
+		this.saveButton.setOnMouseClicked((MouseEvent event) -> {
+			this.fireEvent(new UserEvent(UserEvent.SAVE_GRAPH));
+		});
+
 
 		this.weightCheckbox.selectedProperty().addListener(((observable, oldValue, newValue) -> {
 			this.setting.setWeighted(newValue);

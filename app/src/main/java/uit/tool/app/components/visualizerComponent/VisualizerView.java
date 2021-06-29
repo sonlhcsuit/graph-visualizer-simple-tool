@@ -49,5 +49,6 @@ public class VisualizerView extends TabPane implements Loader {
 	}
 	public void render(){
 		this.graphView.render();
+		this.matrixView.render();
 	}
 }

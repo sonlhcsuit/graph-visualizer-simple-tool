@@ -54,33 +54,23 @@ public class App extends BorderPane implements Loader {
 		Loader.loadFXML(this);
 	}
 
+	public void setGraph(Graph graph) {
+		this.graph = graph;
+		this.visualizerView.setGraph(this.graph);
+		this.menu.setSetting(this.graph.getSetting());
+	}
+
 	public void initialize() {
 		isMenuOpen = true;
 		this.visualizerView.setLogger(this.logger);
-//
-//		this.graphView.setLogger(this.logger);
-//		this.matrixView.setLogger(this.logger);
-//
-////		Set up function for navigation
-//		this.navigation.getOpenFunc().setMenuFunction(this.openGraph);
-//		this.navigation.getSaveFunc().setMenuFunction(this.saveGraph);
+
+//		Graph g = Graph.sampleGraph();
+//		this.graph = g;
+//		this.visualizerView.setGraph(g);
+//		this.menu.setSetting(g.getSetting());
 
 
-		Graph g = Graph.sampleGraph();
-		this.graph = g;
-		this.visualizerView.setGraph(g);
-		this.menu.setSetting(g.getSetting());
-
-
-		this.addEventFilter(SettingEvent.SAVE_GRAPH, (SettingEvent event) -> {
-			try {
-				Graph.save(this.graph);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-
-
+		this.addEventFilter(UserEvent.SAVE_GRAPH, this::saveGraphUserEventHandler);
 		this.addEventFilter(UserEvent.NEW_GRAPH, this::newGraphUserEventHandler);
 		this.addEventFilter(UserEvent.OPEN_GRAPH, this::openGraphUserEventHandler);
 		this.addEventFilter(UserEvent.SAVE_AS_GRAPH, this::saveAsUserEventHandler);
@@ -94,44 +84,37 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(SettingEvent.TOGGLE_WEIGHTED, (SettingEvent event) -> {
 			this.visualizerView.render();
 		});
-//
-////		Set event filter, whenever graph change, automatically render new view
-//		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
-//		this.addEventHandler(VertexEvent.REMOVE, this::removeEventHandler);
-//		this.addEventHandler(VertexEvent.RENAME, this::renameEventHandler);
-//		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
-	}
-//
-//	private void updateGraph(Graph g) {
-//		this.graph = g;
-//		this.graphView.setGraph(g);
-//		this.matrixView.setGraph(g);
-//		this.graphView.render();
-//		this.matrixView.render();
-//	}
-//
-//	public void weightHandler(EdgeEvent event) {
-//		this.graph.updateEdge(event.getRow(), event.getCol(), event.getWeight());
-//		this.graphView.render();
-//	}
-//
-//	private void addEventFilter(VertexEvent event) {
-//		System.out.println("hihi");
-//		render();
-//	}
 
-//	private void renameEventHandler(VertexEvent event) {
-//		render();
-//	}
-//
-//	private void removeEventHandler(VertexEvent event) {
-//		render();
-//	}
-//
-//	public void render() {
-//		this.graphView.render();
-//		this.matrixView.render();
-//	}
+//		Set event filter, whenever graph change, automatically render new view
+		this.addEventHandler(EdgeEvent.UPDATE_WEIGHT, this::weightHandler);
+		this.addEventHandler(VertexEvent.REMOVE, this::removeEventHandler);
+		this.addEventHandler(VertexEvent.RENAME, this::renameEventHandler);
+		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
+	}
+
+
+	public void weightHandler(EdgeEvent event) {
+		this.graph.updateEdge(event.getRow(), event.getCol(), event.getWeight());
+		this.visualizerView.render();
+	}
+
+	private void addEventFilter(VertexEvent event) {
+		this.visualizerView.render();
+	}
+
+	private void renameEventHandler(VertexEvent event) {
+		this.visualizerView.render();
+	}
+
+	private void removeEventHandler(VertexEvent event) {
+		this.visualizerView.render();
+	}
+
+
+	private void newGraphUserEventHandler(UserEvent event) {
+		Graph g = new Graph();
+		this.setGraph(g);
+	}
 
 	private void openGraphUserEventHandler(UserEvent event) {
 		FileChooser fc = new FileChooser();
@@ -145,10 +128,8 @@ public class App extends BorderPane implements Loader {
 		File file = fc.showOpenDialog(null);
 		try {
 			Graph g = Graph.load(file.getAbsolutePath());
-			this.visualizerView.setGraph(g);
-			Stage primStage = (Stage) getScene().getWindow();
-			primStage.setTitle(String.format("GVST - %s", g.getSetting().getName()));
-
+			this.setGraph(g);
+			System.out.println("Open a graph");
 		} catch (IllegalStateException | IOException | JsonSyntaxException e) {
 			showError("Error", e.getMessage());
 			e.printStackTrace();
@@ -157,33 +138,9 @@ public class App extends BorderPane implements Loader {
 		}
 	}
 
-	private void showError(String title, String content) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle(title);
-		alert.setContentText(content);
-		alert.showAndWait();
-	}
-
-	private void newGraphUserEventHandler(UserEvent event) {
-
-	}
-
 	private void saveAsUserEventHandler(UserEvent event) {
-
-	}
-
-	private void saveGraphUserEventHandler(UserEvent event) {
-
-	}
-
-	private void settingUserEventHandler(UserEvent event) {
-
-	}
-
-
-	private final Callback<Void, Void> saveGraph = (unused) -> {
 		FileChooser fc = new FileChooser();
-		fc.setTitle("Save graph");
+		fc.setTitle("Save graph as");
 		fc.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Graph Files (*.graph)", "*.graph"),
 				new FileChooser.ExtensionFilter("All Files", "?.*")
@@ -193,15 +150,39 @@ public class App extends BorderPane implements Loader {
 		File f = fc.showSaveDialog(null);
 		if (f != null) {
 			try {
-				FileWriter fw = new FileWriter(f.getAbsolutePath());
-				String data = Graph.convertToFileString(graph, "Graph A");
-				fw.write(data);
-				fw.close();
+				String fp = f.getAbsolutePath();
+				this.graph.getSetting().setFilepath(fp);
+				Graph.save(this.graph);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
-		return null;
-	};
+	}
+
+	private void saveGraphUserEventHandler(UserEvent event) {
+		try {
+			if (this.graph == null) {
+				System.out.println("graph is null");
+			}
+			if (this.graph.getSetting().getFilepath() == null) {
+				saveAsUserEventHandler(null);
+			} else {
+				Graph.save(this.graph);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void settingUserEventHandler(UserEvent event) {
+
+	}
+
+	private void showError(String title, String content) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
 }

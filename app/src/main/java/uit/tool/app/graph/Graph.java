@@ -15,6 +15,12 @@ public class Graph {
 	double[][] matrix;
 	private String name;
 
+	public Graph() {
+		vertexes = new ArrayList<>();
+		this.matrix = new double[0][0];
+		this.setting = new Setting();
+	}
+
 	Graph(ArrayList<Vertex> vertexes) throws NullPointerException {
 		if (vertexes == null) {
 			throw new NullPointerException("Must provided at least 1 vertex");
@@ -160,21 +166,6 @@ public class Graph {
 		return matrix;
 	}
 
-	static public String convertToFileString(Graph g, String name) {
-		String metadata = String.format("Name: %s", name);
-		String numberVertex = String.format("Number of Vertex: %d", g.vertexes.size());
-		StringBuilder vertexes = new StringBuilder();
-		for (Vertex v : g.vertexes) {
-			vertexes.append(v.toFileString()).append("\n");
-		}
-
-		StringBuilder edges = new StringBuilder();
-		for (double[] row : g.matrix) {
-			edges.append(Arrays.toString(row)).append("\n");
-		}
-		return String.format("%s\n%s\n%s%s", metadata, numberVertex, vertexes.toString(), edges.toString());
-	}
-
 	static public Graph load(String filepath) throws IllegalStateException, IOException, JsonSyntaxException {
 		File file = new File(filepath);
 		if (!file.exists()) {
@@ -186,15 +177,13 @@ public class Graph {
 
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		StringBuilder builder = new StringBuilder();
-		String line;
-		do {
-			line = reader.readLine();
+		String line = "";
+		while (line != null) {
 			builder.append(line);
-		} while (line != null);
+			line = reader.readLine();
+		}
 		reader.close();
-
 		Gson gson = new Gson();
-		System.out.println();
 		return gson.fromJson(builder.toString(), Graph.class);
 	}
 
@@ -205,6 +194,7 @@ public class Graph {
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(graph);
+		System.out.println(json);
 		FileWriter fileWriter = new FileWriter(filePath);
 		fileWriter.write(json);
 		fileWriter.close();
