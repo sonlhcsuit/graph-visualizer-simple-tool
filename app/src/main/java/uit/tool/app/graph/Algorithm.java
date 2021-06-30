@@ -1,5 +1,6 @@
 package uit.tool.app.graph;
 
+import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.animation.Visited;
 
 import java.util.ArrayList;
@@ -31,9 +32,11 @@ public class Algorithm {
 
 	}
 
-	public static ArrayList<String> DFS(Graph graph) {
-		System.out.println("run dfs");
- 		ArrayList<String> vertexes = new ArrayList<>(graph.getVertexNames());
+	public static ArrayList<VertexAnimation> DFS(Graph graph) {
+
+		ArrayList<VertexAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> V = graph.getVertexes();
+		ArrayList<String> vertexes = new ArrayList<>(graph.getVertexNames());
 //
 		ArrayList<String> visited = new ArrayList<>(vertexes.size());
 		Stack<String> frontier = new Stack<>();
@@ -50,11 +53,13 @@ public class Algorithm {
 					}
 				}
 			}
+
+			animations.add(new Visited(V.get(vertexes.indexOf(v))));
 			visited.add(v);
 		}
-
+		System.out.println(visited);
 //		thứ tự chạy các animation tương ứng từng cạnh hoặc đỉnh
-		return visited;
+		return animations;
 
 	}
 }

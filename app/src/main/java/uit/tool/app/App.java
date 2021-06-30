@@ -6,7 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
-import uit.tool.app.components.animation.Visited;
+import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.event.*;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.menuComponent.Menu;
@@ -71,8 +71,8 @@ public class App extends BorderPane implements Loader {
 		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
 
 //		animation
-		this.addEventFilter(AnimationEvent.DFS, this::DFS_Handler);
-		this.addEventFilter(AnimationEvent.BFS, this::BFS_Handler);
+		this.addEventFilter(AlgorithmEvent.DFS, this::DFS_Handler);
+		this.addEventFilter(AlgorithmEvent.BFS, this::BFS_Handler);
 
 		try {
 			this.setGraph(Graph.load("/Users/sonlh/Untitled.graph"));
@@ -195,12 +195,12 @@ public class App extends BorderPane implements Loader {
 
 //	Animation
 
-	private void DFS_Handler(AnimationEvent event){
-		ArrayList<String> visited = Algorithm.DFS(this.graph);
+	private void DFS_Handler(AlgorithmEvent event){
+		ArrayList<VertexAnimation> visited = Algorithm.DFS(this.graph);
 		this.visualizerView.renderAnimation(visited);
 	}
 
-	private void BFS_Handler(AnimationEvent event){
+	private void BFS_Handler(AlgorithmEvent event){
 		Algorithm.BFS(this.graph);
 	}
 }

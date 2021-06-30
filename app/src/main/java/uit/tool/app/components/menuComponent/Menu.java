@@ -6,7 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import uit.tool.app.components.event.AnimationEvent;
+import uit.tool.app.components.event.AlgorithmEvent;
 import uit.tool.app.components.event.SettingEvent;
 import uit.tool.app.components.event.UserEvent;
 import uit.tool.app.graph.Setting;
@@ -73,9 +73,9 @@ public class Menu extends VBox implements Loader {
 		Object source = event.getSource();
 
 		if (DFS.equals(source)) {
-			this.fireEvent(new AnimationEvent(AnimationEvent.DFS));
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DFS));
 		} else if (BFS.equals(source)) {
-			this.fireEvent(new AnimationEvent(AnimationEvent.BFS));
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.BFS));
 		}
 	}
 }

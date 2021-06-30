@@ -4,16 +4,16 @@ import javafx.animation.FillTransition;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
+import uit.tool.app.graph.Vertex;
 
 
-public class Visited {
+public class Visited extends VertexAnimation {
 
-	private final FillTransition ft;
-	public Visited(VertexView v) {
-		this.ft = new FillTransition(Duration.millis(1000),v.getCircle(), Color.BLACK, Color.GRAY);
+//	private final FillTransition ft;
+	public Visited(Vertex v) {
+		super(v);
+		getFillTransition().setToValue(Color.GREEN);
 	}
 
-	public void play() {
-		this.ft.play();
-	}
+
 }

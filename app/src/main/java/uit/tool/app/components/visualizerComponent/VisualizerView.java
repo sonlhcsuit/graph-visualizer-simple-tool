@@ -3,9 +3,11 @@ package uit.tool.app.components.visualizerComponent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import uit.tool.app.components.Logger;
+import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
 import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.graph.Graph;
+import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class VisualizerView extends TabPane implements Loader {
 		this.matrixView.render();
 	}
 
-	public void renderAnimation(ArrayList<String> sequence ){
+	public void renderAnimation(ArrayList<VertexAnimation> sequence ){
 		this.graphView.renderAnimation(sequence);
 	}
 }
