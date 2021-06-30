@@ -10,9 +10,7 @@ public class Visited {
 
 	private final FillTransition ft;
 	public Visited(VertexView v) {
-		this.ft = new FillTransition(Duration.millis(3000),v.getCircle(), Color.BLACK, Color.GRAY);
-		ft.setCycleCount(4);
-		ft.setAutoReverse(true);
+		this.ft = new FillTransition(Duration.millis(1000),v.getCircle(), Color.BLACK, Color.GRAY);
 	}
 
 	public void play() {
