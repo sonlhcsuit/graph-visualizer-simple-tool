@@ -53,6 +53,7 @@ public class Algorithm {
 			visited.add(v);
 		}
 
+//		thứ tự chạy các animation tương ứng từng cạnh hoặc đỉnh
 		return visited;
 
 	}
