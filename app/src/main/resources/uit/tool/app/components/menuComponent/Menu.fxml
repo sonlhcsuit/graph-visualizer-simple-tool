@@ -62,8 +62,8 @@
             <padding>
                 <Insets top="10" bottom="10"/>
             </padding>
-            <AlgorithmButton text="Button 1" row="0" col="0" fx:id="sample"/>
-            <AlgorithmButton text="Button 1" row="0" col="1"/>
+            <AlgorithmButton text="DFS" row="0" col="0" fx:id="DFS"/>
+            <AlgorithmButton text="BFS" row="0" col="1" fx:id="BFS"/>
             <AlgorithmButton text="Button 1" row="1" col="0"/>
             <AlgorithmButton text="Button 1" row="1" col="1"/>
             <AlgorithmButton text="Button 1" row="2" col="0"/>

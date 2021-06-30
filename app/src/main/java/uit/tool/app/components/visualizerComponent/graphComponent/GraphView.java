@@ -1,15 +1,17 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import uit.tool.app.components.Event.SettingEvent;
-import uit.tool.app.components.Event.UserEvent;
-import uit.tool.app.components.Event.VertexEvent;
+import uit.tool.app.components.animation.Visited;
+import uit.tool.app.components.event.UserEvent;
+import uit.tool.app.components.event.VertexEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Setting;
@@ -17,7 +19,6 @@ import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class GraphView extends ScrollPane implements Loader {
@@ -102,6 +103,32 @@ public class GraphView extends ScrollPane implements Loader {
 
 		return differenceAxe + relative;
 	}
+
+	public VertexView getVertexViewOf(Vertex v) {
+		System.out.println(v);
+		ObservableList<Node> child = this.area.getChildren();
+		for (Node c : child) {
+			if (c.equals(new VertexView(v))) {
+				return (VertexView) c;
+			}
+		}
+		return null;
+	}
+
+	public void renderAnimation(ArrayList<String> sequence) {
+		ArrayList<Vertex> V = this.graph.getVertexes();
+		ArrayList<String> vertexes = new ArrayList<>(this.graph.getVertexNames());
+		System.out.println(vertexes);
+
+		for(String name:sequence){
+			int vIndex = vertexes.indexOf(name);
+			Vertex vertex = V.get(vIndex);
+			VertexView vw = getVertexViewOf(vertex);
+			Visited vs = new Visited(vw);
+			vs.play();
+		}
+	}
+
 
 	/**
 	 * Using this method to render visual part of graph
@@ -204,11 +231,10 @@ public class GraphView extends ScrollPane implements Loader {
 		this.graph.updateVertexPosition(vertex, absoluteX, absoluteY);
 		try {
 			this.logger.writeLog(String.format("Moved: %.2f %.2f", absoluteX, absoluteY));
+			render();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		render();
 	}
 
 	/**
@@ -306,6 +332,7 @@ public class GraphView extends ScrollPane implements Loader {
 	/**
 	 * When user right-clicked to any point, a context menu will be showed up
 	 * Also provide where context menu was trigger (where user click) in userData field of ContextMenu
+	 *
 	 * @param event The ContextMenu Event itself
 	 * @see ContextMenu
 	 */
@@ -322,8 +349,8 @@ public class GraphView extends ScrollPane implements Loader {
 	 * @param event the event itself
 	 */
 	public void addContextMenuHandler(ActionEvent event) {
-		if (this.graph == null){
-			Alert alert = new Alert(Alert.AlertType.ERROR,"Create graph before add any vertex");
+		if (this.graph == null) {
+			Alert alert = new Alert(Alert.AlertType.ERROR, "Create graph before add any vertex");
 			alert.showAndWait();
 			return;
 		}

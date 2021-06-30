@@ -1,4 +1,4 @@
-package uit.tool.app.components.Event;
+package uit.tool.app.components.event;
 
 
 import javafx.event.Event;

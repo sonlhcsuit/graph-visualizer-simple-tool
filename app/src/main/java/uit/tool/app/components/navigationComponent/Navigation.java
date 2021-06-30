@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
-import uit.tool.app.components.Event.UserEvent;
+import uit.tool.app.components.event.UserEvent;
 import uit.tool.app.interfaces.Loader;
 
 public class Navigation extends VBox implements Loader {

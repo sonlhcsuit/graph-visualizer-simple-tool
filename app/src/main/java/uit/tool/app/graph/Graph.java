@@ -168,6 +168,7 @@ public class Graph {
 
 	static public Graph load(String filepath) throws IllegalStateException, IOException, JsonSyntaxException {
 		File file = new File(filepath);
+
 		if (!file.exists()) {
 			throw new IOException("File didnt' not exist!");
 		}
@@ -178,10 +179,12 @@ public class Graph {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		StringBuilder builder = new StringBuilder();
 		String line = "";
+
 		while (line != null) {
 			builder.append(line);
 			line = reader.readLine();
 		}
+
 		reader.close();
 		Gson gson = new Gson();
 		return gson.fromJson(builder.toString(), Graph.class);
@@ -192,9 +195,9 @@ public class Graph {
 		if ("".equals(filePath) || filePath == null) {
 			throw new IllegalStateException("File path was not specified!");
 		}
+
 		Gson gson = new Gson();
 		String json = gson.toJson(graph);
-		System.out.println(json);
 		FileWriter fileWriter = new FileWriter(filePath);
 		fileWriter.write(json);
 		fileWriter.close();

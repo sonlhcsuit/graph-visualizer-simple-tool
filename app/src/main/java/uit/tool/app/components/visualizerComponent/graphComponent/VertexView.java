@@ -1,5 +1,7 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
+import javafx.animation.FillTransition;
+import javafx.animation.Transition;
 import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -10,16 +12,22 @@ import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import uit.tool.app.components.Event.VertexEvent;
+import javafx.scene.shape.Circle;
+import uit.tool.app.components.event.VertexEvent;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
+
+import java.util.Objects;
 
 
 public class VertexView extends StackPane implements Loader {
 	@FXML
 	Label vName;
+	@FXML
+	Circle circle;
 	ContextMenu ctm;
 	private Vertex vertex;
+
 
 	public VertexView(@NamedArg(value = "x", defaultValue = "0") double x,
 					  @NamedArg(value = "y", defaultValue = "0") double y,
@@ -37,6 +45,14 @@ public class VertexView extends StackPane implements Loader {
 
 	public Vertex getVertex() {
 		return vertex;
+	}
+
+	public Circle getCircle() {
+		return circle;
+	}
+
+	public void setCircle(Circle circle) {
+		this.circle = circle;
 	}
 
 	private Image setUpImage() {
@@ -95,4 +111,18 @@ public class VertexView extends StackPane implements Loader {
 		ctm.getItems().addAll(rename, remove);
 		return ctm;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		System.out.println("run equal");
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		VertexView that = (VertexView) o;
+		return Objects.equals(vertex, that.vertex);
+	}
+//
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(vName, circle, ctm, vertex);
+//	}
 }

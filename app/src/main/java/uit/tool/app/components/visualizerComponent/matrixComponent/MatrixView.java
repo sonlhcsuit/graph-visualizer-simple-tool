@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import uit.tool.app.components.Event.EdgeEvent;
+import uit.tool.app.components.event.EdgeEvent;
 import uit.tool.app.components.Logger;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;

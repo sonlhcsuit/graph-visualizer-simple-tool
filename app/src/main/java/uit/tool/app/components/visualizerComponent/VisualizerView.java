@@ -8,6 +8,8 @@ import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.interfaces.Loader;
 
+import java.util.ArrayList;
+
 public class VisualizerView extends TabPane implements Loader {
 	@FXML
 	private GraphView graphView;
@@ -50,5 +52,9 @@ public class VisualizerView extends TabPane implements Loader {
 	public void render(){
 		this.graphView.render();
 		this.matrixView.render();
+	}
+
+	public void renderAnimation(ArrayList<String> sequence ){
+		this.graphView.renderAnimation(sequence);
 	}
 }
