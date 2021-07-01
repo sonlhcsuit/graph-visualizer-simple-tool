@@ -201,6 +201,7 @@ public class App extends BorderPane implements Loader {
 	}
 
 	private void BFS_Handler(AlgorithmEvent event){
-		Algorithm.BFS(this.graph);
+		ArrayList<VertexAnimation> visited = Algorithm.BFS(this.graph);
+		this.visualizerView.renderAnimation(visited);
 	}
 }
