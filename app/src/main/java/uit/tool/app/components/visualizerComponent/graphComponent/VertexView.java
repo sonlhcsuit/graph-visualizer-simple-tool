@@ -114,7 +114,6 @@ public class VertexView extends StackPane implements Loader {
 
 	@Override
 	public boolean equals(Object o) {
-		System.out.println("run equal");
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		VertexView that = (VertexView) o;

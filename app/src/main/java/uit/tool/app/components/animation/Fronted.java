@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
 
-public class Frontier extends VertexAnimation{
-	public Frontier(VertexView v) {
+public class Fronted extends VertexAnimation{
+	public Fronted(VertexView v) {
 	}
 }

@@ -1,5 +1,6 @@
 package uit.tool.app.components.animation;
 
+import javafx.animation.Transition;
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Vertex;
 
@@ -24,4 +25,13 @@ public class EdgeAnimation extends VisualAnimation{
 		return edge;
 	}
 
+	@Override
+	public Transition getTransition() {
+		return null;
+	}
+
+	@Override
+	public void setTransition(Transition transition) {
+
+	}
 }

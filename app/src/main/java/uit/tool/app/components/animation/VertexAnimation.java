@@ -1,6 +1,7 @@
 package uit.tool.app.components.animation;
 
 import javafx.animation.FillTransition;
+import javafx.animation.Transition;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
@@ -30,18 +31,26 @@ public class VertexAnimation extends VisualAnimation{
 		this.vertex = vertex;
 	}
 
-	public FillTransition getFillTransition() {
+	@Override
+	public Transition getTransition() {
 		return fillTransition;
 	}
 
-	public void setFillTransition(FillTransition fillTransition) {
-		this.fillTransition = fillTransition;
+	@Override
+	public void setTransition(Transition transition) {
+		this.fillTransition = (FillTransition) transition;
 	}
 
 	public void setTarget(VertexView target) {
 		this.target = target;
 		this.fillTransition.setShape(target.getCircle());
 	}
+
+	public VertexView getTarget() {
+		return target;
+	}
+
+
 
 	@Override
 	public void play() {

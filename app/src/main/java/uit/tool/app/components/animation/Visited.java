@@ -9,11 +9,14 @@ import uit.tool.app.graph.Vertex;
 
 public class Visited extends VertexAnimation {
 
-//	private final FillTransition ft;
+	//	private final FillTransition ft;
 	public Visited(Vertex v) {
 		super(v);
-		getFillTransition().setToValue(Color.GREEN);
+		((FillTransition) getTransition()).setToValue(Color.GREEN);
 	}
 
-
+	@Override
+	public String toString() {
+		return String.format("%s@%s{target:%s}", getClass().getSimpleName(), Integer.toHexString(hashCode()), getVertex());
+	}
 }

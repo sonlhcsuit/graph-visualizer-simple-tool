@@ -9,6 +9,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import uit.tool.app.components.animation.AnimationOrder;
+import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.animation.Visited;
 import uit.tool.app.components.event.UserEvent;
 import uit.tool.app.components.event.VertexEvent;
@@ -115,21 +117,32 @@ public class GraphView extends ScrollPane implements Loader {
 		return null;
 	}
 
-	public void renderAnimation(ArrayList<String> sequence) {
-		System.out.println(sequence);
-		ArrayList<Vertex> V = this.graph.getVertexes();
-		ArrayList<String> vertexes = new ArrayList<>(this.graph.getVertexNames());
+	public void renderAnimation(ArrayList<VertexAnimation> sequence) {
 
+//		matching child
 
-
-
-		for(String name:sequence){
-			int vIndex = vertexes.indexOf(name);
-			Vertex vertex = V.get(vIndex);
-			VertexView vw = getVertexViewOf(vertex);
-			Visited vs = new Visited(vw);
-			vs.play();
+		for (VertexAnimation v : sequence) {
+			System.out.println(v);
+			v.setTarget(getVertexViewOf(v.getVertex()));
 		}
+		AnimationOrder animationOrder= new AnimationOrder();
+		animationOrder.setAnimations(sequence);
+		animationOrder.run();
+		System.out.println(sequence);
+
+
+//		System.out.println(sequence);
+//		ArrayList<Vertex> V = this.graph.getVertexes();
+//		ArrayList<String> vertexes = new ArrayList<>(this.graph.getVertexNames());
+
+
+//		for(String name:sequence){
+//			int vIndex = vertexes.indexOf(name);
+//			Vertex vertex = V.get(vIndex);
+//			VertexView vw = getVertexViewOf(vertex);
+//			Visited vs = new Visited(vw);
+//			vs.play();
+//		}
 	}
 
 
