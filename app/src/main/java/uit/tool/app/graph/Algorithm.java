@@ -88,4 +88,16 @@ public class Algorithm {
 
 		return null;
 	}
+
+	public static ArrayList<VisualAnimation> hamiltonianPath(Graph graph){
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		return animations;
+	}
+
+	public static ArrayList<VisualAnimation> hamiltonianCycle(Graph graph){
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		return animations;
+	}
+
+	
 }
