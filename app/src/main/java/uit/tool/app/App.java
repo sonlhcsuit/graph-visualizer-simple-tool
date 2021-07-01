@@ -207,10 +207,12 @@ public class App extends BorderPane implements Loader {
 	}
 
 	private void Dijkstra_Handler(AlgorithmEvent event) {
-		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
-		String to = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter destination vertex name");
-		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
-//		this.visualizerView.renderAnimation(visited);
+//		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+//		String to = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter destination vertex name");
+//		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
+		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, "a", "h");
+
+		//		this.visualizerView.renderAnimation(visited);
 	}
 
 	private void Greedy_Handler(AlgorithmEvent event) {
