@@ -64,14 +64,18 @@
             </padding>
             <AlgorithmButton text="DFS" row="0" col="0" fx:id="DFS"/>
             <AlgorithmButton text="BFS" row="0" col="1" fx:id="BFS"/>
-            <AlgorithmButton text="Button 1" row="1" col="0"/>
-            <AlgorithmButton text="Button 1" row="1" col="1"/>
-            <AlgorithmButton text="Button 1" row="2" col="0"/>
-            <AlgorithmButton text="Button 1" row="2" col="1"/>
-            <AlgorithmButton text="Button 1" row="3" col="0"/>
-            <AlgorithmButton text="Button 1" row="3" col="1"/>
-            <AlgorithmButton text="Button 1" row="4" col="0"/>
-            <AlgorithmButton text="Button 1" row="4" col="1"/>
+            <AlgorithmButton text="SP-BFS" row="1" col="0"/>
+            <AlgorithmButton text="SP-Dijkstra's" row="1" col="1"/>
+            <AlgorithmButton text="SP-Bellman-Ford" row="2" col="0"/>
+            <AlgorithmButton text="SP-Floyd-Warshall" row="2" col="1"/>
+            <AlgorithmButton text="SP-A*" row="3" col="0"/>
+            <AlgorithmButton text="MST-Kruskal's" row="3" col="1"/>
+            <AlgorithmButton text="MST-Prim-Boruvka" row="4" col="0"/>
+            <AlgorithmButton text="SCC-Tarjan's" row="4" col="1"/>
+            <AlgorithmButton text="SCC-Kosaraju's" row="5" col="0"/>
+            <AlgorithmButton text="TSP-Held-Karp" row="5" col="1"/>
+            <AlgorithmButton text="GC-Vertex" row="6" col="1"/>
+            <AlgorithmButton text="GC-Ramsey" row="6" col="0"/>
         </GridPane>
 
     </TitledPane>

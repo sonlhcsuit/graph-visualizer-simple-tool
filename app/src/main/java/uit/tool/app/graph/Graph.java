@@ -187,7 +187,11 @@ public class Graph {
 
 		reader.close();
 		Gson gson = new Gson();
-		return gson.fromJson(builder.toString(), Graph.class);
+		Graph g = gson.fromJson(builder.toString(), Graph.class);
+		if (g.getSetting().getFilepath().equals(filepath)) {
+			g.getSetting().setFilepath(filepath);
+		}
+		return g;
 	}
 
 	public static void save(Graph graph) throws IllegalStateException, IOException {

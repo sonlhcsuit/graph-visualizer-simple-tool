@@ -75,7 +75,7 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(AlgorithmEvent.BFS, this::BFS_Handler);
 
 		try {
-			this.setGraph(Graph.load("/Users/sonlh/Untitled.graph"));
+			this.setGraph(Graph.load("/Users/sonlh/sp.graph"));
 		}catch (Exception e){
 			System.out.println("got bug");
 		}
