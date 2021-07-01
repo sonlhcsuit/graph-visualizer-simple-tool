@@ -20,18 +20,11 @@ public class AnimationOrder<T extends VisualAnimation> {
 
 
 	public void run() {
-		for (T animation : animations) {
-			System.out.println(animation);
-			System.out.println(animation.getClass().getSimpleName());
-			System.out.println(((VertexAnimation) animation).getTarget());
-		}
 		for (int i = 0; i < animations.size(); i++) {
-			VertexAnimation animation = (VertexAnimation) animations.get(i);
-
+			VisualAnimation animation = animations.get(i);
 			animation.getTransition().setOnFinished((event -> {
-//				System.out.printf("Run animation in ", animation.getVertex());
-//				System.out.println(this.i);
 				this.i = this.i + 1;
+				System.out.println(this.i);
 				if (this.i < animations.size()) {
 					animations.get(this.i).getTransition().play();
 

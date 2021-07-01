@@ -62,8 +62,8 @@
             <padding>
                 <Insets top="10" bottom="10"/>
             </padding>
-            <AlgorithmButton text="TG-DFS" row="0" col="0" fx:id="TG_DFS"/>
-            <AlgorithmButton text="TG-BFS" row="0" col="1" fx:id="TG_BFS"/>
+            <AlgorithmButton text="GT-DFS" row="0" col="0" fx:id="GT_DFS"/>
+            <AlgorithmButton text="GT-BFS" row="0" col="1" fx:id="GT_BFS"/>
             <AlgorithmButton text="SP-Greedy" row="1" col="0" fx:id="SP_Greedy" />
             <AlgorithmButton text="SP-Dijkstra's" row="1" col="1" fx:id="SP_Dijkstra"/>
             <AlgorithmButton text="SP-Bellman-Ford" row="2" col="0" fx:id=""/>

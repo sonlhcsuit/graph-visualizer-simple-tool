@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TabPane;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.animation.VertexAnimation;
+import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.visualizerComponent.graphComponent.GraphView;
 import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView;
 import uit.tool.app.graph.Graph;
@@ -56,7 +57,7 @@ public class VisualizerView extends TabPane implements Loader {
 		this.matrixView.render();
 	}
 
-	public void renderAnimation(ArrayList<VertexAnimation> sequence ){
+	public void renderAnimation(ArrayList<VisualAnimation> sequence ){
 		this.graphView.renderAnimation(sequence);
 	}
 }

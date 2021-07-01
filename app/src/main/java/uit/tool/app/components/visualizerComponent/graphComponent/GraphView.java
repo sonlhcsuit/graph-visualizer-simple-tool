@@ -11,7 +11,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import uit.tool.app.components.animation.AnimationOrder;
 import uit.tool.app.components.animation.VertexAnimation;
-import uit.tool.app.components.animation.Visited;
+import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.event.UserEvent;
 import uit.tool.app.components.event.VertexEvent;
 import uit.tool.app.components.Logger;
@@ -107,7 +107,7 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public VertexView getVertexViewOf(Vertex v) {
-		System.out.println(v);
+//		System.out.println(v);
 		ObservableList<Node> child = this.area.getChildren();
 		for (Node c : child) {
 			if (c.equals(new VertexView(v))) {
@@ -117,32 +117,23 @@ public class GraphView extends ScrollPane implements Loader {
 		return null;
 	}
 
-	public void renderAnimation(ArrayList<VertexAnimation> sequence) {
-
+	public void renderAnimation(ArrayList<VisualAnimation> sequence) {
 //		matching child
-
-		for (VertexAnimation v : sequence) {
-			System.out.println(v);
-			v.setTarget(getVertexViewOf(v.getVertex()));
+		System.out.println(sequence.size());
+		for (VisualAnimation v : sequence) {
+			System.out.println(v.getClass().getSimpleName());
+			if (
+					v instanceof VertexAnimation
+			) {
+				VertexAnimation vv = (VertexAnimation) v;
+				vv.setTarget(getVertexViewOf(vv.getVertex()));
+			}
+//			System.out.println(v);
 		}
-		AnimationOrder animationOrder= new AnimationOrder();
+		AnimationOrder<VisualAnimation> animationOrder = new AnimationOrder<>();
 		animationOrder.setAnimations(sequence);
 		animationOrder.run();
-		System.out.println(sequence);
 
-
-//		System.out.println(sequence);
-//		ArrayList<Vertex> V = this.graph.getVertexes();
-//		ArrayList<String> vertexes = new ArrayList<>(this.graph.getVertexNames());
-
-
-//		for(String name:sequence){
-//			int vIndex = vertexes.indexOf(name);
-//			Vertex vertex = V.get(vIndex);
-//			VertexView vw = getVertexViewOf(vertex);
-//			Visited vs = new Visited(vw);
-//			vs.play();
-//		}
 	}
 
 

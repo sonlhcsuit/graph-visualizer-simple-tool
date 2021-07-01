@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import uit.tool.app.components.animation.VertexAnimation;
+import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.event.*;
 import uit.tool.app.components.Logger;
 import uit.tool.app.components.menuComponent.Menu;
@@ -196,12 +197,12 @@ public class App extends BorderPane implements Loader {
 //	Animation
 
 	private void DFS_Handler(AlgorithmEvent event){
-		ArrayList<VertexAnimation> visited = Algorithm.DFS(this.graph);
+		ArrayList<VisualAnimation> visited = Algorithm.DFS(this.graph);
 		this.visualizerView.renderAnimation(visited);
 	}
 
 	private void BFS_Handler(AlgorithmEvent event){
-		ArrayList<VertexAnimation> visited = Algorithm.BFS(this.graph);
+		ArrayList<VisualAnimation> visited = Algorithm.BFS(this.graph);
 		this.visualizerView.renderAnimation(visited);
 	}
 }
