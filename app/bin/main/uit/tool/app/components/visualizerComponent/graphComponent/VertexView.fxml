@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<fx:root type="javafx.scene.layout.StackPane"  xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="@/uit/tool/app/stylesheets/VertexView.css" styleClass="stackpane" prefHeight="40" prefWidth="40"
+         fx:controller="uit.tool.app.components.visualizerComponent.graphComponent.VertexView">
+    <Circle fx:id="circle" radius="20" centerX="20" centerY="20" fill="black" />
+    <Label text="A" fx:id="vName" id="name"/>
+
+</fx:root>

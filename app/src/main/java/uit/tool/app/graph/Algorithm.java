@@ -91,8 +91,94 @@ public class Algorithm {
 
 	public static ArrayList<VisualAnimation> hamiltonianPath(Graph graph){
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		double[][] edges = graph.adjacencyMatrix();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		int size =  graph.getVertexes().size();
+		System.out.println("Number vertex: " + size);
+		System.out.println("Edges: ");
+		for(int i = 0; i<size; i++){
+			for(int j = 0; j<size; j++){
+				System.out.print(" " + edges[i][j]);
+			}
+			System.out.print("\n");
+		}		
+		System.out.println("Vertex: ");
+		for(int i = 0; i<size; i++){
+			System.out.print(" " + vertexNames.get(i));
+		}
+		System.out.print("\n");
+
+		int [] path = new int[size];
+		// Set all value path = -1
+		for(int i = 0; i < size; i++){
+			path[i] = -1;
+		}
+
+		System.out.println("Origin path: ");
+		for(int i = 0; i<size; i++){
+			System.out.print(" " + path[i]);
+		}
+		System.out.print("\n");
+
+		path[0] = 0;
+		if(hamPathUtil(edges, path, 1, size) == false){
+			System.out.println("\nSolution does not exist");
+		}
+		else{
+			for(int i = 0; i<size; i++){
+				System.out.print(" " + path[i]);
+			}
+			System.out.print("\n");
+
+		}
+
 		return animations;
 	}
+
+	public static Boolean hamPathUtil(double edges[][], int path [], int pos, int numVertex){
+
+		if(pos == numVertex){
+			return true;
+		}
+
+		for (int v = 1; v < numVertex; v++)
+        {
+            /* Check if this vertex can be added to Hamiltonian
+               Cycle */
+			System.out.println("v: " + v);
+			System.out.println(" path: ");
+			for(int k = 0; k<numVertex; k++){
+				System.out.print(" " + path[k]);
+			}
+			System.out.print("\n");
+	
+            if (isSafe(v, edges, path, pos))
+            {
+                path[pos] = v;
+                /* recur to construct rest of the path */
+                if (hamPathUtil(edges, path, pos + 1, numVertex) == true)
+                    return true;
+                /* If adding vertex v doesn't lead to a solution,
+                   then remove it */
+                path[pos] = -1;
+            }
+        }
+		return false;
+	}
+
+	public static Boolean isSafe(int v, double edges[][], int path [], int pos){
+
+        if (edges[path[pos - 1]][v] == 0 && edges[v][path[pos - 1]] == 0)
+            return false;
+        /* Check if the vertex has already been included.
+           This step can be optimized by creating an array
+           of size V */
+        for (int i = 0; i < pos; i++)
+            if (path[i] == v)
+                return false;
+        return true;
+	}
+
 
 	public static ArrayList<VisualAnimation> hamiltonianCycle(Graph graph){
 		ArrayList<VisualAnimation> animations = new ArrayList<>();

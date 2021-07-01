@@ -22,6 +22,8 @@ public class Menu extends VBox implements Loader {
 	private AlgorithmButton SP_A_star;
 	@FXML
 	private AlgorithmButton SP_Greedy;
+	@FXML
+	private AlgorithmButton Ham_Path;
 
 
 	@FXML
@@ -62,6 +64,8 @@ public class Menu extends VBox implements Loader {
 		this.GT_BFS.setOnMouseClicked(this::emitter);
 		this.SP_Dijkstra.setOnMouseClicked(this::emitter);
 		this.SP_Greedy.setOnMouseClicked(this::emitter);
+		this.Ham_Path.setOnMouseClicked(this::emitter);
+
 
 
 	}
@@ -88,6 +92,9 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DIJKSTRA));
 		} else if (SP_Greedy.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.GREEDY));
+
+		}else if (Ham_Path.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_PATH));
 
 		}
 	}

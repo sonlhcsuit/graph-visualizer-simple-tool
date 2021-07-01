@@ -1,0 +1,8 @@
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #80d8ff;
+}
+#app{
+    -fx-border-color: black;
+    -fx-border-style: solid;
+    -fx-border-width: 1;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import uit.tool.app.components.visualizerComponent.graphComponent.GraphView?>
+<?import uit.tool.app.components.visualizerComponent.matrixComponent.MatrixView?>
+
+<fx:root type="javafx.scene.control.TabPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="uit.tool.app.components.visualizerComponent.VisualizerView" tabClosingPolicy="UNAVAILABLE">
+    <Tab text="Graph View">
+        <GraphView fx:id="graphView"/>
+    </Tab>
+    <Tab text="Matrix View">
+        <MatrixView fx:id="matrixView"/>
+    </Tab>
+</fx:root>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+
+<fx:root xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+         stylesheets="@/uit/tool/app/stylesheets/NavigationItem.css" styleClass="cont"
+         type="javafx.scene.layout.HBox" alignment="CENTER" layoutX="10.0" layoutY="10.0"
+         fx:controller="uit.tool.app.components.navigationComponent.NavigationItem" fx:id="container">
+    <padding>
+        <Insets top="10" bottom="10"/>
+    </padding>
+
+    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" fx:id="icon">
+        <viewport>
+            <Rectangle2D/>
+        </viewport>
+    </ImageView>
+    <Button fx:id="btn" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity"
+            mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0" >
+        <font>
+            <Font name="Arial Bold Italic" size="18.0"/>
+        </font>
+    </Button>
+</fx:root>
