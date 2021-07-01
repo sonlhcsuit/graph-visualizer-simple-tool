@@ -1,9 +1,7 @@
 package uit.tool.app.components.menuComponent;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import uit.tool.app.components.event.AlgorithmEvent;
@@ -63,7 +61,7 @@ public class Menu extends VBox implements Loader {
 		this.GT_DFS.setOnMouseClicked(this::emitter);
 		this.GT_BFS.setOnMouseClicked(this::emitter);
 		this.SP_Dijkstra.setOnMouseClicked(this::emitter);
-		this.SP_A_star.setOnMouseClicked(this::emitter);
+		this.SP_Greedy.setOnMouseClicked(this::emitter);
 
 
 	}
@@ -88,8 +86,8 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.BFS));
 		} else if (SP_Dijkstra.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DIJKSTRA));
-		} else if (SP_A_star.equals(source)) {
-			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.A_STAR));
+		} else if (SP_Greedy.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.GREEDY));
 
 		}
 	}

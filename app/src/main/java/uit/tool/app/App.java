@@ -72,12 +72,13 @@ public class App extends BorderPane implements Loader {
 		this.addEventHandler(VertexEvent.ADD, this::addEventFilter);
 
 //		animation
-		this.addEventFilter(AlgorithmEvent.DFS, this::DFS_Handler);
 		this.addEventFilter(AlgorithmEvent.BFS, this::BFS_Handler);
-
+		this.addEventFilter(AlgorithmEvent.BFS, this::DFS_Handler);
+		this.addEventFilter(AlgorithmEvent.DIJKSTRA, this::Dijkstra_Handler);
+		this.addEventFilter(AlgorithmEvent.GREEDY, this::Greedy_Handler);
 		try {
 			this.setGraph(Graph.load("/Users/sonlh/sp.graph"));
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println("got bug");
 		}
 	}
@@ -194,15 +195,26 @@ public class App extends BorderPane implements Loader {
 		return alert.getResult();
 	}
 
-//	Animation
+	//	Animation
+	private void BFS_Handler(AlgorithmEvent event) {
+		ArrayList<VisualAnimation> visited = Algorithm.BFS(this.graph);
+		this.visualizerView.renderAnimation(visited);
+	}
 
-	private void DFS_Handler(AlgorithmEvent event){
+	private void DFS_Handler(AlgorithmEvent event) {
 		ArrayList<VisualAnimation> visited = Algorithm.DFS(this.graph);
 		this.visualizerView.renderAnimation(visited);
 	}
 
-	private void BFS_Handler(AlgorithmEvent event){
-		ArrayList<VisualAnimation> visited = Algorithm.BFS(this.graph);
-		this.visualizerView.renderAnimation(visited);
+	private void Dijkstra_Handler(AlgorithmEvent event) {
+		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+		String to = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter destination vertex name");
+		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
+//		this.visualizerView.renderAnimation(visited);
+	}
+
+	private void Greedy_Handler(AlgorithmEvent event) {
+//		ArrayList<VisualAnimation> visited = Algorithm.BFS(this.graph);
+//		this.visualizerView.renderAnimation(visited);
 	}
 }

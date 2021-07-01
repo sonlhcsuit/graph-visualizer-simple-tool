@@ -9,25 +9,27 @@ import java.util.*;
 
 public class Algorithm {
 	public static ArrayList<VisualAnimation> BFS(Graph graph) {
-//		Cần có cái này để chạy
+//		Need that fucking array list to be visualize
+//		Add Visual type in this array list and it will do the magic for u
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
-
+//		Actual vertex, need it to bind it to animation
 		ArrayList<Vertex> V = graph.getVertexes();
+//		Vertex name, for better understand
 		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+//		Visited (traversal)
 		ArrayList<String> visited = new ArrayList<>(vertexNames.size());
+//		Frontier (stack)
 		Queue<String> frontier = new LinkedList<>();
 		double[][] edges = graph.adjacencyMatrix();
 
+//		The very first vertex
 		frontier.add(vertexNames.get(0));
 		animations.add(new Fronted(V.get(0)));
-
 		while (frontier.size() != 0) {
-			System.out.println(visited);
-			System.out.println(frontier);
-			String v = frontier.remove();
-			animations.add(new Visited(V.get(vertexNames.indexOf(v))));
-			visited.add(v);
-			int vIndex = vertexNames.indexOf(v);
+			String currentVertex = frontier.remove();
+			animations.add(new Visited(V.get(vertexNames.indexOf(currentVertex))));
+			visited.add(currentVertex);
+			int vIndex = vertexNames.indexOf(currentVertex);
 			for (int i = 0; i < edges.length; i++) {
 				if (edges[vIndex][i] != 0) {
 					if (!visited.contains(vertexNames.get(i)) && !frontier.contains(vertexNames.get(i))) {
@@ -36,39 +38,32 @@ public class Algorithm {
 					}
 				}
 			}
-
-
 		}
 		return animations;
-
 	}
 
 	public static ArrayList<VisualAnimation> DFS(Graph graph) {
+
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
-
 		ArrayList<Vertex> V = graph.getVertexes();
-
 		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
-//
 		ArrayList<String> visited = new ArrayList<>(vertexNames.size());
-
 		Stack<String> frontier = new Stack<>();
-
 		double[][] edges = graph.adjacencyMatrix();
 
 		frontier.push(vertexNames.get(0));
-
 		animations.add(new Fronted(V.get(0)));
+
 		while (frontier.size() != 0) {
 
-			String v = frontier.pop();
+			String currentVertex = frontier.pop();
+			animations.add(new Visited(V.get(vertexNames.indexOf(currentVertex))));
+			visited.add(currentVertex);
+			int vIndex = vertexNames.indexOf(currentVertex);
 
-			animations.add(new Visited(V.get(vertexNames.indexOf(v))));
-			visited.add(v);
-			int vIndex = vertexNames.indexOf(v);
 			for (int i = 0; i < edges.length; i++) {
 				if (edges[vIndex][i] != 0) {
-					if (!visited.contains(vertexNames.get(i))) {
+					if (!visited.contains(vertexNames.get(i)) && !frontier.contains(vertexNames.get(i))) {
 						frontier.push(vertexNames.get(i));
 						animations.add(new Fronted(V.get(i)));
 					}
@@ -80,4 +75,17 @@ public class Algorithm {
 
 	}
 
+	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to){
+		System.out.println(from);
+		System.out.println(to);
+//		Set up
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> V = graph.getVertexes();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		ArrayList<String> visited = new ArrayList<>(vertexNames.size());
+		Stack<String> frontier = new Stack<>();
+		double[][] edges = graph.adjacencyMatrix();
+
+		return null;
+	}
 }

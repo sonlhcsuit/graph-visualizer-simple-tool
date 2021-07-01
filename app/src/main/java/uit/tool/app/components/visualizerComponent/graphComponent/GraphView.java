@@ -320,7 +320,7 @@ public class GraphView extends ScrollPane implements Loader {
 	 * @return vertex name entered
 	 * @throws IllegalStateException Vertex name must be 1 or 2 letters & must be unique with existed with before
 	 */
-	private String getVertexNameFromUser(String headerText, String contentText) throws IllegalStateException {
+	public String getVertexNameFromUser(String headerText, String contentText) throws IllegalStateException {
 		TextInputDialog td = new TextInputDialog();
 		td.setHeaderText(headerText);
 		td.setContentText(contentText);

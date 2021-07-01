@@ -49,6 +49,14 @@ public class VisualizerView extends TabPane implements Loader {
 		return logger;
 	}
 
+	public GraphView getGraphView() {
+		return graphView;
+	}
+
+	public void setGraphView(GraphView graphView) {
+		this.graphView = graphView;
+	}
+
 	public void initialize(){
 
 	}
@@ -56,6 +64,7 @@ public class VisualizerView extends TabPane implements Loader {
 		this.graphView.render();
 		this.matrixView.render();
 	}
+
 
 	public void renderAnimation(ArrayList<VisualAnimation> sequence ){
 		this.graphView.renderAnimation(sequence);
