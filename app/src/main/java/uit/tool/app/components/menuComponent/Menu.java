@@ -15,10 +15,17 @@ import uit.tool.app.interfaces.Loader;
 public class Menu extends VBox implements Loader {
 
 	@FXML
-	private AlgorithmButton BFS;
-
+	private AlgorithmButton TG_BFS;
 	@FXML
-	public AlgorithmButton DFS;
+	private AlgorithmButton TG_DFS;
+	@FXML
+	private AlgorithmButton SP_Dijkstra;
+	@FXML
+	private AlgorithmButton SP_A_star;
+	@FXML
+	private AlgorithmButton SP_Greedy;
+
+
 	@FXML
 	private TextField nameTextField;
 	@FXML
@@ -53,8 +60,11 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new SettingEvent(SettingEvent.TOGGLE_DIRECTED, null));
 		}));
 
-		this.DFS.setOnMouseClicked(this::emitter);
-		this.BFS.setOnMouseClicked(this::emitter);
+		this.TG_DFS.setOnMouseClicked(this::emitter);
+		this.TG_BFS.setOnMouseClicked(this::emitter);
+		this.SP_Dijkstra.setOnMouseClicked(this::emitter);
+		this.SP_A_star.setOnMouseClicked(this::emitter);
+
 
 	}
 
@@ -72,10 +82,15 @@ public class Menu extends VBox implements Loader {
 	public void emitter(MouseEvent event) {
 		Object source = event.getSource();
 
-		if (DFS.equals(source)) {
+		if (TG_DFS.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DFS));
-		} else if (BFS.equals(source)) {
+		} else if (TG_BFS.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.BFS));
+		} else if (SP_Dijkstra.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DIJKSTRA));
+		} else if (SP_A_star.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.A_STAR));
+
 		}
 	}
 }
