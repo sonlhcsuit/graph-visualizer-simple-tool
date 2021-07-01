@@ -17,6 +17,6 @@ public class Visited extends VertexAnimation {
 
 	@Override
 	public String toString() {
-		return String.format("%s@%s{target:%s}", getClass().getSimpleName(), Integer.toHexString(hashCode()), getVertex());
+		return String.format("%s@%s{target:%s}", getClass().getSimpleName(), Integer.toHexString(hashCode()), getVertex().getName());
 	}
 }
