@@ -2,12 +2,12 @@ package uit.tool.app.graph;
 
 
 import uit.tool.app.components.animation.Fronted;
-import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.animation.Visited;
 import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.animation.SetDefaultVertex;
 import uit.tool.app.components.animation.*;
 
+import uit.tool.app.graph.Utilities.*;
 
 import java.util.*;
 
@@ -81,15 +81,9 @@ public class Algorithm {
 
 	}
 
-//<<<<<<< HEAD
-//	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to){
-//		System.out.println(from);
-//		System.out.println(to);
-////		Set up
-//=======
+
 	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to) {
-//		Set up
-//>>>>>>> feature/animation
+
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
 		ArrayList<Vertex> V = graph.getVertexes();
 		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
@@ -159,14 +153,14 @@ public class Algorithm {
 		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
 		int size =  graph.getVertexes().size();
 		System.out.println("Number vertex: " + size);
-		printEdge(edges, size);
-		printVertexNames(vertexNames);
+		Utilities.printEdge(edges, size);
+		Utilities.printVertexNames(vertexNames);
 		int [] path = new int[size];
 		// Set all value path = -1
 		for(int i = 0; i < size; i++){
 			path[i] = -1;
 		}
-		printPath(path, size);
+		Utilities.printPath(path, size);
 		path[0] = 0;
 		animations.add( new Fronted(vertexs.get(path[0])));
 
@@ -175,7 +169,7 @@ public class Algorithm {
 			throw new IllegalStateException("Hamiltonian path does not exist in the graph!!!");
 		}
 		else{
-			printPath(path, size);
+			Utilities.printPath(path, size);
 		}
 		System.out.println(animations);
 		return animations;
@@ -221,31 +215,6 @@ public class Algorithm {
             if (path[i] == v)
                 return false;
         return true;
-	}
-
-	public static void printVertexNames(ArrayList<String> vertexNames){
-		System.out.print("Vertex:");
-		for(int i = 0; i < vertexNames.size(); i++){
-			System.out.print(" " + vertexNames.get(i));
-		}
-		System.out.print("\n");
-	}
-
-	public static void printEdge(double edges[][], int size){
-		for(int i = 0; i<size; i++){
-			for(int j = 0; j<size; j++){
-				System.out.print(" " + edges[i][j]);
-			}
-			System.out.print("\n");
-		}		
-	}
-
-	public static void printPath(int path[], int size){
-		System.out.print("Path:");
-		for(int i = 0; i<size; i++){
-			System.out.print(" " + path[i]);
-		}
-		System.out.println();
 	}
 
 	public static ArrayList<VisualAnimation> hamiltonianCycle(Graph graph){
