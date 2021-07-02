@@ -9,6 +9,8 @@ import uit.tool.app.components.animation.SetDefaultVertex;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class Algorithm {
 	public static ArrayList<VisualAnimation> BFS(Graph graph) {
 //		Need that fucking array list to be visualize
@@ -91,7 +93,7 @@ public class Algorithm {
 		return null;
 	}
 
-	public static ArrayList<VisualAnimation> hamiltonianPath(Graph graph){
+	public static ArrayList<VisualAnimation> hamiltonianPath(Graph graph) throws IllegalStateException{
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
 		ArrayList<Vertex> vertexs = graph.getVertexes();
 		double[][] edges = graph.adjacencyMatrix();
@@ -111,6 +113,7 @@ public class Algorithm {
 
 		if(hamPathUtil(animations,vertexs, edges, path, 1, size) == false){
 			System.out.println("\nSolution does not exist");
+			throw new IllegalStateException("Hamiltonian path does not exist in the graph!!!");
 		}
 		else{
 			printPath(path, size);

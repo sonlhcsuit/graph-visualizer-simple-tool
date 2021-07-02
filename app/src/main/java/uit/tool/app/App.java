@@ -190,6 +190,13 @@ public class App extends BorderPane implements Loader {
 		alert.showAndWait();
 	}
 
+	private void showWarning(String content) {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Warning");
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
 	private ButtonType showConfirm(String content) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION, content, ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
 		alert.setTitle("Confirmation");
@@ -220,8 +227,13 @@ public class App extends BorderPane implements Loader {
 //		this.visualizerView.renderAnimation(visited);
 	}
 	private void Ham_Path_Handler(AlgorithmEvent event) {
-		
-		ArrayList<VisualAnimation> visited = Algorithm.hamiltonianPath(this.graph);
-		this.visualizerView.renderAnimation(visited);
+		try{
+			ArrayList<VisualAnimation> visited = Algorithm.hamiltonianPath(this.graph);
+			this.visualizerView.renderAnimation(visited);
+		}
+		catch(IllegalStateException e){
+			showWarning(e.getMessage());
+		}
+
 	}
 }
