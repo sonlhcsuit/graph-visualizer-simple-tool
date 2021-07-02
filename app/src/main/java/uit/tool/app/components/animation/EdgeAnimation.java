@@ -1,6 +1,7 @@
 package uit.tool.app.components.animation;
 
 import javafx.animation.FillTransition;
+import javafx.animation.StrokeTransition;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.EdgeView;
@@ -10,12 +11,12 @@ import uit.tool.app.graph.Vertex;
 
 public class EdgeAnimation extends VisualAnimation{
 	private Edge edge;
-	private FillTransition fillTransition;
+	private StrokeTransition strokeTransition ;
 	private EdgeView target;
-	private final long time = 1000;
+	private final long time = 5000;
 	EdgeAnimation(){
-		this.fillTransition= new FillTransition();
-		this.fillTransition.setDuration(Duration.millis(time));
+		this.strokeTransition= new StrokeTransition();
+		this.strokeTransition.setDuration(Duration.millis(time));
 	}
 
 	EdgeAnimation(Edge e){
@@ -36,12 +37,13 @@ public class EdgeAnimation extends VisualAnimation{
 
 	 public void setTarget(EdgeView edgeView){
 		this.target  = edgeView;
-		this.fillTransition.setShape(edgeView);
+		this.strokeTransition.setShape(edgeView);
+		this.strokeTransition.play();
 	}
 
 	@Override
 	public Transition getTransition() {
-		return this.fillTransition;
+		return this.strokeTransition;
 	}
 
 

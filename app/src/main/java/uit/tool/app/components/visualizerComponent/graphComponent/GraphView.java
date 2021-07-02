@@ -1,5 +1,7 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
+import javafx.animation.FillTransition;
+import javafx.animation.StrokeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +11,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import uit.tool.app.components.animation.AnimationOrder;
 import uit.tool.app.components.animation.EdgeAnimation;
 import uit.tool.app.components.animation.VertexAnimation;
@@ -118,7 +122,8 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 		return null;
 	}
-	public EdgeView getEdgeViewOf(Edge edge){
+
+	public EdgeView getEdgeViewOf(Edge edge) {
 		ObservableList<Node> child = this.area.getChildren();
 		for (Node c : child) {
 			if (c.equals(new EdgeView(edge))) {
@@ -128,26 +133,28 @@ public class GraphView extends ScrollPane implements Loader {
 		return null;
 
 	}
-	public EdgeView getEdgeViewOf(Vertex source, Vertex destination){
-		Edge e = new Edge(source,destination);
+
+	public EdgeView getEdgeViewOf(Vertex source, Vertex destination) {
+		Edge e = new Edge(source, destination);
 		return getEdgeViewOf(e);
 	}
+
 	public void renderAnimation(ArrayList<VisualAnimation> sequence) {
 //		matching child
 		System.out.println(sequence.size());
 		for (VisualAnimation animation : sequence) {
-			System.out.println(animation.getClass().getSimpleName());
 			if (
-					animation instanceof VertexAnimation vertexAnimation
+					animation instanceof VertexAnimation
 			) {
+				VertexAnimation vertexAnimation = (VertexAnimation) animation;
 				vertexAnimation.setTarget(getVertexViewOf(vertexAnimation.getVertex()));
-			} else if (
-					animation instanceof EdgeAnimation edgeAnimation
-			){
-				edgeAnimation.setTarget(getEdgeViewOf(edgeAnimation.getEdge()));
-
 			}
-//			System.out.println(v);
+			else if (
+					animation instanceof EdgeAnimation
+			) {
+				EdgeAnimation edgeAnimation = (EdgeAnimation) animation;
+				edgeAnimation.setTarget(getEdgeViewOf(edgeAnimation.getEdge()));
+			}
 		}
 		AnimationOrder<VisualAnimation> animationOrder = new AnimationOrder<>();
 		animationOrder.setAnimations(sequence);
