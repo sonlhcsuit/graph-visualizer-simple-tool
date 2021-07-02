@@ -1,15 +1,17 @@
 package uit.tool.app.graph;
 
+
 import uit.tool.app.components.animation.Fronted;
 import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.animation.Visited;
 import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.animation.SetDefaultVertex;
+import uit.tool.app.components.animation.*;
 
 
 import java.util.*;
 
-import javax.swing.JOptionPane;
+
 
 public class Algorithm {
 	public static ArrayList<VisualAnimation> BFS(Graph graph) {
@@ -79,18 +81,75 @@ public class Algorithm {
 
 	}
 
-	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to){
-		System.out.println(from);
-		System.out.println(to);
-//		Set up 
+//<<<<<<< HEAD
+//	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to){
+//		System.out.println(from);
+//		System.out.println(to);
+////		Set up
+//=======
+	public static ArrayList<VisualAnimation> Dijkstra(Graph graph, String from, String to) {
+//		Set up
+//>>>>>>> feature/animation
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
 		ArrayList<Vertex> V = graph.getVertexes();
 		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
-		ArrayList<String> visited = new ArrayList<>(vertexNames.size());
-		Stack<String> frontier = new Stack<>();
-		double[][] edges = graph.adjacencyMatrix();
+		Set<String> vertexNamesSet = new HashSet<>(vertexNames);
 
-		return null;
+
+		int sourceIndex = vertexNames.indexOf(from);
+		double[][] edges = graph.adjacencyMatrix();
+		int size = edges.length;
+
+
+//		create hash table, can easily find the minimum value from source to destination
+		HashMap<String, Double> distance = new HashMap<>();
+		HashMap<String, String> previous = new HashMap<>();
+
+
+		for (String vertexName : vertexNames) {
+			distance.put(vertexName, Double.MAX_VALUE);
+			previous.put(vertexName, null);
+		}
+		distance.put(vertexNames.get(sourceIndex), 0.0);
+
+		while (vertexNamesSet.size() != 0) {
+//			find the minimum value from source to any other vertexes
+			String vertexU = null;
+			double minDistance = Double.MAX_VALUE;
+			for (String key : vertexNamesSet) {
+				if (distance.get(key) < minDistance  ) {
+					vertexU = key;
+					minDistance = distance.get(key);
+				}
+			}
+			animations.add(new Visited(V.get(vertexNames.indexOf(vertexU))));
+			if (!from.equals(vertexU)){
+				animations.add(new Selected(
+						V.get(vertexNames.indexOf(previous.get(vertexU))),
+						V.get(vertexNames.indexOf(vertexU))
+				));
+			}
+			vertexNamesSet.remove(vertexU);
+
+			int uIndex = vertexNames.indexOf(vertexU);
+			for (int vIndex = 0; vIndex < size; vIndex++) {
+				if (edges[uIndex][vIndex] != 0) {
+					String vertexV = vertexNames.get(vIndex);
+					double alt = distance.get(vertexU) + edges[uIndex][vIndex];
+					if (alt < distance.get(vertexV)) {
+						distance.put(vertexV,alt);
+						previous.put(vertexV,vertexU);
+						animations.add(new Considered(
+								V.get(vertexNames.indexOf(vertexU)),
+								V.get(vertexNames.indexOf(vertexV))
+						));
+						animations.add(new Fronted(V.get(vertexNames.indexOf(vertexV))));
+
+					}
+				}
+			}
+		}
+		return animations;
 	}
 
 	public static ArrayList<VisualAnimation> hamiltonianPath(Graph graph) throws IllegalStateException{

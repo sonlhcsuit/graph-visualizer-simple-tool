@@ -1,6 +1,7 @@
 package uit.tool.app.components.animation;
 
 import javafx.animation.Transition;
+import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
 
 public abstract class VisualAnimation {
 

@@ -8,7 +8,6 @@ import uit.tool.app.graph.Setting;
 public class SettingEvent extends Event {
 	public static final EventType<SettingEvent> TOGGLE_DIRECTED = new EventType<>(Event.ANY,"TOGGLE_DIRECTED");
 	public static final EventType<SettingEvent> TOGGLE_WEIGHTED = new EventType<>(Event.ANY,"TOGGLE_WEIGHTED");
-	public static final EventType<SettingEvent> SAVE_GRAPH = new EventType<>(Event.ANY,"SAVE_GRAPH_1");
 
 
 	private Setting setting;

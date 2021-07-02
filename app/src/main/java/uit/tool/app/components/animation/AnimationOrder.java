@@ -23,11 +23,10 @@ public class AnimationOrder<T extends VisualAnimation> {
 		for (int i = 0; i < animations.size(); i++) {
 			VisualAnimation animation = animations.get(i);
 			animation.getTransition().setOnFinished((event -> {
-				this.i = this.i + 1;
-				System.out.println(this.i);
 				if (this.i < animations.size()) {
 					animations.get(this.i).getTransition().play();
-
+					this.i = this.i + 1;
+//					System.out.println(this.i);
 				}
 			}));
 		}

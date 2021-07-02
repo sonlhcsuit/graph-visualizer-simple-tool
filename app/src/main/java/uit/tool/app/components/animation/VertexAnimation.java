@@ -5,7 +5,6 @@ import javafx.animation.Transition;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
-import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Vertex;
 
 public class VertexAnimation extends VisualAnimation{
@@ -50,6 +49,13 @@ public class VertexAnimation extends VisualAnimation{
 		return target;
 	}
 
+	public String toString() {
+		return String.format("%s@%s{target:%s}", getClass().getSimpleName(), Integer.toHexString(hashCode()), getVertex().getName());
+	}
+
+	public void setColor(Color color){
+		this.fillTransition.setToValue(color);
+	}
 
 
 	@Override

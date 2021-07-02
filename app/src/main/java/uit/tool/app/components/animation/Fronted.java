@@ -11,8 +11,4 @@ public class Fronted extends VertexAnimation{
 		((FillTransition) getTransition()).setToValue(Color.ORANGE);
 	}
 
-	@Override
-	public String toString() {
-		return String.format("%s@%s{target:%s}", getClass().getSimpleName(), Integer.toHexString(hashCode()), getVertex());
-	}
 }
