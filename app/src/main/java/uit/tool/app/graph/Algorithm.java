@@ -120,20 +120,20 @@ public class Algorithm {
 						distance.put(vertexV,alt);
 						previous.put(vertexV,vertexU);
 //						them canh
-//						animations.add(new Considered(
-//								V.get(vertexNames.indexOf(vertexU)),
-//								V.get(vertexNames.indexOf(vertexV))
-//						));
+						animations.add(new Considered(
+								V.get(vertexNames.indexOf(vertexU)),
+								V.get(vertexNames.indexOf(vertexV))
+						));
 						animations.add(new Fronted(V.get(vertexNames.indexOf(vertexV))));
 					}
 				}
 			}
 			if (vertexV != null){
 				animations.add(new Visited(V.get(vertexNames.indexOf(previous.get(vertexV)))));
-//				animations.add(new Selected(
-//						V.get(vertexNames.indexOf(vertexU)),
-//						V.get(vertexNames.indexOf(vertexV))
-//				));
+				animations.add(new Selected(
+						V.get(vertexNames.indexOf(vertexU)),
+						V.get(vertexNames.indexOf(vertexV))
+				));
 			}
 		}
 

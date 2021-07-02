@@ -143,15 +143,11 @@ public class GraphView extends ScrollPane implements Loader {
 //		matching child
 		System.out.println(sequence.size());
 		for (VisualAnimation animation : sequence) {
-			if (
-					animation instanceof VertexAnimation
-			) {
+
+			if (animation instanceof VertexAnimation) {
 				VertexAnimation vertexAnimation = (VertexAnimation) animation;
 				vertexAnimation.setTarget(getVertexViewOf(vertexAnimation.getVertex()));
-			}
-			else if (
-					animation instanceof EdgeAnimation
-			) {
+			} else if (animation instanceof EdgeAnimation) {
 				EdgeAnimation edgeAnimation = (EdgeAnimation) animation;
 				edgeAnimation.setTarget(getEdgeViewOf(edgeAnimation.getEdge()));
 			}
@@ -159,7 +155,6 @@ public class GraphView extends ScrollPane implements Loader {
 		AnimationOrder<VisualAnimation> animationOrder = new AnimationOrder<>();
 		animationOrder.setAnimations(sequence);
 		animationOrder.run();
-
 	}
 
 

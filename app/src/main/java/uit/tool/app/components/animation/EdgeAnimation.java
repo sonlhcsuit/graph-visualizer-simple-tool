@@ -13,7 +13,7 @@ public class EdgeAnimation extends VisualAnimation{
 	private Edge edge;
 	private StrokeTransition strokeTransition ;
 	private EdgeView target;
-	private final long time = 5000;
+	private final long time = 1000;
 	EdgeAnimation(){
 		this.strokeTransition= new StrokeTransition();
 		this.strokeTransition.setDuration(Duration.millis(time));
@@ -38,7 +38,6 @@ public class EdgeAnimation extends VisualAnimation{
 	 public void setTarget(EdgeView edgeView){
 		this.target  = edgeView;
 		this.strokeTransition.setShape(edgeView);
-		this.strokeTransition.play();
 	}
 
 	@Override
