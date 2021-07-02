@@ -114,7 +114,6 @@ public class Algorithm {
 				}
 			}
 
-			System.out.println(vertexU);
 			animations.add(new Visited(V.get(vertexNames.indexOf(vertexU))));
 			if (!from.equals(vertexU)) {
 				String p = previous.get(vertexU);

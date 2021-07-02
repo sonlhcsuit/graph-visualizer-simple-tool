@@ -216,24 +216,26 @@ public class App extends BorderPane implements Loader {
 	}
 
 	private void Dijkstra_Handler(AlgorithmEvent event) {
-//		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
-//		String to = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter destination vertex name");
-//		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
-		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, "e");
 
-		this.visualizerView.renderAnimation(visited);
+		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+		if (this.graph.getVertexNames().contains(from)) {
+			ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from);
+			this.visualizerView.renderAnimation(visited);
+		}else{
+			showError("Vertex name does not exist in the graph!");
+		}
 	}
 
 	private void Greedy_Handler(AlgorithmEvent event) {
 //		ArrayList<VisualAnimation> visited = Algorithm.BFS(this.graph);
 //		this.visualizerView.renderAnimation(visited);
 	}
+
 	private void Ham_Path_Handler(AlgorithmEvent event) {
-		try{
+		try {
 			ArrayList<VisualAnimation> visited = Algorithm.hamiltonianPath(this.graph);
 			this.visualizerView.renderAnimation(visited);
-		}
-		catch(IllegalStateException e){
+		} catch (IllegalStateException e) {
 			showWarning(e.getMessage());
 		}
 
