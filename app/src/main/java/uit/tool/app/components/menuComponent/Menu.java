@@ -95,7 +95,6 @@ public class Menu extends VBox implements Loader {
 
 		}else if (HP_Backtracking.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_PATH));
-
 		}
 	}
 }

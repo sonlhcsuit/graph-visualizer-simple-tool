@@ -126,9 +126,17 @@ public class GraphView extends ScrollPane implements Loader {
 	public EdgeView getEdgeViewOf(Edge edge) {
 		ObservableList<Node> child = this.area.getChildren();
 		for (Node c : child) {
-			if (c.equals(new EdgeView(edge))) {
-				return (EdgeView) c;
+			if(c instanceof EdgeView){
+				
+				EdgeView e = (EdgeView) c;
+				if(e.shallowEquals(new EdgeView(edge))){
+					return e;
+				}
+				// if(e.equals(new EdgeView(edge))){
+				// 	return e;
+				// }
 			}
+
 		}
 		return null;
 

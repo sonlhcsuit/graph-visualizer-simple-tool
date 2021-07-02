@@ -143,6 +143,14 @@ public class EdgeView extends Path {
 		EdgeView that = (EdgeView) o;
 		return Objects.equals(source, that.source) && Objects.equals(destination,that.destination);
 	}
+	public boolean shallowEquals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		EdgeView that = (EdgeView) o;
+		return (Objects.equals(source, that.source) && Objects.equals(destination,that.destination)) || 
+		Objects.equals(source, that.destination) && Objects.equals(destination,that.source);
+	}
+
 	private double[] rotate(double pivotX, double pivotY, double X, double Y, double angle) {
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);
@@ -154,5 +162,6 @@ public class EdgeView extends Path {
 		rY = rY + pivotY;
 		return new double[]{rX, rY};
 	}
+
 
 }
