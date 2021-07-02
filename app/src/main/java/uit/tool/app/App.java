@@ -219,7 +219,7 @@ public class App extends BorderPane implements Loader {
 //		String from = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
 //		String to = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter destination vertex name");
 //		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
-		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, "a", "h");
+		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, "e");
 
 		this.visualizerView.renderAnimation(visited);
 	}

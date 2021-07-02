@@ -76,7 +76,7 @@
             <AlgorithmButton text="TSP-Held-Karp" row="5" col="1"/>
             <AlgorithmButton text="GC-Vertex" row="6" col="1"/>
             <AlgorithmButton text="GC-Ramsey" row="6" col="0"/>
-            <AlgorithmButton text="Ham_Path" row="7" col="0" fx:id="Ham_Path"/>
+            <AlgorithmButton text="Ham_Path" row="7" col="0" fx:id="HP_Backtracking"/>
 
         </GridPane>
 
