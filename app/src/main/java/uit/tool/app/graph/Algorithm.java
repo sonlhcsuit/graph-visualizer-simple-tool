@@ -1,10 +1,6 @@
 package uit.tool.app.graph;
 
 
-import uit.tool.app.components.animation.Fronted;
-import uit.tool.app.components.animation.Visited;
-import uit.tool.app.components.animation.VisualAnimation;
-import uit.tool.app.components.animation.SetDefaultVertex;
 import uit.tool.app.components.animation.*;
 
 import uit.tool.app.graph.Utilities.*;
@@ -178,26 +174,29 @@ public class Algorithm {
 	public static Boolean hamPathUtil(ArrayList<VisualAnimation> animations,ArrayList<Vertex> vertexs, double edges[][], int path [], int pos, int numVertex){
 
 		if(pos == numVertex){
+			animations.add(new Selected(vertexs.get(path[pos-2]), vertexs.get(path[pos-1])));
 			animations.add(new Visited(vertexs.get(path[pos-1])));
 			return true;
 		}
 		for (int v = 1; v < numVertex; v++)
         {
-            /* Check if this vertex can be added to Hamiltonian
-               Cycle */
-			// System.out.println("v: " + v);
-			// printPath(path, numVertex);
             if (isSafe(v, edges, path, pos))
             {
-				animations.add(new Visited(vertexs.get(path[pos-1])));
+
+				Vertex prevVertex = vertexs.get(path[pos-1]);
+				animations.add(new Visited(prevVertex));
+				if(pos-2 >= 0){
+					Vertex prevprevVertex = vertexs.get(path[pos-2]);
+					animations.add(new Selected(prevprevVertex, prevVertex));
+				}
                 path[pos] = v;
-				animations.add(new Fronted(vertexs.get(path[pos])));
-                /* recur to construct rest of the path */
+				Vertex curVertex = vertexs.get(path[pos]);
+				animations.add(new Fronted(curVertex));
+				animations.add(new Considered(prevVertex, curVertex));
                 if (hamPathUtil(animations,vertexs, edges, path, pos + 1, numVertex) == true)
                     return true;
-                /* If adding vertex v doesn't lead to a solution,
-                   then remove it */
-				animations.add(new SetDefaultVertex(vertexs.get(path[pos])));
+				animations.add(new SetBlackEdge(prevVertex, curVertex));
+				animations.add(new SetDefaultVertex(curVertex));
                 path[pos] = -1;
             }
         }
@@ -208,9 +207,6 @@ public class Algorithm {
 
         if (edges[path[pos - 1]][v] == 0 && edges[v][path[pos - 1]] == 0)
             return false;
-        /* Check if the vertex has already been included.
-           This step can be optimized by creating an array
-           of size V */
         for (int i = 0; i < pos; i++)
             if (path[i] == v)
                 return false;
