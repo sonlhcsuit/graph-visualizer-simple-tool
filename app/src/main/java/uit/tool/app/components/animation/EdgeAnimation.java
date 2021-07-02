@@ -1,11 +1,9 @@
 package uit.tool.app.components.animation;
 
-import javafx.animation.FillTransition;
 import javafx.animation.StrokeTransition;
 import javafx.animation.Transition;
 import javafx.util.Duration;
 import uit.tool.app.components.visualizerComponent.graphComponent.EdgeView;
-import uit.tool.app.components.visualizerComponent.graphComponent.VertexView;
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Vertex;
 

@@ -107,40 +107,32 @@ public class Algorithm {
 				}
 			}
 			animations.add(new Visited(V.get(vertexNames.indexOf(vertexU))));
-
+			if (!from.equals(vertexU)){
+				animations.add(new Selected(
+						V.get(vertexNames.indexOf(previous.get(vertexU))),
+						V.get(vertexNames.indexOf(vertexU))
+				));
+			}
 			vertexNamesSet.remove(vertexU);
-			String vertexV = null;
 
 			int uIndex = vertexNames.indexOf(vertexU);
 			for (int vIndex = 0; vIndex < size; vIndex++) {
 				if (edges[uIndex][vIndex] != 0) {
-					vertexV = vertexNames.get(vIndex);
+					String vertexV = vertexNames.get(vIndex);
 					double alt = distance.get(vertexU) + edges[uIndex][vIndex];
 					if (alt < distance.get(vertexV)) {
 						distance.put(vertexV,alt);
 						previous.put(vertexV,vertexU);
-//						them canh
 						animations.add(new Considered(
 								V.get(vertexNames.indexOf(vertexU)),
 								V.get(vertexNames.indexOf(vertexV))
 						));
 						animations.add(new Fronted(V.get(vertexNames.indexOf(vertexV))));
+
 					}
 				}
 			}
-			if (vertexV != null){
-				animations.add(new Visited(V.get(vertexNames.indexOf(previous.get(vertexV)))));
-				animations.add(new Selected(
-						V.get(vertexNames.indexOf(vertexU)),
-						V.get(vertexNames.indexOf(vertexV))
-				));
-			}
 		}
-
-		for (String k : previous.keySet()){
-			System.out.printf("%s -> %s\n",previous.get(k),k);
-		}
-
 		return animations;
 	}
 }

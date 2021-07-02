@@ -31,7 +31,7 @@ public class EdgeView extends Path {
 		this.destination =destination;
 
 		setStroke(Color.BLACK);
-		setStrokeWidth(3);
+		setStrokeWidth(2);
 
 		double startX, startY, endX, endY;
 //		adjust 20 make start/end point at center of the circle (not the top-left)

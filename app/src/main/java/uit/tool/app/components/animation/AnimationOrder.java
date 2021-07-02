@@ -26,7 +26,7 @@ public class AnimationOrder<T extends VisualAnimation> {
 				if (this.i < animations.size()) {
 					animations.get(this.i).getTransition().play();
 					this.i = this.i + 1;
-					System.out.println(this.i);
+//					System.out.println(this.i);
 				}
 			}));
 		}
