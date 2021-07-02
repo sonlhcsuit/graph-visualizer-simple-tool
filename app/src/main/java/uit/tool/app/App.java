@@ -222,6 +222,6 @@ public class App extends BorderPane implements Loader {
 	private void Ham_Path_Handler(AlgorithmEvent event) {
 		
 		ArrayList<VisualAnimation> visited = Algorithm.hamiltonianPath(this.graph);
-
-			}
+		this.visualizerView.renderAnimation(visited);
+	}
 }

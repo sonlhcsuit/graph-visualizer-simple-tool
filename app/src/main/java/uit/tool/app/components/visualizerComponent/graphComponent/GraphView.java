@@ -133,7 +133,7 @@ public class GraphView extends ScrollPane implements Loader {
 		AnimationOrder<VisualAnimation> animationOrder = new AnimationOrder<>();
 		animationOrder.setAnimations(sequence);
 		animationOrder.run();
-
+		System.out.println("Run done");
 	}
 
 
