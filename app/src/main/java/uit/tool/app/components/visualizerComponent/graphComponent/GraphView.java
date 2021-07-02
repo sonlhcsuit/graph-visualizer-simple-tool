@@ -10,11 +10,13 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import uit.tool.app.components.animation.AnimationOrder;
+import uit.tool.app.components.animation.EdgeAnimation;
 import uit.tool.app.components.animation.VertexAnimation;
 import uit.tool.app.components.animation.VisualAnimation;
 import uit.tool.app.components.event.UserEvent;
 import uit.tool.app.components.event.VertexEvent;
 import uit.tool.app.components.Logger;
+import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Setting;
 import uit.tool.app.graph.Vertex;
@@ -116,17 +118,34 @@ public class GraphView extends ScrollPane implements Loader {
 		}
 		return null;
 	}
+	public EdgeView getEdgeViewOf(Edge edge){
+		ObservableList<Node> child = this.area.getChildren();
+		for (Node c : child) {
+			if (c.equals(new EdgeView(edge))) {
+				return (EdgeView) c;
+			}
+		}
+		return null;
 
+	}
+	public EdgeView getEdgeViewOf(Vertex source, Vertex destination){
+		Edge e = new Edge(source,destination);
+		return getEdgeViewOf(e);
+	}
 	public void renderAnimation(ArrayList<VisualAnimation> sequence) {
 //		matching child
 		System.out.println(sequence.size());
-		for (VisualAnimation v : sequence) {
-			System.out.println(v.getClass().getSimpleName());
+		for (VisualAnimation animation : sequence) {
+			System.out.println(animation.getClass().getSimpleName());
 			if (
-					v instanceof VertexAnimation
+					animation instanceof VertexAnimation vertexAnimation
 			) {
-				VertexAnimation vv = (VertexAnimation) v;
-				vv.setTarget(getVertexViewOf(vv.getVertex()));
+				vertexAnimation.setTarget(getVertexViewOf(vertexAnimation.getVertex()));
+			} else if (
+					animation instanceof EdgeAnimation edgeAnimation
+			){
+				edgeAnimation.setTarget(getEdgeViewOf(edgeAnimation.getEdge()));
+
 			}
 //			System.out.println(v);
 		}

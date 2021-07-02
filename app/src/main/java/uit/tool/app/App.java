@@ -212,7 +212,7 @@ public class App extends BorderPane implements Loader {
 //		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, from, to);
 		ArrayList<VisualAnimation> visited = Algorithm.Dijkstra(this.graph, "a", "h");
 
-		//		this.visualizerView.renderAnimation(visited);
+		this.visualizerView.renderAnimation(visited);
 	}
 
 	private void Greedy_Handler(AlgorithmEvent event) {

@@ -4,7 +4,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
+import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Vertex;
+
+import java.util.Objects;
 
 public class EdgeView extends Path {
 	private static final double defaultArrowHeadSize = 5;
@@ -14,6 +17,9 @@ public class EdgeView extends Path {
 	public static final String ARC = "ARC";
 	public static final String LINE = "Line";
 
+
+	private Vertex source;
+	private Vertex destination;
 	EdgeView(Vertex source, Vertex destination, String type, boolean withArrow) {
 		/**
 		 * for arrow drawing:
@@ -21,6 +27,8 @@ public class EdgeView extends Path {
 		 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
 		 */
 		super();
+		this.source = source;
+		this.destination =destination;
 		setStroke(Color.BLACK);
 		setStrokeWidth(2);
 
@@ -123,7 +131,17 @@ public class EdgeView extends Path {
 		this(source, destination, LINE, false);
 	}
 
+	EdgeView(Edge edge){
+		this(edge.getSource(),edge.getDestination());
+	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		EdgeView that = (EdgeView) o;
+		return Objects.equals(source, that.source) && Objects.equals(destination,that.destination);
+	}
 	private double[] rotate(double pivotX, double pivotY, double X, double Y, double angle) {
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);
