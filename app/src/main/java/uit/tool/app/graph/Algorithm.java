@@ -310,10 +310,13 @@ public class Algorithm {
 
 	public static Boolean eulerUtil(Integer startVertex, double edges [][],int result[], int pos, ArrayList<String> vertexNames, ArrayList<VisualAnimation> animations, ArrayList<Vertex> vertexs){
 		System.out.println("Pos: " + pos);
-		if(pos == result.length - 1 ){
-			animations.add(new Selected(vertexs.get(result[pos-1]), vertexs.get(result[pos])));
-			animations.add(new Visited(vertexs.get(result[pos])));
-			return true ;
+		// if(pos == result.length - 1 ){
+		// 	animations.add(new Selected(vertexs.get(result[pos-1]), vertexs.get(result[pos])));
+		// 	animations.add(new Visited(vertexs.get(result[pos])));
+		// 	return true ;
+		// }
+		if(pos == result.length){
+			return true;
 		}
 		result[pos] = startVertex;
 		Vertex preVertex = vertexs.get(result[pos]);
@@ -325,7 +328,7 @@ public class Algorithm {
 		System.out.println("Start index: " + startVertex);
 		Utilities.printPath(result, result.length, vertexNames);
 
-		for(int v = 0; v < result.length; v++){
+		for(int v = 0; v < edges.length; v++){
 			System.out.println("v: " + v);
 			if( (edges[v][startVertex] > 0 || edges[startVertex][v] > 0) && isValidNextEdge(startVertex, v, edges )){
 				result[pos+1] = v;
