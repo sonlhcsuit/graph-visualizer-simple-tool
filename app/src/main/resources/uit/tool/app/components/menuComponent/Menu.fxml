@@ -77,6 +77,7 @@
             <AlgorithmButton text="GC-Vertex" row="6" col="1"/>
             <AlgorithmButton text="GC-Ramsey" row="6" col="0"/>
             <AlgorithmButton text="HP-Backtracking" row="7" col="0" fx:id="HP_Backtracking"/>
+            <AlgorithmButton text="HC-Backtracking" row="7" col="1" fx:id="HC_Backtracking"/>
 
         </GridPane>
 

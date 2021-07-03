@@ -136,7 +136,6 @@ public class GraphView extends ScrollPane implements Loader {
 				// 	return e;
 				// }
 			}
-
 		}
 		return null;
 

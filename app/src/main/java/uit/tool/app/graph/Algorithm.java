@@ -168,7 +168,7 @@ public class Algorithm {
 		} else {
 			Utilities.printPath(path, size);
 		}
-		System.out.println(animations);
+		// System.out.println(animations);
 		return animations;
 	}
 
@@ -218,7 +218,70 @@ public class Algorithm {
 
 	public static ArrayList<VisualAnimation> hamiltonianCycle(Graph graph) {
 		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> vertexs = graph.getVertexes();
+		double[][] edges = graph.adjacencyMatrix();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		int size = graph.getVertexes().size();
+		System.out.println("Number vertex: " + size);
+		Utilities.printEdge(edges, size);
+		Utilities.printVertexNames(vertexNames);
+		int[] path = new int[size];
+		// Set all value path = -1
+		for (int i = 0; i < size; i++) {
+			path[i] = -1;
+		}
+		Utilities.printPath(path, size);
+		path[0] = 0;
+		animations.add(new Fronted(vertexs.get(path[0])));
+
+		if (hamCycleUtil(animations, vertexs, edges, path, 1, size) == false) {
+			System.out.println("\nSolution does not exist");
+			Utilities.printPath(path, size);
+			throw new IllegalStateException("Hamiltonian cycle does not exist in the graph!!!");
+		} 
+		Utilities.printPath(path, size);
+		
 		return animations;
+	}
+
+	public static Boolean hamCycleUtil(ArrayList<VisualAnimation> animations, ArrayList<Vertex> vertexs, double edges[][], int path[], int pos, int numVertex) {
+
+		if(pos == numVertex){
+			animations.add(new Selected(vertexs.get(path[pos-2]), vertexs.get(path[pos-1])));
+			animations.add(new Visited(vertexs.get(path[pos-1])));
+			if(edges[path[pos - 1]][0] > 0 || edges[0][path[pos - 1]] > 0){
+				animations.add(new Selected(vertexs.get(path[pos-1]), vertexs.get(0)));
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		for (int v = 1; v < numVertex; v++)
+        {
+            if (isSafe(v, edges, path, pos))
+            {
+
+				Vertex prevVertex = vertexs.get(path[pos-1]);
+				animations.add(new Visited(prevVertex));
+				if(pos-2 >= 0){
+					Vertex prevprevVertex = vertexs.get(path[pos-2]);
+					animations.add(new Selected(prevprevVertex, prevVertex));
+				}
+                path[pos] = v;
+				// Utilities.printPath(path, numVertex);
+				Vertex curVertex = vertexs.get(path[pos]);
+				animations.add(new Considered(prevVertex, curVertex));
+				animations.add(new Fronted(curVertex));
+
+                if (hamCycleUtil(animations,vertexs, edges, path, pos + 1, numVertex) == true)
+                    return true;
+				animations.add(new SetBlackEdge(prevVertex, curVertex));
+				animations.add(new SetDefaultVertex(curVertex));
+                path[pos] = -1;
+            }
+        }
+		return false;
 	}
 
 

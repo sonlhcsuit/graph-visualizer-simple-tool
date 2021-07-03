@@ -77,6 +77,7 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(AlgorithmEvent.DIJKSTRA, this::Dijkstra_Handler);
 		this.addEventFilter(AlgorithmEvent.GREEDY, this::Greedy_Handler);
 		this.addEventFilter(AlgorithmEvent.HAM_PATH, this::Ham_Path_Handler);
+		this.addEventFilter(AlgorithmEvent.HAM_CYCLE, this::Ham_Cycle_Handler);
 
 		try {
 			this.setGraph(Graph.load("/Users/sonlh/sp.graph"));
@@ -234,6 +235,16 @@ public class App extends BorderPane implements Loader {
 	private void Ham_Path_Handler(AlgorithmEvent event) {
 		try {
 			ArrayList<VisualAnimation> visited = Algorithm.hamiltonianPath(this.graph);
+			this.visualizerView.renderAnimation(visited);
+		} catch (IllegalStateException e) {
+			showWarning(e.getMessage());
+		}
+
+	}
+
+	private void Ham_Cycle_Handler(AlgorithmEvent event) {
+		try {
+			ArrayList<VisualAnimation> visited = Algorithm.hamiltonianCycle(this.graph);
 			this.visualizerView.renderAnimation(visited);
 		} catch (IllegalStateException e) {
 			showWarning(e.getMessage());

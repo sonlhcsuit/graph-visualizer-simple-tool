@@ -76,11 +76,8 @@
             <AlgorithmButton text="TSP-Held-Karp" row="5" col="1"/>
             <AlgorithmButton text="GC-Vertex" row="6" col="1"/>
             <AlgorithmButton text="GC-Ramsey" row="6" col="0"/>
-<<<<<<< HEAD
             <AlgorithmButton text="HP-Backtracking" row="7" col="0" fx:id="HP_Backtracking"/>
-=======
-            <AlgorithmButton text="Ham_Path" row="7" col="0" fx:id="HP_Backtracking"/>
->>>>>>> b967e89de3be838594b98b3b685ed684461e1915
+            <AlgorithmButton text="HC-Backtracking" row="7" col="1" fx:id="HC_Backtracking"/>
 
         </GridPane>
 

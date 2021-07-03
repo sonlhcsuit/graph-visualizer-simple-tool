@@ -24,6 +24,8 @@ public class Menu extends VBox implements Loader {
 	private AlgorithmButton SP_Greedy;
 	@FXML
 	private AlgorithmButton HP_Backtracking;
+	@FXML
+	private AlgorithmButton HC_Backtracking;
 
 
 	@FXML
@@ -65,6 +67,7 @@ public class Menu extends VBox implements Loader {
 		this.SP_Dijkstra.setOnMouseClicked(this::emitter);
 		this.SP_Greedy.setOnMouseClicked(this::emitter);
 		this.HP_Backtracking.setOnMouseClicked(this::emitter);
+		this.HC_Backtracking.setOnMouseClicked(this::emitter);
 
 
 
@@ -95,6 +98,9 @@ public class Menu extends VBox implements Loader {
 
 		}else if (HP_Backtracking.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_PATH));
+		}else if (HC_Backtracking.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_CYCLE));
 		}
+		
 	}
 }
