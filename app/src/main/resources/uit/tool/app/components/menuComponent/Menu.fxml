@@ -78,6 +78,8 @@
             <AlgorithmButton text="GC-Ramsey" row="6" col="0"/>
             <AlgorithmButton text="HP-Backtracking" row="7" col="0" fx:id="HP_Backtracking"/>
             <AlgorithmButton text="HC-Backtracking" row="7" col="1" fx:id="HC_Backtracking"/>
+            <AlgorithmButton text="EP-Fleury" row="8" col="0" fx:id="EP_Fleury"/>
+
 
         </GridPane>
 

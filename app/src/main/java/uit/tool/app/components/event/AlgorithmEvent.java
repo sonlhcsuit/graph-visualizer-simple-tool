@@ -10,6 +10,9 @@ public class AlgorithmEvent extends Event {
 	public static final EventType<AlgorithmEvent> GREEDY = new EventType<>(ANY,"GREEDY");
 	public static final EventType<AlgorithmEvent> HAM_PATH = new EventType<>(ANY,"HAMILTONIAN_PATH");
 	public static final EventType<AlgorithmEvent> HAM_CYCLE = new EventType<>(ANY,"HAMILTONIAN_CYCLE");
+	public static final EventType<AlgorithmEvent> EULER_PATH = new EventType<>(ANY,"EULERIAN_PATH");
+	public static final EventType<AlgorithmEvent> EULER_CYCLE = new EventType<>(ANY,"EULERIAN_CYCLE");
+
 
 
 	public AlgorithmEvent(EventType<AlgorithmEvent> type){

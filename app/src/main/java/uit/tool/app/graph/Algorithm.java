@@ -1,6 +1,6 @@
 package uit.tool.app.graph;
 
-
+import java.util.Arrays;
 import uit.tool.app.components.animation.*;
 
 import uit.tool.app.graph.Utilities.*;
@@ -155,10 +155,8 @@ public class Algorithm {
 		Utilities.printVertexNames(vertexNames);
 		int[] path = new int[size];
 		// Set all value path = -1
-		for (int i = 0; i < size; i++) {
-			path[i] = -1;
-		}
-		Utilities.printPath(path, size);
+		Utilities.setNegativeValue(path, size);
+		Utilities.printPath(path, size,vertexNames);
 		path[0] = 0;
 		animations.add(new Fronted(vertexs.get(path[0])));
 
@@ -166,7 +164,7 @@ public class Algorithm {
 			System.out.println("\nSolution does not exist");
 			throw new IllegalStateException("Hamiltonian path does not exist in the graph!!!");
 		} else {
-			Utilities.printPath(path, size);
+			Utilities.printPath(path, size,vertexNames);
 		}
 		// System.out.println(animations);
 		return animations;
@@ -227,19 +225,17 @@ public class Algorithm {
 		Utilities.printVertexNames(vertexNames);
 		int[] path = new int[size];
 		// Set all value path = -1
-		for (int i = 0; i < size; i++) {
-			path[i] = -1;
-		}
-		Utilities.printPath(path, size);
+		Utilities.setNegativeValue(path, size);
+		Utilities.printPath(path, size,vertexNames);
 		path[0] = 0;
 		animations.add(new Fronted(vertexs.get(path[0])));
 
 		if (hamCycleUtil(animations, vertexs, edges, path, 1, size) == false) {
 			System.out.println("\nSolution does not exist");
-			Utilities.printPath(path, size);
+			Utilities.printPath(path, size,vertexNames);
 			throw new IllegalStateException("Hamiltonian cycle does not exist in the graph!!!");
 		} 
-		Utilities.printPath(path, size);
+		Utilities.printPath(path, size,vertexNames);
 		
 		return animations;
 	}
@@ -283,6 +279,87 @@ public class Algorithm {
         }
 		return false;
 	}
+
+
+
+	public static ArrayList<VisualAnimation> eulerianPath(Graph graph) throws IllegalStateException {
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> vertexs = graph.getVertexes();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		double[][] edges = Utilities.copyAdjacencyMatrix(graph.adjacencyMatrix());
+		int numVertex = graph.getVertexes().size();
+		int numEdge = graph.getNumEdge();
+		int oldVertices = Utilities.isEuler(edges, numVertex);
+
+		if(oldVertices != 0 && oldVertices != 2){
+			throw new IllegalStateException("Eulerian path is not exist in the graph!!!");
+		}
+
+		int[] result = new int[numEdge + 1];
+		Utilities.setNegativeValue(result, numEdge +1);
+		Utilities.printPath(result, numEdge +1, vertexNames);
+
+		int startIndexVertex = Utilities.findStartIndexEuler(edges, numVertex);
+		animations.add(new Fronted(vertexs.get(startIndexVertex)));
+
+		eulerUtil(startIndexVertex, edges, result, startIndexVertex,  vertexNames,animations, vertexs);
+		Utilities.printPath(result, numEdge +1, vertexNames);
+		System.out.println("Done");
+		return animations;
+	}
+
+	public static Boolean eulerUtil(Integer startVertex, double edges [][],int result[], int pos, ArrayList<String> vertexNames, ArrayList<VisualAnimation> animations, ArrayList<Vertex> vertexs){
+		System.out.println("Pos: " + pos);
+		if(pos == result.length - 1 ){
+			animations.add(new Selected(vertexs.get(result[pos-1]), vertexs.get(result[pos])));
+			animations.add(new Visited(vertexs.get(result[pos])));
+			return true ;
+		}
+		result[pos] = startVertex;
+		Vertex preVertex = vertexs.get(result[pos]);
+		if(pos > 0 ){
+			Vertex prevpreVertex = vertexs.get(result[pos-1]);
+			animations.add(new Selected(prevpreVertex, preVertex));
+		}
+		animations.add(new Visited(preVertex));
+		System.out.println("Start index: " + startVertex);
+		Utilities.printPath(result, result.length, vertexNames);
+
+		for(int v = 0; v < result.length; v++){
+			System.out.println("v: " + v);
+			if( (edges[v][startVertex] > 0 || edges[startVertex][v] > 0) && isValidNextEdge(startVertex, v, edges )){
+				result[pos+1] = v;
+				Vertex curVertex = vertexs.get(result[pos +1]);
+				animations.add(new Considered(preVertex, curVertex));
+				animations.add(new Fronted(curVertex));
+
+				Utilities.removeEdgeFromAdj(startVertex, result[pos+1], edges);
+				if(eulerUtil(v, edges, result, pos + 1, vertexNames, animations, vertexs)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public static Boolean isValidNextEdge(Integer u, Integer v, double edges [][]){
+		if(Utilities.computeDegreeVertex(edges, u) == 1){
+			return true;
+		}
+		// count vertices reachable before delete edge
+		boolean [] isVisited = new boolean[edges.length];
+		int count1 = Utilities.dfsCount(u, isVisited, edges);
+		System.out.println("Count 1: " + count1);
+
+		//count vertices reachable after delete edge
+		double temp = edges[u][v];
+		edges[u][v] = 0;
+		isVisited = new boolean[edges.length];
+		int count2 = Utilities.dfsCount(u, isVisited, edges);
+		System.out.println("Count 2: " + count2);
+		edges[u][v] = temp;
+		return  (count1 > count2) ? false : true;
+	}
+
 
 
 }
