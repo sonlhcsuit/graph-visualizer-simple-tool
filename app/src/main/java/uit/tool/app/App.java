@@ -55,6 +55,8 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(UserEvent.OPEN_GRAPH, this::openGraphUserEventHandler);
 		this.addEventFilter(UserEvent.SAVE_AS_GRAPH, this::saveAsUserEventHandler);
 		this.addEventFilter(UserEvent.SETTING, this::settingUserEventHandler);
+		this.addEventFilter(UserEvent.CLEAR_GRAPH, this::clearGraphUserEventHandler);
+
 
 //		render toggle
 		this.addEventFilter(SettingEvent.TOGGLE_DIRECTED, (SettingEvent event) -> {
@@ -183,6 +185,11 @@ public class App extends BorderPane implements Loader {
 
 	private void settingUserEventHandler(UserEvent event) {
 
+	}
+	private void clearGraphUserEventHandler(UserEvent event) {
+		Graph g= new Graph();
+		g.setSetting(this.graph.getSetting());
+		this.setGraph(g);
 	}
 
 	private void showError(String content) {

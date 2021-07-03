@@ -401,7 +401,6 @@ public class GraphView extends ScrollPane implements Loader {
 	}
 
 	public void clearContextMenuHandler(ActionEvent event) {
-		System.out.println("clear");
-
+		this.fireEvent(new UserEvent(UserEvent.CLEAR_GRAPH));
 	}
 }

@@ -22,8 +22,6 @@ public class Menu extends VBox implements Loader {
 	@FXML
 	private AlgorithmButton SP_A_star;
 	@FXML
-	private AlgorithmButton SP_Greedy;
-	@FXML
 	private AlgorithmButton HP_Backtracking;
 	@FXML
 	private AlgorithmButton HC_Backtracking;
@@ -68,7 +66,6 @@ public class Menu extends VBox implements Loader {
 		this.GT_DFS.setOnMouseClicked(this::emitter);
 		this.GT_BFS.setOnMouseClicked(this::emitter);
 		this.SP_Dijkstra.setOnMouseClicked(this::emitter);
-		this.SP_Greedy.setOnMouseClicked(this::emitter);
 		this.HP_Backtracking.setOnMouseClicked(this::emitter);
 		this.HC_Backtracking.setOnMouseClicked(this::emitter);
 		this.EP_Fleury.setOnMouseClicked(this::emitter);
@@ -95,10 +92,7 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.BFS));
 		} else if (SP_Dijkstra.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DIJKSTRA));
-		} else if (SP_Greedy.equals(source)) {
-			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.GREEDY));
-
-		}else if (HP_Backtracking.equals(source)) {
+		} else if (HP_Backtracking.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_PATH));
 		}else if (HC_Backtracking.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_CYCLE));
