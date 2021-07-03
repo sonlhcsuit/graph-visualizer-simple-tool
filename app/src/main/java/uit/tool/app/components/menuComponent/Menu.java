@@ -12,6 +12,7 @@ import uit.tool.app.interfaces.Loader;
 
 public class Menu extends VBox implements Loader {
 
+	public AlgorithmButton EC_Fleury;
 	@FXML
 	private AlgorithmButton GT_BFS;
 	@FXML
