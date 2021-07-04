@@ -1,7 +1,5 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
-import javafx.animation.FillTransition;
-import javafx.animation.Transition;
 import javafx.beans.NamedArg;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,7 +25,6 @@ public class VertexView extends StackPane implements Loader {
 	Circle circle;
 	ContextMenu ctm;
 	private Vertex vertex;
-
 
 	public VertexView(@NamedArg(value = "x", defaultValue = "0") double x,
 					  @NamedArg(value = "y", defaultValue = "0") double y,
@@ -55,7 +52,12 @@ public class VertexView extends StackPane implements Loader {
 		this.circle = circle;
 	}
 
-	private Image setUpImage() {
+	/**
+	 * create black square as a image
+	 *
+	 * @return square black image
+	 */
+	private Image blackSquare() {
 		WritableImage wImage = new WritableImage(40, 40);
 		PixelWriter writer = wImage.getPixelWriter();
 		for (int i = 0; i < 30; i++) {
@@ -71,13 +73,7 @@ public class VertexView extends StackPane implements Loader {
 		this.setOnDragDetected((MouseEvent event) -> {
 //			For drag & drop vertex
 			Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
-
-			try {
-				db.setDragView(setUpImage());
-
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
+			db.setDragView(blackSquare());
 			ClipboardContent content = new ClipboardContent();
 			content.putString("");
 			db.setContent(content);
@@ -94,6 +90,11 @@ public class VertexView extends StackPane implements Loader {
 		});
 	}
 
+	/**
+	 * create a context menu when click on a vertex view, allow user rename the vertex, remove the vertex (it must be alone - no any edge )
+	 *
+	 * @return the context menu it self
+	 */
 	public ContextMenu createContextMenu() {
 		ContextMenu ctm = new ContextMenu();
 
@@ -119,9 +120,5 @@ public class VertexView extends StackPane implements Loader {
 		VertexView that = (VertexView) o;
 		return Objects.equals(vertex, that.vertex);
 	}
-//
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(vName, circle, ctm, vertex);
-//	}
+
 }
