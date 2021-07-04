@@ -188,13 +188,13 @@ public class GraphView extends ScrollPane implements Loader {
 					EdgeView ev;
 					WeightedView wv = null;
 					if (matrix[i][j] != 0 && matrix[j][i] != 0) {
-						ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC, setting.isDirected());
+						ev = new EdgeView(V.get(i), V.get(j), Type.Line, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], false);
 						}
 					} else {
 //						1 edge between 2 vertex, use line
-						ev = new EdgeView(V.get(i), V.get(j), EdgeView.LINE, setting.isDirected());
+						ev = new EdgeView(V.get(i), V.get(j), Type.Arc, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], true);
 						}
