@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TitledPane?>
 <?import uit.tool.app.components.menuComponent.AlgorithmButton?>
+
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="uit.tool.app.components.menuComponent.Menu" minWidth="128" maxWidth="256" prefWidth="256"
          stylesheets="@/uit/tool/app/stylesheets/Menu.css">
 
     <TitledPane text="Graph Information">
         <GridPane>
+
             <columnConstraints>
                 <ColumnConstraints percentWidth="50"/>
                 <ColumnConstraints percentWidth="50"/>
             </columnConstraints>
+
             <padding>
                 <Insets top="10" bottom="10"/>
             </padding>
 
-            <TextField fx:id="nameTextField" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2">
+            <TextField fx:id="nameTextField" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2" >
                 <GridPane.margin>
                     <Insets topRightBottomLeft="10"/>
                 </GridPane.margin>
@@ -48,12 +50,9 @@
             </CheckBox>
 
         </GridPane>
-
-
     </TitledPane>
 
     <TitledPane text="Algorithms" GridPane.columnSpan="2" focusTraversable="false">
-
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints percentWidth="50"/>
@@ -62,6 +61,7 @@
             <padding>
                 <Insets top="10" bottom="10"/>
             </padding>
+
             <AlgorithmButton row="0" col="0" text="GT-DFS" fx:id="GT_DFS"/>
             <AlgorithmButton row="0" col="1" text="GT-BFS" fx:id="GT_BFS"/>
             <AlgorithmButton row="1" col="0" text="SP-Dijkstra's" fx:id="SP_Dijkstra"/>
@@ -80,9 +80,6 @@
             <AlgorithmButton row="7" col="1" text="GC-Vertex"/>
             <AlgorithmButton row="8" col="0" text="GC-Ramsey"/>
 
-
         </GridPane>
-
     </TitledPane>
-
 </fx:root>
