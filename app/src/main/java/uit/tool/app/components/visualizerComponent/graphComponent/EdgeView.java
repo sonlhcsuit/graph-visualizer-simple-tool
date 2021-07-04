@@ -20,12 +20,13 @@ public class EdgeView extends Path {
 
 	private Vertex source;
 	private Vertex destination;
+	/**
+	 * for arrow drawing:
+	 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
+	 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
+	 */
 	EdgeView(Vertex source, Vertex destination, String type, boolean withArrow) {
-		/**
-		 * for arrow drawing:
-		 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
-		 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
-		 */
+
 		super();
 		this.source = source;
 		this.destination =destination;
@@ -136,6 +137,7 @@ public class EdgeView extends Path {
 		this(edge.getSource(),edge.getDestination());
 	}
 
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -143,6 +145,12 @@ public class EdgeView extends Path {
 		EdgeView that = (EdgeView) o;
 		return Objects.equals(source, that.source) && Objects.equals(destination,that.destination);
 	}
+
+	/**
+	 * A shallow version of equals, allow to match the edge A -> B with B -> A (bi-direction edge)
+	 * @param o EdgeView to be compared with
+	 * @return 2 edgeview are the same or not, just consider the edge (2 vertex at endpoint), not the order (direction of edge)
+	 */
 	public boolean shallowEquals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
@@ -151,6 +159,15 @@ public class EdgeView extends Path {
 		Objects.equals(source, that.destination) && Objects.equals(destination,that.source);
 	}
 
+	/**
+	 * Rotate the point around pivot point a angle in radian
+	 * @param pivotX X-coordinate value of the pivot point
+	 * @param pivotY Y-coordinate value of the pivot point
+	 * @param X X-coordinate of the point to be rotated
+	 * @param Y Y-coordinate of the point to be rotated
+	 * @param angle angle in radian
+	 * @return an 2-element array present X & Y of result point respectively
+	 */
 	private double[] rotate(double pivotX, double pivotY, double X, double Y, double angle) {
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);

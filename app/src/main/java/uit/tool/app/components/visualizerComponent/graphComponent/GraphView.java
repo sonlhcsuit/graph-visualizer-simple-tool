@@ -1,7 +1,5 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
-import javafx.animation.FillTransition;
-import javafx.animation.StrokeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +9,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import uit.tool.app.components.animation.AnimationOrder;
 import uit.tool.app.components.animation.EdgeAnimation;
 import uit.tool.app.components.animation.VertexAnimation;
@@ -25,7 +21,6 @@ import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Setting;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
-
 import java.util.ArrayList;
 
 
