@@ -5,6 +5,13 @@ import javafx.scene.layout.AnchorPane;
 import uit.tool.app.graph.Vertex;
 
 public class WeightedView extends Label {
+	/**
+	 * Draw an text, present the weight of the edge
+	 * @param source the vertex which edge starts
+	 * @param destination the vertex which edge ends
+	 * @param weight weight value in float
+ 	 * @param isLine if the edge was draw in a straight line or not (if not a straight line, it must be a arc)
+	 */
 	WeightedView(Vertex source, Vertex destination, double weight, boolean isLine) {
 		super();
 		this.setText(String.format("%.2f", weight));

@@ -48,6 +48,7 @@ public class MatrixView extends GridPane implements Loader {
 		t.setPrefSize(40, 40);
 
 		t.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//			listener to update the weight value whenever user change value
 			if (!newValue) {
 				try {
 					double newW = Double.parseDouble(t.getText());
@@ -64,13 +65,14 @@ public class MatrixView extends GridPane implements Loader {
 					alert.showAndWait();
 				}
 			}
-
 		});
 
 		return t;
 	}
 
-
+	/**
+	 * render the matrix view created from grid of input text
+	 */
 	public void render() {
 		if (graph == null) {
 			return;

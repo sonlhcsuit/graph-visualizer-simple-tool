@@ -10,6 +10,10 @@ public class Logger extends TextArea implements Loader {
 		Loader.loadFXML(this);
 	}
 
+	/**
+	 * write log in the bottom component
+	 * @param message message to be log in the log
+	 */
 	public void writeLog(String message) {
 		Label l = new Label();
 		l.setText(message);
