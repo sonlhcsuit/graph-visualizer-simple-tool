@@ -41,9 +41,9 @@ public class Navigation extends VBox implements Loader {
 	public void initialize() {
 		isMenuOpen = true;
 		navBrandIcon.setOnMouseClicked((MouseEvent e) -> {
-			toggleMenu();
+			toggleNavigation();
 		});
-		toggleMenu();
+		toggleNavigation();
 		this.newItem.setOnMouseClicked(this::newItemHandler);
 		this.openItem.setOnMouseClicked(this::openFunction);
 		this.saveAsItem.setOnMouseClicked(this::saveAsHandler);
@@ -59,7 +59,6 @@ public class Navigation extends VBox implements Loader {
 		this.fireEvent(new UserEvent(UserEvent.OPEN_GRAPH));
 	}
 
-
 	public void saveAsHandler(MouseEvent event) {
 		this.fireEvent(new UserEvent(UserEvent.SAVE_AS_GRAPH));
 	}
@@ -68,6 +67,10 @@ public class Navigation extends VBox implements Loader {
 		this.fireEvent(new UserEvent(UserEvent.SETTING));
 	}
 
+	/**
+	 * Open the avatar section or close it
+	 * @param isSmall the avatar must be closed or opened
+	 */
 	public void toggleAvatar(boolean isSmall) {
 		if (isSmall) {
 			Scale small = new Scale();
@@ -81,6 +84,10 @@ public class Navigation extends VBox implements Loader {
 		}
 	}
 
+	/**
+	 * Open the brand or close it
+	 * @param isSmall the brand must be closed or opened
+	 */
 	public void toggleBrand(boolean isSmall) {
 		if (isSmall) {
 			navBrand.getChildren().remove(1);
@@ -89,16 +96,24 @@ public class Navigation extends VBox implements Loader {
 		}
 	}
 
+	/**
+	 * Change size of the navigation from small (64px) to (256px)
+	 * @param isSmall the navigation must be closed or opened
+	 */
 	public void toggleNavigationSize(boolean isSmall) {
 		if (isSmall) {
 			this.setPrefWidth(64);
 		} else {
 			this.setPrefWidth(256);
-
 		}
 	}
 
-	public void toggleMenu() {
+	/**
+	 * Toggle expand or close the Navigation based on current status
+	 * open -> close
+	 * close -> open
+	 */
+	public void toggleNavigation() {
 		for (int i = 0; i < this.navGroup.getChildren().size(); i++) {
 			NavigationItem navItem = (NavigationItem) this.navGroup.getChildren().get(i);
 			navItem.toggle(isMenuOpen);

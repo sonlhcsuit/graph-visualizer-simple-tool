@@ -16,13 +16,15 @@ public class NavigationItem extends HBox implements Loader {
 	private ImageView icon;
 	@FXML
 	HBox container;
-
 	private boolean isCollapsed;
 
 
-	public NavigationItem(
-			@NamedArg("text") String text, @NamedArg("icon") String icon
-	) {
+	/**
+	 * create the navigation item
+	 * @param text the text present on the component
+	 * @param icon the image present on the component
+	 */
+	public NavigationItem(@NamedArg("text") String text, @NamedArg("icon") String icon) {
 		Loader.loadFXML(this);
 		Image image = new Image(icon);
 		this.icon.setImage(image);
@@ -43,6 +45,10 @@ public class NavigationItem extends HBox implements Loader {
 		this.btn.onMouseClickedProperty().bind(this.onMouseClickedProperty());
 	}
 
+	/**
+	 * Toggle whenever the value of navigation item
+	 * @param isCollapsed value of the navigation, it must be a value, true mean open - false mean close
+	 */
 	public void toggle(boolean isCollapsed) {
 		if (isCollapsed) {
 //			trigger to close
@@ -54,12 +60,18 @@ public class NavigationItem extends HBox implements Loader {
 		setCollapsed(isCollapsed);
 	}
 
+	/**
+	 * expand the navigation item itself
+	 */
 	public void collapse() {
 		if (!isCollapsed) {
 			container.getChildren().remove(1);
 		}
 	}
 
+	/**
+	 * shrink the navigation item itself
+	 */
 	public void unCollapse() {
 		if (isCollapsed) {
 			container.getChildren().add(btn);
