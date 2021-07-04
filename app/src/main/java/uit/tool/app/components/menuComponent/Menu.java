@@ -48,6 +48,7 @@ public class Menu extends VBox implements Loader {
 		this.nameTextField.textProperty().addListener((obs, oldV, newV) -> {
 			this.setting.setName(newV);
 		});
+
 		this.saveButton.setOnMouseClicked((MouseEvent event) -> {
 			this.fireEvent(new UserEvent(UserEvent.SAVE_GRAPH));
 		});
@@ -85,9 +86,12 @@ public class Menu extends VBox implements Loader {
 		return setting;
 	}
 
+	/**
+	 * Event handler tracks which button user clicked and emits new algorithm event
+	 * @param event The click event itself
+	 */
 	public void emitter(MouseEvent event) {
 		Object source = event.getSource();
-
 		if (GT_DFS.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.DFS));
 		} else if (GT_BFS.equals(source)) {
