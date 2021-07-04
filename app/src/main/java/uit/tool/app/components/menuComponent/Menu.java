@@ -28,7 +28,6 @@ public class Menu extends VBox implements Loader {
 	@FXML
 	private AlgorithmButton EP_Fleury;
 
-
 	@FXML
 	private TextField nameTextField;
 	@FXML
@@ -69,6 +68,7 @@ public class Menu extends VBox implements Loader {
 		this.HP_Backtracking.setOnMouseClicked(this::emitter);
 		this.HC_Backtracking.setOnMouseClicked(this::emitter);
 		this.EP_Fleury.setOnMouseClicked(this::emitter);
+		this.EC_Fleury.setOnMouseClicked(this::emitter);
 
 	}
 
@@ -98,6 +98,8 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.HAM_CYCLE));
 		}else if (EP_Fleury.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.EULER_PATH));
+		}else if (EC_Fleury.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.EULER_CYCLE));
 		}
 		
 	}

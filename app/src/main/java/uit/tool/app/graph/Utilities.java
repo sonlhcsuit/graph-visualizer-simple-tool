@@ -93,7 +93,7 @@ public class Utilities {
 				return i;
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	public static int computeDegreeVertex(double edges [][], int v){
