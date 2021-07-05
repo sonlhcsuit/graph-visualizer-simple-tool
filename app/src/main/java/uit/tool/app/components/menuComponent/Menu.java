@@ -69,6 +69,8 @@ public class Menu extends VBox implements Loader {
 		this.HC_Backtracking.setOnMouseClicked(this::emitter);
 		this.EP_Fleury.setOnMouseClicked(this::emitter);
 		this.EC_Fleury.setOnMouseClicked(this::emitter);
+		this.SP_A_star.setOnMouseClicked(this::emitter);
+
 
 	}
 
@@ -100,7 +102,8 @@ public class Menu extends VBox implements Loader {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.EULER_PATH));
 		}else if (EC_Fleury.equals(source)) {
 			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.EULER_CYCLE));
-		}
-		
+		}else if (SP_A_star.equals(source)) {
+			this.fireEvent(new AlgorithmEvent(AlgorithmEvent.A_STAR));
+		} 
 	}
 }

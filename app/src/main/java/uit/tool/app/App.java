@@ -82,6 +82,8 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(AlgorithmEvent.HAM_CYCLE, this::Ham_Cycle_Handler);
 		this.addEventFilter(AlgorithmEvent.EULER_PATH, this::Euler_Path_Handler);
 		this.addEventFilter(AlgorithmEvent.EULER_CYCLE, this::Euler_Cycle_Handler);
+		this.addEventFilter(AlgorithmEvent.A_STAR, this::A_Star_Handler);
+
 
 
 		try {
@@ -274,6 +276,18 @@ public class App extends BorderPane implements Loader {
 	private void Euler_Cycle_Handler(AlgorithmEvent event) {
 		try {
 			ArrayList<VisualAnimation> visited = Algorithm.eulerianCycle(this.graph);
+			this.visualizerView.renderAnimation(visited);
+		} catch (IllegalStateException e) {
+			showWarning(e.getMessage());
+		}
+
+	}
+
+	private void A_Star_Handler(AlgorithmEvent event) {
+		String source = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+		String target = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter target vertex name");
+		try {
+			ArrayList<VisualAnimation> visited = Algorithm.aStarAlgorithm(this.graph, source, target);
 			this.visualizerView.renderAnimation(visited);
 		} catch (IllegalStateException e) {
 			showWarning(e.getMessage());

@@ -1,6 +1,12 @@
 package uit.tool.app.graph;
 
 import java.util.ArrayList;
+import java.lang.Math;
+import java.util.Iterator;
+import java.util.Collections;
+import java.util.*;
+
+
 
 public class Utilities {
 
@@ -132,5 +138,102 @@ public class Utilities {
 		}
 		return result;
 	}
+
+	public static double[] calculateHeuristic(int target, ArrayList<Vertex> vertexs){
+		double[] heuristicVertexs = new double[vertexs.size()];
+		double targetX = vertexs.get(target).getX();
+		double targetY = vertexs.get(target).getY();
+		for(int i=0; i < vertexs.size(); i++){
+			double CurrX = vertexs.get(i).getX();
+			double CurrY = vertexs.get(i).getX();
+
+			heuristicVertexs[i] = Math.sqrt((CurrX - targetX )*(CurrX - targetX ) + (CurrY - targetY )*(CurrY - targetY));
+		}
+
+		return heuristicVertexs;
+	}
+
+	public static int findMinWay(int vertex, double heuristicVertexs [], double edges [][]){
+		int minIndex = findStartMin(vertex,edges);
+		double minValue = getMinValue(vertex, minIndex, heuristicVertexs, edges);
+	
+		for(int i=0; i<heuristicVertexs.length; i++){
+			if(edges[vertex][i] > 0 || edges[i][vertex] > 0){
+				double curDistance = getMinValue(vertex, i, heuristicVertexs, edges);
+				if(curDistance < minValue){
+					minIndex = i;
+					minValue = curDistance;
+				}
+			}
+		}
+		return minIndex;
+	}
+
+	public static int findStartMin(int vertex, double edges [][]){
+		for(int i=0; i<edges.length; i++){
+			if(edges[vertex][i] > 0 || edges[i][vertex] > 0){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public static double getMinValue(int vertex,int minIndex, double heuristicVertexs [], double edges [][]){
+		double minValue = -1;
+		if(edges[vertex][minIndex] > 0){
+			minValue = edges[vertex][minIndex] + heuristicVertexs[minIndex];
+		}
+		if(edges[minIndex][vertex]> 0){
+			double minValue2 = edges[minIndex][vertex] + heuristicVertexs[minIndex];
+			if(minValue == -1){
+				minValue = minValue2;
+			}
+			else{
+				if(minValue2 < minValue){
+					minValue = minValue2;
+				}
+			}
+		}
+		return minValue;
+	}
+
+	public static ArrayList<Integer> getAdjList(int sourceIndex, double heuristicVertexs [], double edges [][] ){
+		ArrayList<Integer> indexList = new ArrayList<Integer>();
+		ArrayList<Double> valueList = new ArrayList<Double>();
+		ArrayList<Double> CopyValueList = new ArrayList<Double>();
+		// System.out.println("Copy value: ");
+		for(int i = 0; i < edges.length; i++){
+			if(edges[sourceIndex][i] > 0 || edges[i][sourceIndex] > 0){
+				double curDistance = getMinValue(sourceIndex, i, heuristicVertexs, edges);
+				valueList.add(curDistance);
+				CopyValueList.add(curDistance);
+			}
+			else{
+				CopyValueList.add(-1.0);
+			}
+			System.out.println(" " + CopyValueList.get(i));
+
+		}
+		System.out.println();
+		Collections.sort(valueList);
+
+		for(int i = 0; i < valueList.size(); i++){
+			indexList.add(CopyValueList.indexOf(valueList.get(i)));
+		}
+		//Copy array 
+		return indexList;
+	}
+
+	public static void printStack(Stack<Integer> stack){
+		Iterator value = stack.iterator();
+        // Displaying the values
+        // after iterating through the stack
+        System.out.print("Stack: ");
+        while (value.hasNext()) {
+            System.out.print(" " + value.next());
+        }
+		System.out.println();
+	}
+
 
 }
