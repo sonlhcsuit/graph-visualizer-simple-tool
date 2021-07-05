@@ -77,13 +77,15 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(AlgorithmEvent.BFS, this::BFS_Handler);
 		this.addEventFilter(AlgorithmEvent.BFS, this::DFS_Handler);
 		this.addEventFilter(AlgorithmEvent.DIJKSTRA, this::Dijkstra_Handler);
-		this.addEventFilter(AlgorithmEvent.GREEDY, this::Greedy_Handler);
 		this.addEventFilter(AlgorithmEvent.HAM_PATH, this::Ham_Path_Handler);
 		this.addEventFilter(AlgorithmEvent.HAM_CYCLE, this::Ham_Cycle_Handler);
 		this.addEventFilter(AlgorithmEvent.EULER_PATH, this::Euler_Path_Handler);
+		this.addEventFilter(AlgorithmEvent.EULER_CYCLE, this::Euler_Cycle_Handler);
+		this.addEventFilter(AlgorithmEvent.A_STAR, this::A_Star_Handler);
+
 
 		try {
-			this.setGraph(Graph.load("/Users/sonlh/sp.graph"));
+			this.setGraph(Graph.load("/Users/sonlh/sonlh/projects/personal/graph-visualizer-simple-tool/Graphs/sp.graph"));
 		} catch (Exception e) {
 			System.out.println("got bug");
 		}
@@ -263,6 +265,27 @@ public class App extends BorderPane implements Loader {
 	private void Euler_Path_Handler(AlgorithmEvent event) {
 		try {
 			ArrayList<VisualAnimation> visited = Algorithm.eulerianPath(this.graph);
+			this.visualizerView.renderAnimation(visited);
+		} catch (IllegalStateException e) {
+			showWarning(e.getMessage());
+		}
+
+	}
+	private void Euler_Cycle_Handler(AlgorithmEvent event) {
+		try {
+			ArrayList<VisualAnimation> visited = Algorithm.eulerianCycle(this.graph);
+			this.visualizerView.renderAnimation(visited);
+		} catch (IllegalStateException e) {
+			showWarning(e.getMessage());
+		}
+
+	}
+
+	private void A_Star_Handler(AlgorithmEvent event) {
+		try {
+			String source = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+			String target = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter target vertex name");
+			ArrayList<VisualAnimation> visited = Algorithm.aStarAlgorithm(this.graph, source, target);
 			this.visualizerView.renderAnimation(visited);
 		} catch (IllegalStateException e) {
 			showWarning(e.getMessage());

@@ -1,7 +1,5 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
-import javafx.animation.FillTransition;
-import javafx.animation.StrokeTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +9,6 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import uit.tool.app.components.animation.AnimationOrder;
 import uit.tool.app.components.animation.EdgeAnimation;
 import uit.tool.app.components.animation.VertexAnimation;
@@ -25,7 +21,6 @@ import uit.tool.app.graph.Graph;
 import uit.tool.app.graph.Setting;
 import uit.tool.app.graph.Vertex;
 import uit.tool.app.interfaces.Loader;
-
 import java.util.ArrayList;
 
 
@@ -193,13 +188,13 @@ public class GraphView extends ScrollPane implements Loader {
 					EdgeView ev;
 					WeightedView wv = null;
 					if (matrix[i][j] != 0 && matrix[j][i] != 0) {
-						ev = new EdgeView(V.get(i), V.get(j), EdgeView.ARC, setting.isDirected());
+						ev = new EdgeView(V.get(i), V.get(j), Type.Arc, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], false);
 						}
 					} else {
 //						1 edge between 2 vertex, use line
-						ev = new EdgeView(V.get(i), V.get(j), EdgeView.LINE, setting.isDirected());
+						ev = new EdgeView(V.get(i), V.get(j), Type.Line, setting.isDirected());
 						if (setting.isWeighted()) {
 							wv = new WeightedView(V.get(i), V.get(j), matrix[i][j], true);
 						}

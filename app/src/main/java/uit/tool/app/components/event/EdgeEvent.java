@@ -7,8 +7,9 @@ import javafx.event.EventType;
 public class EdgeEvent extends Event {
 	public final static EventType<EdgeEvent> UPDATE_WEIGHT = new EventType<>(ANY, "UPDATE");
 
-	private int row, col;
-	private double weight;
+	private final int row;
+	private final int col;
+	private final double weight;
 
 	public EdgeEvent(EventType<EdgeEvent> type, int row, int col, double weight) {
 		super(type);

@@ -1,34 +1,37 @@
 package uit.tool.app.components.visualizerComponent.graphComponent;
 
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
 import uit.tool.app.graph.Edge;
 import uit.tool.app.graph.Vertex;
 
 import java.util.Objects;
 
+enum Type{
+	Arc,
+	Line,
+}
 public class EdgeView extends Path {
 	private static final double defaultArrowHeadSize = 5;
 	private static final double defaultArrowAngle = Math.PI / 6;  // 30 deg
 	private static final double radius = 20;
+	private final Vertex source;
+	private final Vertex destination;
 
-	public static final String ARC = "ARC";
-	public static final String LINE = "Line";
+	/**
+	 * for arrow drawing:
+	 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
+	 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
+	 * @param source the vertex the edge starts
+	 * @param destination the vertex the edge ends
+	 * @param type type of the line, straight line or ellipse arc
+	 * @param withArrow end of the point have arrow or not
+	 */
+	EdgeView(Vertex source, Vertex destination, Type type, boolean withArrow) {
 
-
-	private Vertex source;
-	private Vertex destination;
-	EdgeView(Vertex source, Vertex destination, String type, boolean withArrow) {
-		/**
-		 * for arrow drawing:
-		 * https://math.stackexchange.com/questions/1314006/drawing-an-arrow
-		 * https://stackoverflow.com/questions/47079268/how-to-draw-arrow-head-with-coordinates
-		 */
 		super();
 		this.source = source;
-		this.destination =destination;
+		this.destination = destination;
 
 		setStroke(Color.BLACK);
 		setStrokeWidth(2);
@@ -49,9 +52,9 @@ public class EdgeView extends Path {
 
 		getElements().add(new MoveTo(startX, startY));
 
-		if (LINE.equals(type)) {
+		if (type == Type.Line ) {
 			getElements().add(new LineTo(endX, endY));
-		} else if (ARC.equals(type)) {
+		} else if (type == Type.Arc) {
 //			vX == 0 || vY == 0 mean that start point or end point are horizontal line or vertical line
 			double angle = Math.atan2(vY, vX);
 			double radiusX = vLength / 2;
@@ -82,12 +85,12 @@ public class EdgeView extends Path {
 			Bx = endX - defaultArrowHeadSize * rightVectorX;
 			By = endY - defaultArrowHeadSize * rightVectorY;
 
-			if (LINE.equals(type)) {
+			if (type == Type.Line) {
 				getElements().add(new MoveTo(endX, endY));
 				getElements().add(new LineTo(Ax, Ay));
 				getElements().add(new LineTo(Bx, By));
 				getElements().add(new LineTo(endX, endY));
-			} else if (ARC.equals(type)) {
+			} else if (type == Type.Arc) {
 //				center of end point
 				double pivotX, pivotY;
 				pivotX = destination.getX() + radius;
@@ -98,7 +101,7 @@ public class EdgeView extends Path {
 				rightVectorX = endX - defaultArrowHeadSize * rightVectorX;
 				rightVectorY = endY - defaultArrowHeadSize * rightVectorY;
 
-//				Secret formula
+//				Secret formula, not precious
 				double ll = Math.log(vLength) / Math.log(2);
 				double ROTATE_ANGLE = 20 + (ll - 6) * 12.5;
 
@@ -124,33 +127,51 @@ public class EdgeView extends Path {
 
 	}
 
-	EdgeView(Vertex source, Vertex destination, String type) {
+	EdgeView(Vertex source, Vertex destination, Type type) {
 		this(source, destination, type, false);
 	}
 
 	EdgeView(Vertex source, Vertex destination) {
-		this(source, destination, LINE, false);
+		this(source, destination, Type.Line, false);
 	}
 
-	EdgeView(Edge edge){
-		this(edge.getSource(),edge.getDestination());
+	EdgeView(Edge edge) {
+		this(edge.getSource(), edge.getDestination());
 	}
+
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		EdgeView that = (EdgeView) o;
-		return Objects.equals(source, that.source) && Objects.equals(destination,that.destination);
+		return Objects.equals(source, that.source) && Objects.equals(destination, that.destination);
 	}
+
+	/**
+	 * A shallow version of equals, allow to match the edge A -> B with B -> A (bi-direction edge)
+	 *
+	 * @param o EdgeView to be compared with
+	 * @return 2 edgeview are the same or not, just consider the edge (2 vertex at endpoint), not the order (direction of edge)
+	 */
 	public boolean shallowEquals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		EdgeView that = (EdgeView) o;
-		return (Objects.equals(source, that.source) && Objects.equals(destination,that.destination)) || 
-		Objects.equals(source, that.destination) && Objects.equals(destination,that.source);
+		return (Objects.equals(source, that.source) && Objects.equals(destination, that.destination)) ||
+				Objects.equals(source, that.destination) && Objects.equals(destination, that.source);
 	}
 
+	/**
+	 * Rotate the point around pivot point a angle in radian
+	 *
+	 * @param pivotX X-coordinate value of the pivot point
+	 * @param pivotY Y-coordinate value of the pivot point
+	 * @param X      X-coordinate of the point to be rotated
+	 * @param Y      Y-coordinate of the point to be rotated
+	 * @param angle  angle in radian
+	 * @return an 2-element array present X & Y of result point respectively
+	 */
 	private double[] rotate(double pivotX, double pivotY, double X, double Y, double angle) {
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);

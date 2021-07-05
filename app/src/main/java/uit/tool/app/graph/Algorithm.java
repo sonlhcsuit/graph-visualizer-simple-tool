@@ -1,6 +1,7 @@
 package uit.tool.app.graph;
 
 import java.util.Arrays;
+
 import uit.tool.app.components.animation.*;
 
 import uit.tool.app.graph.Utilities.*;
@@ -51,7 +52,6 @@ public class Algorithm {
 		ArrayList<String> visited = new ArrayList<>(vertexNames.size());
 		Stack<String> frontier = new Stack<>();
 		double[][] edges = graph.adjacencyMatrix();
-
 		frontier.push(vertexNames.get(0));
 		animations.add(new Fronted(V.get(0)));
 
@@ -302,18 +302,21 @@ public class Algorithm {
 		int startIndexVertex = Utilities.findStartIndexEuler(edges, numVertex);
 		animations.add(new Fronted(vertexs.get(startIndexVertex)));
 
-		eulerUtil(startIndexVertex, edges, result, startIndexVertex,  vertexNames,animations, vertexs);
+		eulerUtil(startIndexVertex, edges, result, 0,  vertexNames,animations, vertexs);
 		Utilities.printPath(result, numEdge +1, vertexNames);
 		System.out.println("Done");
 		return animations;
 	}
 
 	public static Boolean eulerUtil(Integer startVertex, double edges [][],int result[], int pos, ArrayList<String> vertexNames, ArrayList<VisualAnimation> animations, ArrayList<Vertex> vertexs){
-		System.out.println("Pos: " + pos);
-		if(pos == result.length - 1 ){
-			animations.add(new Selected(vertexs.get(result[pos-1]), vertexs.get(result[pos])));
-			animations.add(new Visited(vertexs.get(result[pos])));
-			return true ;
+		// System.out.println("Pos: " + pos);
+		// if(pos == result.length - 1 ){
+		// 	animations.add(new Selected(vertexs.get(result[pos-1]), vertexs.get(result[pos])));
+		// 	animations.add(new Visited(vertexs.get(result[pos])));
+		// 	return true ;
+		// }
+		if(pos == result.length){
+			return true;
 		}
 		result[pos] = startVertex;
 		Vertex preVertex = vertexs.get(result[pos]);
@@ -322,11 +325,11 @@ public class Algorithm {
 			animations.add(new Selected(prevpreVertex, preVertex));
 		}
 		animations.add(new Visited(preVertex));
-		System.out.println("Start index: " + startVertex);
-		Utilities.printPath(result, result.length, vertexNames);
+		// System.out.println("Start index: " + startVertex);
+		// Utilities.printPath(result, result.length, vertexNames);
 
-		for(int v = 0; v < result.length; v++){
-			System.out.println("v: " + v);
+		for(int v = 0; v < edges.length; v++){
+			// System.out.println("v: " + v);
 			if( (edges[v][startVertex] > 0 || edges[startVertex][v] > 0) && isValidNextEdge(startVertex, v, edges )){
 				result[pos+1] = v;
 				Vertex curVertex = vertexs.get(result[pos +1]);
@@ -348,18 +351,151 @@ public class Algorithm {
 		// count vertices reachable before delete edge
 		boolean [] isVisited = new boolean[edges.length];
 		int count1 = Utilities.dfsCount(u, isVisited, edges);
-		System.out.println("Count 1: " + count1);
-
+		// System.out.println("Count 1: " + count1);
 		//count vertices reachable after delete edge
 		double temp = edges[u][v];
 		edges[u][v] = 0;
 		isVisited = new boolean[edges.length];
 		int count2 = Utilities.dfsCount(u, isVisited, edges);
-		System.out.println("Count 2: " + count2);
+		// System.out.println("Count 2: " + count2);
 		edges[u][v] = temp;
 		return  (count1 > count2) ? false : true;
 	}
 
+	public static ArrayList<VisualAnimation> eulerianCycle(Graph graph) throws IllegalStateException {
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> vertexs = graph.getVertexes();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		double[][] edges = Utilities.copyAdjacencyMatrix(graph.adjacencyMatrix());
+		int numVertex = graph.getVertexes().size();
+		int numEdge = graph.getNumEdge();
+		int oldVertices = Utilities.isEuler(edges, numVertex);
 
+		if(oldVertices != 0){
+			throw new IllegalStateException("Eulerian cycle is not exist in the graph!!!");
+		}
+		int[] result = new int[numEdge + 1];
+		Utilities.setNegativeValue(result, numEdge +1);
+		Utilities.printPath(result, numEdge +1, vertexNames);
+
+		int startIndexVertex = 0;
+		animations.add(new Fronted(vertexs.get(startIndexVertex)));
+
+		eulerUtilCycle(startIndexVertex, edges, result, 0,  vertexNames,animations, vertexs);
+		Utilities.printPath(result, numEdge +1, vertexNames);
+		System.out.println("Done");
+		return animations;
+	}
+
+	public static Boolean eulerUtilCycle(Integer startVertex, double edges [][],int result[], int pos, ArrayList<String> vertexNames, ArrayList<VisualAnimation> animations, ArrayList<Vertex> vertexs){
+		// System.out.println("Pos: " + pos);
+		if(pos == result.length ){
+			return true;
+		}
+		result[pos] = startVertex;
+		Vertex preVertex = vertexs.get(result[pos]);
+		if(pos > 0 ){
+			Vertex prevpreVertex = vertexs.get(result[pos-1]);
+			animations.add(new Selected(prevpreVertex, preVertex));
+		}
+		animations.add(new Visited(preVertex));
+		// System.out.println("Start index: " + startVertex);
+		// Utilities.printPath(result, result.length, vertexNames);
+		for(int v = 0; v < edges.length; v++){
+			// System.out.println("v: " + v);
+			if( (edges[v][startVertex] > 0 || edges[startVertex][v] > 0) && isValidNextEdge(startVertex, v, edges )){
+				result[pos+1] = v;
+				Vertex curVertex = vertexs.get(result[pos +1]);
+				animations.add(new Considered(preVertex, curVertex));
+				animations.add(new Fronted(curVertex));
+
+				Utilities.removeEdgeFromAdj(startVertex, result[pos+1], edges);
+				if(eulerUtilCycle(v, edges, result, pos + 1, vertexNames, animations, vertexs)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static ArrayList<VisualAnimation> aStarAlgorithm(Graph graph, String source, String target) throws IllegalStateException {
+		ArrayList<VisualAnimation> animations = new ArrayList<>();
+		ArrayList<Vertex> vertexs = graph.getVertexes();
+		ArrayList<String> vertexNames = new ArrayList<>(graph.getVertexNames());
+		double[][] edges = Utilities.copyAdjacencyMatrix(graph.adjacencyMatrix());
+		int numVertex = graph.getVertexes().size();
+		int numEdge = graph.getNumEdge();
+		int sourceIndex = vertexNames.indexOf(source);
+		int targetIndex = vertexNames.indexOf(target);
+		System.out.println("source: " + sourceIndex );
+		System.out.println("target: " + targetIndex );
+		double[] heuristicVertexs = Utilities.calculateHeuristic(targetIndex, vertexs);
+		Stack<Integer> result = new Stack<Integer>();
+		boolean[] isVisited = new boolean[edges.length];
+		int nextIndex = -1 ;
+		isVisited[sourceIndex] = true;
+		result.push(sourceIndex);
+		Utilities.printStack(result);
+		animations.add(new Fronted(vertexs.get(sourceIndex)));
+		if(!aStarUtil(sourceIndex, targetIndex, result,heuristicVertexs, edges, isVisited, animations, vertexs)){
+			throw new IllegalStateException("Not exist path with Astar Algorithm!!!");
+		}
+		Utilities.printStack(result);
+		System.out.println("Done");
+		return animations;
+	}
+	public static Boolean aStarUtil(int sourceIndex,int targetIndex, Stack<Integer> result,double[] heuristicVertexs , double edges[][], boolean[] isVisited, ArrayList<VisualAnimation> animations ,	ArrayList<Vertex> vertexs ){
+		ArrayList<Integer> adjList = Utilities.getAdjList(sourceIndex, heuristicVertexs, edges);
+		int tmp = result.pop();
+		Vertex curVertex = vertexs.get(tmp);
+		if(!result.isEmpty()){
+			Vertex preVertex = vertexs.get(result.peek());
+			animations.add(new Selected(preVertex,curVertex));
+		}
+		result.push(tmp);
+		animations.add(new Visited(curVertex));
+
+		// System.out.println("begin: " + sourceIndex );
+		for(Integer vertex: adjList){
+			// System.out.println("adj element: " + vertex );
+			if(!isVisited[vertex]){
+				Vertex consVertex = vertexs.get(vertex);
+				animations.add(new Considered(curVertex, consVertex));
+				animations.add(new Fronted(consVertex));
+				result.push(vertex);
+				if(vertex == targetIndex){
+					animations.add(new Selected(curVertex, consVertex));
+					animations.add(new Visited(consVertex));
+					return true;
+				}
+				isVisited[vertex] = true;
+				if(aStarUtil(vertex,targetIndex, result,heuristicVertexs, edges,isVisited, animations, vertexs)){
+					return true;
+				}
+			}
+		}
+		Utilities.printStack(result);
+		if(result.peek() == targetIndex){
+			Vertex peekVertex = vertexs.get(result.peek());
+			animations.add(new Selected(curVertex, peekVertex));
+			animations.add(new Visited(peekVertex));
+			return true;
+		}
+		else{
+			int topVertexIndex = result.pop();
+			int prevVertexIndex= result.peek();
+			Vertex topVertex = vertexs.get(topVertexIndex);
+			Vertex prevVertex = vertexs.get(prevVertexIndex);
+			animations.add(new SetBlackEdge(prevVertex, topVertex));
+			animations.add(new SetDefaultVertex(topVertex));
+			isVisited[topVertexIndex] = false;
+			//remove delete edges.
+			edges[topVertexIndex][prevVertexIndex] = 0;
+			edges[prevVertexIndex][topVertexIndex] = 0;
+			return false;
+
+		}
+	
+	}
 
 }
