@@ -65,7 +65,7 @@
             <AlgorithmButton row="0" col="0" text="GT-DFS" fx:id="GT_DFS"/>
             <AlgorithmButton row="0" col="1" text="GT-BFS" fx:id="GT_BFS"/>
             <AlgorithmButton row="1" col="0" text="SP-Dijkstra's" fx:id="SP_Dijkstra"/>
-<<<<<<< HEAD
+
             <AlgorithmButton row="1" col="1" text="SP-A*" fx:id="SP_A_star"/>
             <AlgorithmButton row="2" col="0" text="HP-Backtracking" fx:id="HP_Backtracking"/>
             <AlgorithmButton row="2" col="1" text="HC-Backtracking" fx:id="HC_Backtracking"/>
@@ -81,22 +81,7 @@
             <!--            <AlgorithmButton row="7" col="0" text="TSP-Held-Karp"/>-->
             <!--            <AlgorithmButton row="7" col="1" text="GC-Vertex"/>-->
             <!--            <AlgorithmButton row="8" col="0" text="GC-Ramsey"/>-->
-=======
-            <AlgorithmButton row="1" col="1" text="HP-Backtracking" fx:id="HP_Backtracking"/>
-            <AlgorithmButton row="2" col="0" text="HC-Backtracking" fx:id="HC_Backtracking"/>
-            <AlgorithmButton row="2" col="1" text="EP-Fleury" fx:id="EP_Fleury"/>
-            <AlgorithmButton row="3" col="0" text="EC-Fleury" fx:id="EC_Fleury"/>
-            <AlgorithmButton row="3" col="1" text="SP-Bellman-Ford" fx:id=""/>
-            <AlgorithmButton row="4" col="0" text="SP-Floyd-Warshall"/>
-            <AlgorithmButton row="4" col="1" text="SP-A*" fx:id="SP_A_star"/>
-            <AlgorithmButton row="5" col="0" text="MST-Kruskal's"/>
-            <AlgorithmButton row="5" col="1" text="MST-Prim-Boruvka"/>
-            <AlgorithmButton row="6" col="0" text="SCC-Tarjan's"/>
-            <AlgorithmButton row="6" col="1" text="SCC-Kosaraju's"/>
-            <AlgorithmButton row="7" col="0" text="TSP-Held-Karp"/>
-            <AlgorithmButton row="7" col="1" text="GC-Vertex"/>
-            <AlgorithmButton row="8" col="0" text="GC-Ramsey"/>
->>>>>>> e32dbf2c961f76766e1c81b3eeea136d079e5ad9
+
 
         </GridPane>
     </TitledPane>
