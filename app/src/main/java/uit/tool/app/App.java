@@ -284,9 +284,9 @@ public class App extends BorderPane implements Loader {
 	}
 
 	private void A_Star_Handler(AlgorithmEvent event) {
-		String source = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
-		String target = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter target vertex name");
 		try {
+			String source = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter source vertex name");
+			String target = visualizerView.getGraphView().getVertexNameFromUser("Enter vertex name", "Enter target vertex name");
 			ArrayList<VisualAnimation> visited = Algorithm.aStarAlgorithm(this.graph, source, target);
 			this.visualizerView.renderAnimation(visited);
 		} catch (IllegalStateException e) {
