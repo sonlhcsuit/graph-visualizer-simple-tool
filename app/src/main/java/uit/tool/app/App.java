@@ -84,11 +84,11 @@ public class App extends BorderPane implements Loader {
 		this.addEventFilter(AlgorithmEvent.A_STAR, this::A_Star_Handler);
 
 
-//		try {
-//			this.setGraph(Graph.load("/Users/sonlh/sp.graph"));
-//		} catch (Exception e) {
-//			System.out.println("got bug");
-//		}
+		try {
+			this.setGraph(Graph.load("/Users/sonlh/sonlh/projects/personal/graph-visualizer-simple-tool/Graphs/sp.graph"));
+		} catch (Exception e) {
+			System.out.println("got bug");
+		}
 	}
 
 
