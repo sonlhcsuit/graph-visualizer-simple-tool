@@ -75,7 +75,7 @@ public class App extends BorderPane implements Loader {
 
 //		animation
 		this.addEventFilter(AlgorithmEvent.BFS, this::BFS_Handler);
-		this.addEventFilter(AlgorithmEvent.BFS, this::DFS_Handler);
+		this.addEventFilter(AlgorithmEvent.DFS, this::DFS_Handler);
 		this.addEventFilter(AlgorithmEvent.DIJKSTRA, this::Dijkstra_Handler);
 		this.addEventFilter(AlgorithmEvent.GREEDY, this::Greedy_Handler);
 		this.addEventFilter(AlgorithmEvent.HAM_PATH, this::Ham_Path_Handler);
